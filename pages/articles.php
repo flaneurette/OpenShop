@@ -69,7 +69,7 @@ include("../resources/php/header.php");
 						<div class="ts-shop-page-item-header-focus">
 						<?php
 						if(strlen($row['article.image.header']) > 30) {
-							echo '<img src="' . $shop->cleanInput($row['article.image.header']) . '" />';
+							echo '<img src="' . str_replace('../','',$baseurl.$shop->cleanInput($row['article.image.header'])) . '" />';
 						}
 						?>
 						</div>
