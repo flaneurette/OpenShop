@@ -252,7 +252,7 @@ include("../resources/php/header.php");
 									echo '</div>';
 								}
 							}
-
+							echo '<br /><br />';
 							echo '<div id="product-info-box">';
 									if($product_id  != false) { echo '<div id="product-info-box-item">Product ID: '.$shop->cleaninput($product_id).'</div>'; }
 									if($product_title != false) { echo '<div id="product-info-box-item">Product title: '.$shop->cleaninput($product_title).'</div>'; } 
