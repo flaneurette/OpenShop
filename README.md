@@ -1,36 +1,8 @@
 
 # OpenShop v1.0
 
-A open shop written in PHP and flat file JSON. OpenShop works with CSV files, which are converted to JSON. Useful for small webshops that do not receive much web traffic, and for those who do not want to install unwieldy and large pieces of software that have too many features. A shop owner wants to sell a product, and that does not have to be complex. 
+A webshop software written in PHP and flat file JSON. OpenShop works with CSV files, which are converted to JSON.  
 
-Tiny shop will be ideal for clients who make one-time single purchases, handmade or boutique items such as: art prints, antiques, music, jewelry, books and stationary. It is not recommended for mass retail and high volume shops, eventhough it can compete with regards to speed and delivery due to a lean architecture and adequate JSON caching.
-
-Administration: CSV files can be uploaded through the administration folder, which are then automatically converted to JSON flat file database, through which OpenShop functions. An example CSV file which contains all shop products: https://github.com/flaneurette/tiny-shop/blob/master/inventory/csv/shop.csv
-
-OpenShop is also mobile friendly, as it supports automatic scaling for most mobile devices such as phones, tablets and other appliances. Since we do not use 3rd party software, OpenShop has custom scafolding, css and theming.
-
-# What is new
-
-As of version 3.7, OpenShop has a OPTIONBAR displayed in each category, from which buyers can refine their options, generated from variants and product options. This function can be enabled by editing the site.conf.csv and setting site.optionbar to: 1.
-
-As of version 3.3, OpenShop has a PRICEBAR with which users can refine on price. Prices can be set by editing site.conf.csv on site.pricebar.values
-
-As of version 3.0, OpenShop supports Carbon offset values, where buyers can choose to offset shipping with added value. A shopowner can then donate the collected values to a green organization, for example: <a href="https://1t.org">1T.ORG</a> or <a href="https://onetreeplanted.org/">One Tree Planted</a> who aims at planting a trillion trees by 2030.
-
-![Carbon Offset](https://raw.githubusercontent.com/flaneurette/tiny-shop/master/resources/images/offset.png)
-
-As of version 2.73, OpenShop also supports themes, this the Dark Theme:
-
-	- The installer asks which theme needs to be installed. 
-	- Manually, themes can be edited through site.conf.csv or site.conf.json by editing the stylesheet paths. 
-
-![Image Dark Theme](https://raw.githubusercontent.com/flaneurette/OpenShop/master/resources/images/theme-dark-silver.png) 
-Default Theme:
-![Image Default Theme](https://raw.githubusercontent.com/flaneurette/OpenShop/master/resources/images/theme-light.png)
-
-Another new feature is the pricebar, which can be edited through site.conf.csv  
-
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
 # Table of Contents
 <details open>
 <summary><b>(click to expand or hide)</b></summary>
