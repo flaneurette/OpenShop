@@ -1,0 +1,11 @@
+[
+    {
+        "payment.email.oncancel": "1",
+        "payment.email.onerror": "1",
+        "payment.email.reminder": "1",
+        "payment.cancel.text": "We noticed you cancelled the order. If there is anything that went wrong, we would like to hear from you by replying to this e-mail. If you want to continue to proceed with the checkout, click the link below.",
+        "payment.error.text": "We noticed there was an error during checkout. If there is anything that went wrong, we would like to hear from you by replying to this e-mail. If you want to continue to proceed with the checkout, click the link below.",
+        "payment.reminder.text": "We want to remind you that you started a checkout in our shop. The products are still in your cart. If there is anything that went wrong, we would like to hear from you by replying to this e-mail. If you want to continue to proceed with the checkout, click the link below.",
+        "payment.email.tries": "1"
+    }
+]
