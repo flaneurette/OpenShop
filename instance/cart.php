@@ -236,8 +236,8 @@ include("../resources/php/header.php");
 		<hr />
 		<h1>Checkout</h1>
 		<hr />
-
-			<div  style="float:right">e-mail: <input type="text" name="email" id="email-prepayment" size="25" value="" style="width:250px;margin-left:5px;" /></div>
+			<span>e-mailaddress:</span>
+			<div><input type="text" name="email" id="email-prepayment" size="25" value="" style="width:250px;" /></div>
 			<br /><br /><hr />
 			
 			<?php
