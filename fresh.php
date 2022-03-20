@@ -19,7 +19,7 @@
 	<body>
 		<div id="wrapper">
 			<h1>Welcome to OpenShop.</h1>
-			<h2>a fresh new way to shop.</h2>
+			<h2>A fresh new way to shop.</h2>
 			Currently, the webshop is being installed, please wait a moment...
 			<hr />
 			<small>If you are the shop owner: please continue to install the shop. This page will not be visible after the shop is correctly installed.</small>
