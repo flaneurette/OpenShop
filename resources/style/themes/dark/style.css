@@ -654,13 +654,6 @@ label {
 .ts-shop-form-field {
 	display: block;
 	float: right;
-	border: 1px solid #ded4da;
-	border-radius: .25rem;
-	padding: 1px;
-	margin-top:5px;
-	text-align: left;
-	position: relative;
-	background-color:#999;
 }
 #ts-shop-cart-form-data {
 	display: block;
