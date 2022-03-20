@@ -1,7 +1,7 @@
 
 # OpenShop v1.0
 
-A webshop software written in PHP and flat file JSON. OpenShop works with CSV files, which are converted to JSON.  
+A webshop software written in PHP and flat file JSON. 
 
 # Table of Contents
 <details open>
