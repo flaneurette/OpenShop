@@ -1,5 +1,5 @@
 
-# OpenShop v1.0
+# OpenShop
 
 A webshop software written in PHP and flat file JSON. 
 
