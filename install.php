@@ -10,7 +10,7 @@
 		<meta name="Cache-Control" content="no-cache">
 		<meta name="Expires" content="-1">
 		<meta name="revisit-after" content="3 days">
-		<link rel="stylesheet" href="resources/style/themes/default/style.css?rev=3" type="text/css" />
+
 		<link rel="stylesheet" href="resources/style/themes/default/admin.css?rev=3" type="text/css" />
 	</head>
 <body>
@@ -731,7 +731,7 @@ Allow from '.$ip.'
 
 ?>
 
-<h1>Setup OpenShop</h1>
+<h2>Setup OpenShop</h2>
 <div>
 	<?php echo "All requirements were met. Continue to configure OpenShop";?>
 </div>
