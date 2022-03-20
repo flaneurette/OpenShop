@@ -208,12 +208,13 @@ include("../resources/php/header.php");
 							echo '<div class="product-box">
 									<div class="product-title"><h2>'.$product_title.'</h2></div>
 										<div class="product-subbox">
+											
+											<div class="product-details">
 											<div class="product-image">
 												<img src="'.$base_url.$product_image.'" onmouseup="mouse(\'11\');" onmousedown="mouse(\'11\');" onrightclick="mouse(\'11\');"/>
 											</div>
-											<div class="product-details">
 												<div class="product-description">'.$shop->formatter($product_description,'product-description').'</div>
-												<div class="product-price" id="price-update">'.$shop->getsitecurrency('server/config/site.conf.json','server/config/currencies.conf.json').' '.$product_price.'</div>'; 
+												<span class="product-price" id="price-update">'.$shop->getsitecurrency('server/config/site.conf.json','server/config/currencies.conf.json').' '.$product_price.'</span>'; 
 
 												if($optionbox1 != false) { 
 													echo '<div class="product-option" style="float:left;">Variant: '. $optionbox1 .'</div>'; 
@@ -225,7 +226,7 @@ include("../resources/php/header.php");
 													echo '<div class="product-option" style="float:left;">Variant: '. $optionbox3 .'</div>'; 
 												} 
 
-												echo '<div class="product-buynow">'.$string_button.'</div>
+												echo '<br /><span class="product-buynow">'.$string_button.'</span>
 											
 										';
 							// closing div below.
