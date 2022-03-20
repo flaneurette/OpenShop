@@ -1,6 +1,6 @@
 
 .ts-shop-page-item {
-	border:1px solid #000;
+	/* border:1px solid #000; */
 	margin:0px;
 	margin-top:15px;
 	padding:5px;
@@ -10,7 +10,7 @@
 }
 
 .ts-shop-page-item-header {
-	border:1px solid #000;
+	/* border:1px solid #000; */
 	height:200px;
 	overflow:hidden;
 }
