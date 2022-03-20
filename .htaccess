@@ -1,0 +1,11 @@
+Options All -Indexes
+Options +FollowSymLinks
+
+RewriteEngine On
+
+# Rewrite URI's
+RewriteCond %{HTTPS} !on
+RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
+RewriteRule ^index.php$ fresh.php [NC,L]
+RewriteRule ^index.html$ fresh.php [NC,L]
+RewriteRule ^index.htm$ fresh.php [NC,L]
