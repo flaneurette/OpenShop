@@ -38,7 +38,7 @@ A webshop software written in PHP and flat file JSON.
 </details>
 
 <a name="First-steps-on-working-with-OpenShop"></a> 
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # First steps on working with OpenShop 
 If installed, go to the administration folder and there you will be able to upload .CSV files. The CSV files included in /inventory/csv/ are examples of a shop. Normally, the only CSV files that need to be edited are: 
 
@@ -54,7 +54,7 @@ In OpenShop it is possible to change the column order of the CSV, in any way you
 The CSV files can be downloaded through the administration panel, by visiting the /downloads/ tab.
 
 <a name="Installing"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Installing
 - Clone or download the zip and upload them to a folder on your server.
 - Make sure that the shop folder is properly chowned under the rights of apache or php, to prevent installer failures: 
@@ -65,7 +65,7 @@ The CSV files can be downloaded through the administration panel, by visiting th
 OpenShop checks all requirements and if satisfied, the package should be installed seamlessly. If not, it will prompt for further action.
 
 <a name="Requirements"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Requirements
 - PHP 5.6+ (the higher the better) PHP 8 is supported, but might not be optimized.
 - PHP extensions (the installer will check on them and prompt for missing extensions)
@@ -82,7 +82,7 @@ OpenShop checks all requirements and if satisfied, the package should be install
 	- Server module: mod_headers: for extra server-side security measures.
 
 <a name="Ports"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Ports
 OpenShop requires the following minimal open ports: 80, 443 and 25. 
 It would be wise to install UFW for port control:
@@ -95,7 +95,7 @@ It would be wise to install UFW for port control:
 	ufw enable
 
 <a name="Permissions"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Permissions
 The following files need to be writeable by the installer. The installer attempts to chmod the files *automatically*, if this fails, then file rights need to be manually assigned as follows. The installer tries to obtain the greatest possible permissions: 0777 to prevent setup failures.
 
@@ -119,12 +119,12 @@ The administration panel requires the following folders to be writable contineou
 Depening on your situation, it would be wise to start with the lowest permissions, however, the adminsitration panel might require more permissions. OpenShop will try to chmod the .csv and .json files when a change is made, and chmods the files automatically back to 0755. If you cannot upload files, chmod these folders to 0777 manually to prepare OpenShop to make changes automatically.
 
 <a name="Payment-configuration"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Payment configuration
 For ease of use, the installer writes your PayPal e-mail address to the file: /payment/paypal/paypal.json. However, it would be wise to check manually if your e-mail was written to it. If not, then PayPal might not function correctly. 
 
 <a name="Directory-security"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Directory security
 If the Server Modules: mod_access_compat and version_module are available and installed, then OpenShop has more ways to secure itself. For example, OpenShop adds the below rules inside the main *.htaccess*. With these added rules, it is not possible for others except for the server to access the: json, csv, log and backup files. Most often, these modules come with Apache, and therefore there is no need to add them, as the installer adds these rules automatically.
 
@@ -144,7 +144,7 @@ If the Server Modules: mod_access_compat and version_module are available and in
 	</IfVersion>
 
 <a name="Sending-mail"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Sending mail
 
 OpenShop has a basic contact page, which is located at: /mail/index.php. which can be added to the nagivation panel, if so desired.
@@ -158,7 +158,7 @@ By default, OpenShop uses the e-mail address that was given upon installation, w
 Because of the nature of PHP and sendmail, it is possible that some mail might be flagged as SPAM if the email, domain and serveraddress is not correct. In order to prevent this, do a test order to see whether mail is labelled as SPAM. OpenShop has a contactform inside the /mail/ folder.
 
 <a name="Testing-a-fake-order-mail"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Testing a fake order & mail
 
 To test a fake order and mail function, run this script in the browser:
@@ -168,24 +168,24 @@ To test a fake order and mail function, run this script in the browser:
 This script places a fake order, to see whether you can receive an order to your e-mail. Remember to delete this file after testing.
 
 <a name="Importing-exporting"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Importing & exporting
 OpenShop made the file structure in such a way that it will be able to import/export data from other shoppingcarts, such as Shopify and in a later stage Magento and other popular shoppingcarts. However, this functionality is currently under development.
 
 <a name="Shipping"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Shipping
 OpenShop has a basic flat fee shipping file, *shipping.csv* where each country has a flat fee shipping price. Each product can also have an individual shipping price. The cart will automatically calculate the total shipping amount. If the shipping price exceeds the flat fee shipping price, as listed in shipping.csv, then it will take the flat fee price. If the total purchase amount exceeds the free shipping option, then shipping will be free. The free shipping amount can be edited in site.csv, or site.json and uploaded through the administration screen.
 
 To edit the *free shipping* option, edit: *site.conf.csv* by default it ships an order for free if the purchase amount is more than 50, in the currency your shop works in.
 
 <a name="Tax"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Tax
 Tax added values can be added to every single product individually, by editing shop.csv and the product.tax column. If no value is given, then OpenShop defaults by reading the tax.conf.json file, which holds tax values for each country. This process is automated. Tax.conf.csv can be edited and uploaded, if you want to change the tax value of a country. Currently, OpenShop has default values of 10%.
 
 <a name="Payment-types"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Payment types
 
 By default, the free version, only accepts PayPal payments (including credit cards). 
@@ -195,32 +195,32 @@ Long term planned integration (with a future paid plan) will support more Paymen
 Bancontact, KNET, CitrusPay, Mada, QPAY, EPS, Giropay, iDEAL, Bitcoin: Coingate, Poli, Przelewy24, Sofort, Boleto Bancário, Fawry, Multibanco, OXXO, Pago Fácil, Rapipago, Via Baloto, ACH, SEPA Direct Debit, Klarna, Bancontact, KNET, Mada, QPAY, Stripe, Alipay, Apple Pay, BenefitPay, Google Pay and PayPal.
 
 <a name="Currencies"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Currencies
-Tiny Shop supports 36 different currencies, including Bitcoin.
+OpenShop supports 36 different currencies, including Bitcoin.
 
 <a name="Storage"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Storage
-Tiny shop uses JSON to store data. The benefit of a flat file database, is that it works on all platforms and operating systems, and there is no need to install database software. JSON can be easely converted back and forth into CSV and excel, making it easy for a shop owner to update the shop, without having to login into a complex portal or a server-side administration screen. 
+OpenShop uses JSON to store data. The benefit of a flat file database, is that it works on all platforms and operating systems, and there is no need to install database software. JSON can be easely converted back and forth into CSV and excel, making it easy for a shop owner to update the shop, without having to login into a complex portal or a server-side administration screen. 
 
 <a name="Encryption"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Encryption
-Tiny shop has a reasonably safe encryption method to encrypt the shop data, namely AES 256. Since it does not store user-details, the encryption is disabled by default. All user details are not stored, but e-mailed to the shop owner. It is possible to store the details and thus encrypt it through Tiny Shop, but that is up to the shop owner.
+OpenShop has a reasonably safe encryption method to encrypt the shop data, namely AES 256. Since it does not store user-details, the encryption is disabled by default. All user details are not stored, but e-mailed to the shop owner. It is possible to store the details and thus encrypt it through OpenShop, but that is up to the shop owner.
 
 <a name="Backups"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Backups
-Tiny Shop makes (real-time) automatic backups of the JSON database each time a product is added, changed or removed.
+OpenShop makes (real-time) automatic backups of the JSON database each time a product is added, changed or removed.
 
 <a name="SEO"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # SEO
-Tiny Shop creates SEO friendly URL's of all products.
+OpenShop creates SEO friendly URL's of all products.
 
 <a name="Products"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Products
 The file shop.csv|.json, contains all the products. All products require to have a unique product identifier, or productId. This is numeric, for example: 10000234. It is advised to have a large product identifier, in this way one can add more products. Without productId, or duplicate productIds, the shop might not work properly. It is best to start with: 10000001. The items can be added sequentially, as OpenShop sorts the products from new to old, through a array_reverse, automatically.
 
@@ -230,7 +230,7 @@ To place a product inside a category or subcategory, the subsequent csv files ne
 In a future version of OpenShop, all CSV files will be linked into a single Excel document, making it even more practical. In this way the whole shop can be modified from a single excel document.
 
 <a name="Style-and-themes"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Style and themes
 
 Since version 2.73, OpenShop has the option to change themes. Themes are changed by editting the site.csv, and the subsequent theme folder.
@@ -255,12 +255,12 @@ Reset stylesheet, needs not to be modified:
 - /resources/style/themes/default/reset.css
 
 <a name="Logging"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Logging
 OpenShop emulates Apache logging. By default, OpenShop logs most folders and the logging locations can be modified by editting the server/config/csv/site.conf.csv or JSON. The file log.log contains basic rows of user information that accessed the shop. This file could be parsed further, if so required. There is a hard logging limit of about 3 to 5MB, before the log is emptied out automatically. The data logged is User-Agent, IP, date and time of access, querystring, request method and which location was viewed. OpenShop does not place any cookies, as logging is done server-side. Logging is only done for security reasons. OpenShop does not track visitors. Logging can be turned off by editing server/config/csv/site.conf.csv and set site.logging = 0 instead of 1. OpenShop does not set cookies, however cookies can be site through the site.conf.csv or when external tracking javascript is added. If this is the case, a popup needs to be show in line with EU rules. By default, OpenShop does not show a popup since it does not track visitors.
 
 <a name="CSV-files-of-interest"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # CSV files of interest
 
 As of version 3.2, the administration panel has a downloads page where the CSV can be downloaded.
@@ -304,7 +304,7 @@ This file contains all the articles, if written and displayed under the navigati
 This file contains all the weblogs, if written and displayed under the navigation of weblog or blog.
 
 <a name="JSON-values-and-parameters"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # JSON values and parameters
 
 An upload page is used to convert each CSV to JSON, located in /administration/. In this way, only the CSV files have to be edited and the shop will be updated automatically. Obviously, it is also possible to upload each JSON and CSV file through either SCP, FTP or command line, rendering the upload page expendable. Just remember that OpenShop does not read the CSV files, only JSON files. The CSV files are used offline and uploaded to be converted to JSON.
@@ -492,7 +492,7 @@ article.updated			- unused
 ```
 
 <a name="Custom-programming"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Custom programming: Product list minimal demo (for programmers):
 
 - Function: getproducts() takes params: method, category, string, limit, pagination and token.
@@ -513,7 +513,7 @@ echo $products[1];
 			
 ```
 <a name="Loading-a-JSON-file"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Loading a JSON file
 ```
 include("resources/php/header.inc.php");
@@ -533,10 +533,9 @@ foreach($shopconf as $row)
 	
 ```
 <a name="Product-list-demo"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Product list demo
 
-![Image of Product list](https://raw.githubusercontent.com/flaneurette/tiny-shop/master/resources/images/product-screen.png)
 
 <a name="Security-Policy"></a>
 # Security Policy
@@ -549,12 +548,10 @@ OpenShop expects that users install the latest version of OpenShop. The supporte
 | < 3.0   | :x:                |
 
 <a name="Reporting-a-Vulnerability"></a>
-<a href="https://github.com/flaneurette/OpenShop/blob/master/README.md"><img src="https://github.com/flaneurette/OpenShop/blob/master/resources/images/icons/carbon-offset.png" align="right"></a>
+
 # Reporting a Vulnerability
 
 Use this section to tell people how to report a vulnerability.
 
-Security issues can be reported by opening an issue, or if you wish to submit it privately, please go to:
-
-http://www.flaneurette.work/contact.html
+Security issues can be reported by opening an issue.
 
