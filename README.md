@@ -551,7 +551,5 @@ OpenShop expects that users install the latest version of OpenShop. The supporte
 
 # Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
-
 Security issues can be reported by opening an issue.
 
