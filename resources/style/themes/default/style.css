@@ -504,7 +504,7 @@ hr {
 }
 
 .product-option { 
-	display: block;
+	display: inline-block;
 	padding: 5px;
 	font-weight: 400;
 	line-height: 1.5;
@@ -1185,7 +1185,8 @@ label {
     margin-left: 0px;
     padding-left: 0px;
     float: left;
-    width: 80px;
+    width: 50px;
+    font-size: large;
 }
 
 .product-buynow {
