@@ -56,6 +56,15 @@ The CSV files can be downloaded through the administration panel, by visiting th
 <a name="Installing"></a>
 
 # Installing
+
+OpenShop can be installed via two methods, composer and manual installation.
+
+### Composer: 
+
+	composer require flaneurette/open-shop
+
+### Manual:
+
 - Clone or download the zip and upload them to a folder on your server.
 - Make sure that the shop folder is properly chowned under the rights of apache or php, to prevent installer failures: 
 
