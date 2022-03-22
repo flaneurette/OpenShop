@@ -61,7 +61,7 @@ OpenShop can be installed via two methods, composer and manual installation.
 
 ### Composer: 
 
-	composer require flaneurette/open-shop
+	composer require flaneurette/open-shop:dev-main
 ### Manual:
 
 - Clone or download the zip and upload them to a folder on your server.
