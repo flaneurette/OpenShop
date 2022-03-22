@@ -141,25 +141,29 @@ class Session {
 		if($obj['product.qty'] > self::MAXQTY) {
 			$obj['product.qty'] = 1;
 		}
+	
 		
-		// if(!isset($_SESSION['cart'][$i]['product.id'])) {
-		//	return 'session could not be initialized due to offset error.';
-		// }
+		$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
 		
 		if($c > 0 ) { 
 
 			for($i = 0; $i <= $c; $i++) {
 				
-					if($_SESSION['cart'][$i]['product.id'] === $obj['product.id']) {
+					if(!isset($_SESSION['cart'][$i]['product.id'])) {
+						return 'Session could not be initialized due to offset error. Please reload the page.';
+					}
+		
+					if($_SESSION['cart'][$i]['product.id'] == $obj['product.id']) {
 						
 						if($obj['product.qty'] < 1) {
-							$obj['product.qty'] = 1;
+							$obj['product.qty'] = 0;
 							} elseif($obj['product.qty'] > self::MAXQTY) {
 							$obj['product.qty'] = 1;
 						} else {}
 						
 						if(($_SESSION['cart'][$i]['product.qty'] + $obj['product.qty']) > self::MAXQTY) {
 						} else {
+						
 						$_SESSION['cart'][$i]['product.qty'] = ($_SESSION['cart'][$i]['product.qty'] + $obj['product.qty']);
 						}
 						} else {
@@ -219,8 +223,6 @@ class Session {
 		
 		return $array;
 	}
-	
-	
 	
 	/**
 	* Showing session messages.

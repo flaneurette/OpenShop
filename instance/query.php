@@ -20,14 +20,16 @@ if(isset($_POST['token']))  {
 		// token is correct.
 		} else {
 			echo 'token is incorrect';
-			// echo $_SESSION['token'];
 		exit;
 	}
+} else {
+	echo 'A token was not given, aborting code execution.';
+	exit;
 }
 
 if(isset($_POST['qty'])) {
 	if(is_int($_POST['qty'])) {
-		if($_POST['qty'] > 9999) {
+		if($_POST['qty'] > $session::MAXQTY) {
 			$qty = 1;
 		}
 	} else {
@@ -180,7 +182,6 @@ if(isset($_POST['action'])) {
 				$session->addtocart($arr);
 
 				$_SESSION['cart'] = $session->unique_array($_SESSION['cart'], 'product.id');
-
 				echo "Product added to cart. ";
 				echo PHP_EOL;
 				echo "X";

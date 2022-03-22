@@ -217,13 +217,13 @@ include("../resources/php/header.php");
 												<span class="product-price" id="price-update">'.$shop->getsitecurrency('server/config/site.conf.json','server/config/currencies.conf.json').' '.$product_price.'</span>'; 
 
 												if($optionbox1 != false) { 
-													echo '<div class="product-option" style="float:left;">Variant: '. $optionbox1 .'</div>'; 
+													echo '<div class="product-option">Variant: '. $optionbox1 .'</div>'; 
 												} 
 												if($optionbox2 != false) { 
-													echo '<div class="product-option" style="float:left;">Variant: '. $optionbox2 .'</div>'; 
+													echo '<div class="product-option">Variant: '. $optionbox2 .'</div>'; 
 												} 
 												if($optionbox3 != false) { 
-													echo '<div class="product-option" style="float:left;">Variant: '. $optionbox3 .'</div>'; 
+													echo '<div class="product-option">Variant: '. $optionbox3 .'</div>'; 
 												} 
 
 												echo '<br /><span class="product-buynow">'.$string_button.'</span>
