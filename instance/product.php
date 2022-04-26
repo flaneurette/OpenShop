@@ -219,16 +219,28 @@ include("../resources/php/header.php");
 												if($optionbox1 != false) { 
 													echo '<div class="product-option">Variant: '. $optionbox1 .'</div>'; 
 												} 
+												
 												if($optionbox2 != false) { 
 													echo '<div class="product-option">Variant: '. $optionbox2 .'</div>'; 
 												} 
+												
 												if($optionbox3 != false) { 
 													echo '<div class="product-option">Variant: '. $optionbox3 .'</div>'; 
 												} 
 
-												echo '<br /><span class="product-buynow">'.$string_button.'</span>
-											
-										';
+												echo '<br /><br /><div class="product-buynow">'.$string_button.'</div>';
+										
+												$video 	= $shop->cleaninput($iv[$i]['product.video']);
+												$audio 	= $shop->cleaninput($iv[$i]['product.audio']);
+												
+												if(isset($video) && $video != "") {
+													echo "<br /><div class=\"product-video\"><video width=\"50%\" controls><source src=\"".$video."\" type=\"video/mp4\"></video></div>";
+												}
+												
+												if(isset($audio) && $audio != "") {
+													echo "<br /><div class=\"product-audio\"><audio controls><source src=\"".$audio."\" type=\"audio/mpeg\"></audio></div>";
+												}
+												
 							// closing div below.
 							
 							$find = strstr($product_images,',');

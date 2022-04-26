@@ -1170,6 +1170,17 @@ label {
 	width:350px;
 }
 
+.product-audio {
+	float: left;
+    width: 50%;
+    margin: 20px 0px 20px;
+}
+	
+.product-video {
+	float: left;
+    width: 50%;
+    margin: 20px 0px 20px;
+}	
 
 .product-details {
 	margin:auto;

@@ -1091,6 +1091,7 @@ class Shop {
 							$this->textstring .= $productimage;
 							$this->textstring .= "<div class=\"ts-list-product-link\"><a href=\"".$this->getbase()."category/".$this->seoUrl($this->cleaninput($ts[$i]['product.category']))."/item/".$this->seoUrl($this->cleaninput($ts[$i]['product.category'])).'/'.$this->seoUrl($this->cleaninput($ts[$i]['product.title'])).'/'.$this->cleaninput($ts[$i]['product.id'])."/".(int)$this->page_id."/\">".$this->maxstring($this->cleaninput($ts[$i]['product.title']),10,false)."</a> </div>";
 							$this->textstring .= "<div class=\"ts-list-product-desc\">".$this->maxstring($this->cleaninput($ts[$i]['product.description']),30,true)."</div>";
+							
 							// $this->textstring .= "<div class=\"ts-list-product-cat\">".$this->cleaninput($ts[$i]['product.category'])."</div>";
 							$this->textstring .= "<div class=\"ts-list-product-price\">".$this->getsitecurrency(self::INVENTORY_PATH . self::SITECONF,self::INVENTORY_PATH . self::CURRENCIES).' '.$this->cleaninput($ts[$i]['product.price'])."</div>";
 							$this->textstring .= "<div class=\"ts-list-product-status\">left in stock.<div class=\"".$status."\">".$this->cleaninput($ts[$i]['product.stock'])."</div></div>";
@@ -1107,6 +1108,7 @@ class Shop {
 						break;
 
 						case 'group':		
+						
 						$this->textstring .= "<div class=\"ts-product-group\">";
 						$this->textstring .= $productimage;
 						$this->textstring .= "<div class=\"ts-group-product-link\"><a href=\"item/".$this->seoUrl($this->cleaninput($ts[$i]['product.category'])).'/'.$this->seoUrl($this->cleaninput($ts[$i]['product.title'])).'/'.$this->cleaninput($ts[$i]['product.id'])."/\">".$this->cleaninput($ts[$i]['product.title'])."</a> </div>";
