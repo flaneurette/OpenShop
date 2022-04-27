@@ -73,8 +73,8 @@ if(isset($_GET['type'])) {
 	exit;
 }
 
-readfile($file);
-
 unset($_SESSION['streamtoken']);
 $_SESSION['streamtoken'] = null;
+
+readfile($file);
 ?>
