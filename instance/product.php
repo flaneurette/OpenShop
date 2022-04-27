@@ -1,6 +1,7 @@
 <?php
 
-error_reporting(0);
+	error_reporting(0);
+	session_start();
 
 	include("../resources/php/header.inc.php");
 	include("../resources/php/class.Shop.php");
@@ -9,9 +10,7 @@ error_reporting(0);
 	
 	$token = $shop->getToken();
 	$_SESSION['token'] = $token;
-	
-	$streamtoken = $shop->pseudoNonce().$shop->pseudoNonce().$shop->pseudoNonce();
-	$_SESSION['streamtoken'] = $streamtoken;
+	$_SESSION['streamtoken'] = $token;
 
 	$productid = false;
 	
@@ -238,11 +237,11 @@ include("../resources/php/header.php");
 												$audio 	= $shop->cleaninput($iv[$i]['product.audio']);
 												
 												if(isset($video) && $video != "") {
-													echo "<br /><div class=\"product-video\"><video width=\"50%\" controls><source src=\"".$hostaddr."instance/stream.php?id=".(int)$product_id."&type=video&streamtoken=".$streamtoken ."\" type=\"video/mp4\"></video></div>";
+													echo "<br /><div class=\"product-video\"><video width=\"50%\" controls><source src=\"".$hostaddr."instance/stream.php?id=".(int)$product_id."&type=video&streamtoken=".$_SESSION['streamtoken']."\" type=\"video/mp4\"></video></div>";
 												}
 												
 												if(isset($audio) && $audio != "") {
-													echo "<br /><div class=\"product-audio\"><audio controls><source src=\"".$hostaddr."instance/stream.php?id=".(int)$product_id."&type=audio&streamtoken=".$streamtoken ."\" type=\"audio/mpeg\"></audio></div>";
+													echo "<br /><div class=\"product-audio\"><audio controls><source src=\"".$hostaddr."instance/stream.php?id=".(int)$product_id."&type=audio&streamtoken=".$_SESSION['streamtoken']."\" type=\"audio/mpeg\"></audio></div>";
 												}
 												
 							// closing div below.
