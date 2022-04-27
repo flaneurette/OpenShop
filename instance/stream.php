@@ -4,8 +4,8 @@ include("../resources/php/class.Shop.php");
 	
 $shop  = new Shop();
 
-if(isset($_GET['token']))  {
-	if($_GET['token'] == $_SESSION['token']) {
+if(isset($_GET['streamtoken']))  {
+	if($_GET['streamtoken'] == $_SESSION['streamtoken']) {
 		//token is correct.
 		} else {
 			echo 'Token is incorrect, stream cannot be initated.';
@@ -81,4 +81,7 @@ if(isset($_GET['type'])) {
 }
 
 readfile($file);
+
+unset($_SESSION['streamtoken']);
+$_SESSION['streamtoken'] = null;
 ?>
