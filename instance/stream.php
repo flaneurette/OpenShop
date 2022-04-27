@@ -61,17 +61,9 @@ if(isset($_GET['type'])) {
 		switch($_GET['type']) {
 			case 'audio':
 			header('Content-Type: audio/mpeg');
-			header('Content-length: ' . filesize($file));
-			header('Cache-Control: no-cache');
-			header("Content-Transfer-Encoding: binary"); 
-			header("Content-Type: audio/mpeg");
 			break;
 			case 'video':
-			header('Content-type: video/mp4');
-			header('Content-length: ' . filesize($file));
-			header('Cache-Control: no-cache');
-			header("Content-Transfer-Encoding: binary"); 
-			header("Content-Type: video/mp4");
+			header('Content-Type: video/mp4');
 			break;
 			default:
 			exit;
