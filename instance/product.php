@@ -10,7 +10,7 @@
 	
 	$token = $shop->getToken();
 	$_SESSION['token'] = $token;
-	$_SESSION['streamtoken'] = $token;
+	$_SESSION['streamtoken'] = $shop->pseudoNonce().$shop->pseudoNonce();
 
 	$productid = false;
 	
