@@ -8,7 +8,7 @@ if(isset($_GET['streamtoken']))  {
 	if($_GET['streamtoken'] == $_SESSION['streamtoken']) {
 		//token is correct.
 		} else {
-			echo 'Token is incorrect, stream cannot be initated.';
+		echo 'Token is incorrect, stream cannot be initated.';
 		exit;
 	}
 } else {
@@ -46,6 +46,7 @@ foreach($product_list as $c) {
 												
 					if(isset($audio) && ($audio != "") && ($_GET['type'] == 'audio')) {
 						$file = $audio;
+echo $file;
 					}
 			}
 			
@@ -59,17 +60,9 @@ foreach($product_list as $c) {
 if(isset($_GET['type'])) {
 		switch($_GET['type']) {
 			case 'audio':
-			header('Content-type: audio/mpeg');
-			header('Content-length: ' . filesize($file));
-			header('Cache-Control: no-cache');
-			header("Content-Transfer-Encoding: binary"); 
 			header("Content-Type: audio/mpeg");
 			break;
 			case 'video':
-			header('Content-type: video/mp4');
-			header('Content-length: ' . filesize($file));
-			header('Cache-Control: no-cache');
-			header("Content-Transfer-Encoding: binary"); 
 			header("Content-Type: video/mp4");
 			break;
 			default:
