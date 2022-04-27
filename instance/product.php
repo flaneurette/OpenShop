@@ -234,11 +234,11 @@ include("../resources/php/header.php");
 												$audio 	= $shop->cleaninput($iv[$i]['product.audio']);
 												
 												if(isset($video) && $video != "") {
-													echo "<br /><div class=\"product-video\"><video width=\"50%\" controls><source src=\"".$video."\" type=\"video/mp4\"></video></div>";
+													echo "<br /><div class=\"product-video\"><video width=\"50%\" controls><source src=\"".$hostaddr."instance/stream.php?id=".(int)$product_id."&type=video&token=".$token."\" type=\"video/mp4\"></video></div>";
 												}
 												
 												if(isset($audio) && $audio != "") {
-													echo "<br /><div class=\"product-audio\"><audio controls><source src=\"".$audio."\" type=\"audio/mpeg\"></audio></div>";
+													echo "<br /><div class=\"product-audio\"><audio controls><source src=\"".$hostaddr."instance/stream.php?id=".(int)$product_id."&type=audio&token=".$token."\" type=\"audio/mpeg\"></audio></div>";
 												}
 												
 							// closing div below.
