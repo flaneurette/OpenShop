@@ -1,7 +1,6 @@
 <?php
 
-session_start();
-
+include("../resources/php/header.inc.php");
 include("../resources/php/class.Shop.php");
 $shop  = new Shop();
 
