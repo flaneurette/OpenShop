@@ -6,10 +6,10 @@ $shop  = new Shop();
 
 if(isset($_GET['token']))  {
 	if($_GET['token'] == $_SESSION['token']) {
-		// token is correct.
+		//token is correct.
 		} else {
-		//	echo 'Token is incorrect, stream cannot be initated.';
-		//exit;
+			echo 'Token is incorrect, stream cannot be initated.';
+		exit;
 	}
 } else {
 	echo 'A token was not given, aborting code execution.';
