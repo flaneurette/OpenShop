@@ -3,6 +3,8 @@
 
 Is a barebones opensource webshop software, written in PHP and flat file JSON. 
 
+<img src="https://raw.githubusercontent.com/flaneurette/OpenShop/main/resources/images/product-screen.png" />
+
 # Table of Contents
 <details open>
 <summary><b>(click to expand or hide)</b></summary>
