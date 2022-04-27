@@ -2158,7 +2158,7 @@ class Shop {
 	}
 
 	public function pseudoNonce($max=0xffffffff) {
-		$tmp_nonce = uniqid().mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max);
+		$tmp_nonce = mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max);
 		return $tmp_nonce;
 	}
 	
