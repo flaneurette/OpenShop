@@ -9,9 +9,10 @@ error_reporting(0);
 	
 	$token = $shop->getToken();
 	$_SESSION['token'] = $token;
-	$_SESSION['streamtoken'] = $shop->getToken();
-	$streamtoken = $_SESSION['streamtoken'];
 	
+	$streamtoken = $shop->getToken();
+	$_SESSION['streamtoken'] = $streamtoken;
+
 	$productid = false;
 	
 	if(isset($_REQUEST['cat'])) {
