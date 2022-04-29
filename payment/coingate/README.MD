@@ -20,10 +20,10 @@ composer require coingate/coingate-php
 
 ## Manual Installation
 
-Donwload [latest release](https://github.com/coingate/coingate-php/releases) and include `init.php` file.
+Donwload [latest release](https://github.com/coingate/coingate-php/releases) and include `Init.php` file.
 
 ```php
-require_once('/path/to/coingate-php/init.php');
+require_once('/path/to/coingate-php/Init.php');
 ```
 
 ## Getting Started

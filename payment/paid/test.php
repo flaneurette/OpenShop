@@ -7,10 +7,10 @@
 	
 	// exit;
 	
-	include("../../resources/php/header.inc.php");
-	include("../../resources/php/class.Session.php");
-	include("../../resources/php/class.SecureMail.php");
-	include("../../class.Shop.php");
+	include("../../resources/PHP/Header.inc.php");
+	include("../../resources/PHP/Class.Session.php");
+	include("../../resources/PHP/Class.SecureMail.php");
+	include("../../Class.Shop.php");
 	
 	$shop = new Shop();
 
