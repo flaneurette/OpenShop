@@ -7,11 +7,11 @@ class Logging {
 		$this->init($params);
 	}
 	
-	/**
+     /**
 	* Initializes object.
 	* @param array $params
 	* @throws Exception
-	*/	
+      */	
 	
     public function init($params)
     {
