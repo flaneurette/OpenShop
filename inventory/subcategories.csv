@@ -1,6 +1,0 @@
-sub.category.cat.id,sub.category.order,sub.category.sub.id,sub.category.title,sub.category.description,sub.category.short.text,sub.category.long.text,sub.category.url,sub.category.tags,sub.category.image.header,sub.category.image.main,sub.category.image.left,sub.category.image.right,sub.category.status,sub.category.meta.title,sub.category.meta.description
-1,1,1,myproduct,my shop product,index,,,,,,,,,,
-2,2,1,rings,jewelry,jewelry,,,,,,,,,,
-2,2,2,necklaces,jewelry,jewelry,,,,,,,,,,
-3,3,1,men,watches,watches,,,,,,,,,,
-3,3,2,woman,watches,watches,,,,,,,,,,
