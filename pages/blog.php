@@ -1,11 +1,13 @@
 <?php
 
-	include("../resources/php/header.inc.php");
-	include("../resources/php/class.Shop.php");
+	include("../resources/PHP/Header.inc.php");
+	include("../resources/PHP/Class.Shop.php");
+	include("../core/Cryptography.php");
 	
-	$shop  = new Shop();
+	$shop  		  = new Shop();
+	$cryptography = new Cryptography();
 	
-	$token = $shop->getToken();
+	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
 	
 	if(isset($_GET['cat'])) {
@@ -41,7 +43,7 @@
 <body>
 
 <?php
-include("../resources/php/header.php");
+include("../resources/PHP/Header.php");
 ?>
 
 <div id="wrapper">
@@ -148,7 +150,7 @@ include("../resources/php/header.php");
 </div>
 
 <?php
-include("../resources/php/footer.php");
+include("../resources/PHP/Footer.php");
 ?>
 </body>
 </html>

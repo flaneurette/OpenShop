@@ -1,7 +1,7 @@
 <?php
 
-	include("../resources/php/header.inc.php");
-	include("../resources/php/class.Shop.php");
+	include("../resources/PHP/Header.inc.php");
+	include("../resources/PHP/Class.Shop.php");
 		
 	$shop  = new Shop();
 		
