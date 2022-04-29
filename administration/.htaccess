@@ -1,0 +1,7 @@
+AuthType Basic
+AuthName "OpenShop Administration"
+AuthUserFile C:/xampp/htdocs/OpenShop/administration/.htpasswd
+Require valid-user
+Order Deny,Allow
+Deny from all
+Allow from ::1
