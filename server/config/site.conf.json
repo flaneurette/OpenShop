@@ -2,7 +2,7 @@
     {
         "site.url": "https://localhost",
         "site.domain": "https://localhost",
-        "site.email": "info@mystryl.art",
+        "site.email": "info@localhost",
         "site.canonical": "OpenShop",
         "site.cdn": "",
         "site.charset": "utf-8",
