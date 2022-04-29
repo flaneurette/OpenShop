@@ -25,9 +25,11 @@
 	/* There is no need in editing this file.
 	*/
 
-	include("resources/php/class.Shop.php");
+	include("resources/PHP/Class.Shop.php");
+	include("core/Cryptography.php");
 	
 	$shop = new Shop();
+	$cryptography = new Cryptography();
 	
 	$versioning = PHP_VERSION_ID;
 	$error = [];
@@ -88,7 +90,7 @@
 	if(isset($_SESSION['nonce'])) {
 		$nonce = $shop->sanitize($_SESSION['nonce'],'alphanum');
 		} else {
-		$nonce = $shop->pseudoNonce();
+		$nonce = $cryptography->pseudoNonce();
 		$_SESSION['nonce'] = $shop->sanitize($nonce,'alphanum');
 	}
 
@@ -272,7 +274,7 @@
 			}
 
 			$session = fopen("administration/session.ses", "rw+") or die("<div class=\"installer-message\">Unable to open administration/session.ses. Cannot continue installation.</div>");
-			$tmp_nonce = $shop->getToken();
+			$tmp_nonce = $cryptography->getToken();
 			
 			$ip = $shop->sanitize($_SERVER['REMOTE_ADDR'],'field');
 			$install_nonce = sha1($ip . PHP_VERSION_ID . $tmp_nonce);
@@ -283,7 +285,7 @@
 				fclose($session);
 				die("<div class=\"installer-message\">Unable to continue installation. Reason: installer has been run before, or is in use by another user. For security reasons, we cannot have more than one installer running at once or an installation that has already been completed. If this is in error, empty <a href=\"administration/session.ses\">session.ses</a> manually and run the installer again.</div>");
 				} else {
-				$tmp_nonce = $shop->getToken();
+				$tmp_nonce = $cryptography->getToken();
 				$install_nonce = 'OpenShop-INSTALL-ID:' . sha1($_SERVER['REMOTE_ADDR'] . PHP_VERSION_ID . $tmp_nonce) . '-IP:' . sha1($ip  . PHP_VERSION_ID . $tmp_nonce);
 				fwrite($session, $install_nonce);
 				fclose($session);
@@ -451,26 +453,26 @@ RewriteCond %{HTTPS} !on
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI}
 
 # product single item
-RewriteRule ^category/(.*)/(.*)/(item)/(.*)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&subcat=$2&product=$5&productid=$6&page=$7 [NC,L]
-RewriteRule ^category/(.*)/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&subcat=$2&product=$5&productid=$6 [NC,L]
+RewriteRule ^category/(.*)/(.*)/(item)/(.*)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&subcat=$2&product=$5&productid=$6&page=$7 [NC,L]
+RewriteRule ^category/(.*)/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&subcat=$2&product=$5&productid=$6 [NC,L]
 
-RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&product=$4&productid=$5&page=$6 [NC,L]
-RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&product=$4&productid=$5&page=$6 [NC,L]
-RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&product=$4&productid=$5 [NC,L]
+RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5&page=$6 [NC,L]
+RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5&page=$6 [NC,L]
+RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5 [NC,L]
 
 # products index
-RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&product=$4&productid=$5&productid=$6 [NC,L]
-RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/product.php?cat=$1&product=$4&productid=$5 [NC,L]
+RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5&productid=$6 [NC,L]
+RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5 [NC,L]
 
 # single cat pag.
-RewriteRule ^category/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/category.php?cat=$1&page=$2 [NC,L]
+RewriteRule ^category/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&page=$2 [NC,L]
 # single cat
-RewriteRule ^category/(.*)/$ /'.$ts_shop_folder.'/instance/category.php?cat=$1 [NC,L]
+RewriteRule ^category/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1 [NC,L]
 
 # subcat pag.
-RewriteRule ^subcategory/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/category.php?cat=$1&subcat=$2&page=$3 [NC,L]
+RewriteRule ^subcategory/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&subcat=$2&page=$3 [NC,L]
 # subcat
-RewriteRule ^subcategory/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/category.php?cat=$1&subcat=$2 [NC,L]
+RewriteRule ^subcategory/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&subcat=$2 [NC,L]
 
 RewriteRule ^blog/$ /'.$ts_shop_folder.'/pages/blog.php  [NC,L]
 RewriteRule ^articles/$ /'.$ts_shop_folder.'/pages/articles.php  [NC,L]
@@ -486,8 +488,8 @@ RewriteRule ^'.$ts_shop_folder.'/blog/(.*)/(.*)/$ /'.$ts_shop_folder.'/pages/blo
 RewriteRule ^'.$ts_shop_folder.'/pages/(.*)/(.*)/$ /'.$ts_shop_folder.'/pages/page.php?pageid=$1&pagetitle=$2  [NC,L]
 RewriteRule ^'.$ts_shop_folder.'/articles/(.*)/(.*)/$ /'.$ts_shop_folder.'/pages/articles.php?articleid=$1&articletitle=$2  [NC,L]
 
-RewriteRule ^search/(.*)$ /'.$ts_shop_folder.'/instance/search.php [NC,L]
-RewriteRule ^refine/(.*)$ /'.$ts_shop_folder.'/instance/refine.php [NC,L]
+RewriteRule ^search/(.*)$ /'.$ts_shop_folder.'/instance/Search.php [NC,L]
+RewriteRule ^refine/(.*)$ /'.$ts_shop_folder.'/instance/Refine.php [NC,L]
 
 RewriteRule ^bargain/(.*):(.*)$ /'.$ts_shop_folder.'/instance/pricebar.php?minprice=$1&maxprice=$2 [NC,L]
 
@@ -496,27 +498,27 @@ RewriteRule ^offline/(.*)$ /'.$ts_shop_folder.'/pages/shop-error.php?reason=2 [N
 RewriteRule ^closed/(.*)$ /'.$ts_shop_folder.'/pages/shop-error.php?reason=3 [NC,L]
 
 # /query/rnd/action/code/
-RewriteRule ^query/(.*)/(.*)/(.*)/$ instance/query.php?action=$2&code=$3  [NC,L]
+RewriteRule ^query/(.*)/(.*)/(.*)/$ instance/Query.php?action=$2&code=$3  [NC,L]
 
 # /wishlist/rnd/action/product/tr/
-RewriteRule ^wishlist/(.*)/(.*)/(.*)/(.*)/$ instance/query.php?action=$2&product=$3&tr=$4  [NC,L]
+RewriteRule ^wishlist/(.*)/(.*)/(.*)/(.*)/$ instance/Query.php?action=$2&product=$3&tr=$4  [NC,L]
 
 # /cart/action/rnd/product/
 # /cart/addtocart/rnd/id/
 
-RewriteRule ^cart/$ instance/cart.php [NC,L]
+RewriteRule ^cart/$ instance/Cart.php [NC,L]
 
-RewriteRule ^cart/checkout/$ instance/checkout.php [NC,L]
-RewriteRule ^'.$ts_shop_folder.'/cart/checkout/$ /instance/checkout.php [NC,L]
+RewriteRule ^cart/checkout/$ instance/Checkout.php [NC,L]
+RewriteRule ^'.$ts_shop_folder.'/cart/checkout/$ /instance/Checkout.php [NC,L]
 
-RewriteRule ^cart/cancel/$ instance/query.php?action=cancel [NC,L]
-RewriteRule ^cart/paid/$ instance/query.php?action=payed [NC,L]
-RewriteRule ^'.$ts_shop_folder.'/cart/paid/$ /instance/query.php?action=payed [NC,L]
-RewriteRule ^cart/ipn/$ instance/query.php?action=ipn [NC,L]
-RewriteRule ^'.$ts_shop_folder.'/cart/delete/(.*)/$ /instance/query.php [NC,L]
-RewriteRule ^'.$ts_shop_folder.'/cart/update/(.*)/$ /instance/query.php?action=$1 [NC,L]
-RewriteRule ^cart/(.*)/(.*)/$ instance/query.php?action=$1 [NC,L]
-RewriteRule ^'.$ts_shop_folder.'/cart/(.*)/(.*)/$ /instance/query.php?action=$1 [NC,L]
+RewriteRule ^cart/cancel/$ instance/Query.php?action=cancel [NC,L]
+RewriteRule ^cart/paid/$ instance/Query.php?action=payed [NC,L]
+RewriteRule ^'.$ts_shop_folder.'/cart/paid/$ /instance/Query.php?action=payed [NC,L]
+RewriteRule ^cart/ipn/$ instance/Query.php?action=ipn [NC,L]
+RewriteRule ^'.$ts_shop_folder.'/cart/delete/(.*)/$ /instance/Query.php [NC,L]
+RewriteRule ^'.$ts_shop_folder.'/cart/update/(.*)/$ /instance/Query.php?action=$1 [NC,L]
+RewriteRule ^cart/(.*)/(.*)/$ instance/Query.php?action=$1 [NC,L]
+RewriteRule ^'.$ts_shop_folder.'/cart/(.*)/(.*)/$ /instance/Query.php?action=$1 [NC,L]
 
 # Webapplication firewall.
 
@@ -635,7 +637,7 @@ Allow from '.$ip.'
 				$json[0]["site.email"] 		= $shop->sanitize($_POST['admin_email'],'url');
 
 				if($_POST['admin_encryption'] == '1') {
-					$json[0]["site.email"] = $shop->encrypt($shop->sanitize($_POST['admin_email'],'url'));
+					$json[0]["site.email"] = $cryptography->encrypt($shop->sanitize($_POST['admin_email'],'url'));
 					} else {
 					$json[0]["site.email"] = $shop->sanitize($_POST['admin_email'],'url');
 				}
