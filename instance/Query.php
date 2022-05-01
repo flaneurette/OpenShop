@@ -21,7 +21,7 @@ if(isset($_POST['token']))  {
 	if($_POST['token'] == $_SESSION['token']) {
 		// token is correct.
 		} else {
-			echo 'token is incorrect';
+		// echo 'token is incorrect';
 		exit;
 	}
 } else {
