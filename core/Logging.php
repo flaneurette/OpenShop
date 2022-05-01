@@ -2,6 +2,8 @@
 
 class Logging {
 	
+	CONST LOGGINGDIR  = "server/logging/";
+	
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
@@ -27,8 +29,8 @@ class Logging {
 		$logfile  = self::LOGGINGDIR;
 		$logfile .= $this->sanitize($dir,'alphanum') . '/log.log';		
 		
-		$remoteaddr	 	= $this->sanitize($this->remoteaddr,'log',50);
-		$useragent 		= $this->sanitize($this->useragent,'log',250);
+		$remoteaddr	 = $this->sanitize($this->remoteaddr,'log',50);
+		$useragent 	= $this->sanitize($this->useragent,'log',250);
 		$scriptname 	= $this->sanitize($this->scriptname,'log',255);
 		$querystring 	= $this->sanitize($this->querystring,'log',500);
 		
