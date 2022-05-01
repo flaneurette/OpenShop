@@ -4,11 +4,15 @@
 	include("../../resources/PHP/Class.Session.php");
 	include("../../resources/PHP/Class.SecureMail.php");
 	include("../../resources/PHP/Class.Shop.php");
+	include("../../core/Message.php");
+	include("../../core/Sanitize.php");
 	
-	$shop = new Shop();
+	$shop 	  = new Shop;
+	$session  = new Session;
+	$messages = new Message;
+	$sanitizer 	= new Sanitizer;
+		
 	$hostaddr = $shop->getbase();
-
-	$session = new Session();
 	
 	$session->sessioncheck();
 	
@@ -17,15 +21,15 @@
 		$token = $_SESSION['token'];
 		
 			if($token != $_GET['token']) {
-				$shop->message('Transaction completed, however token is incorrect. Please contact the shop owner if issues arrive through either e-mail or the contact form. N.B. The shopowner has not been notified of this error.');
-				$shop->showmessage();
+				$messages->message('Transaction completed, however token is incorrect. Please contact the shop owner if issues arrive through either e-mail or the contact form. N.B. The shopowner has not been notified of this error.');
+				$messages->showmessage();
 				exit;
 			}
 	
 		} else {
 			
-		$shop->message('Transaction completed, however token is incomplete. Please contact the shop owner if issues arrive through either e-mail or the contact form. N.B. The shopowner has not been notified of this error.');
-		$shop->showmessage();
+		$messages->message('Transaction completed, however token is incomplete. Please contact the shop owner if issues arrive through either e-mail or the contact form. N.B. The shopowner has not been notified of this error.');
+		$messages->showmessage();
 		exit;
 	}
 
@@ -71,7 +75,7 @@
 	}
 
 	$sitecurrency = $shop->getsitecurrency('../../server/config/site.conf.json','../../server/config/currencies.conf.json');
-	$shippingcountry = $shop->sanitize($_SESSION['shipping_country'],'encode');
+	$shippingcountry = $sanitizer->sanitize($_SESSION['shipping_country'],'encode');
 	$siteconf = $shop->load_json("../../server/config/shipping.conf.json");
 	$countryprice = $shop->getcountryprice($siteconf,$shippingcountry);
 	
@@ -92,7 +96,7 @@
 		if(strlen($result["site.email"]) > 64) {
 			$email = $shop->decrypt($result["site.email"]);
 			} else {
-			$email = $shop->sanitize($result["site.email"],'email');
+			$email = $sanitizer->sanitize($result["site.email"],'email');
 		}
 	}
 	
@@ -101,7 +105,7 @@
 	
 	if($result["site.title"] != '') {
 		if(strlen($result["site.title"]) > 10) {
-			$shopname = $shop->sanitize($result["site.title"],'unicode');
+			$shopname = $sanitizer->sanitize($result["site.title"],'unicode');
 			} else {
 			$shopname = 'Webshop owner';
 		}
@@ -196,11 +200,11 @@
 							}
 								
 							if($value[$k][0] == 'product.description') {
-								$productdesc = $shop->sanitize($value[$k][1],'encode');	
+								$productdesc = $sanitizer->sanitize($value[$k][1],'encode');	
 							}
 
 							if($value[$k][0] == 'product.title') {
-								$producttitle = $shop->sanitize($value[$k][1],'encode');	
+								$producttitle = $sanitizer->sanitize($value[$k][1],'encode');	
 							}
 
 						}

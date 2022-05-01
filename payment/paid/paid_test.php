@@ -4,8 +4,10 @@
 	include("../../resources/PHP/Class.Session.php");
 	include("../../resources/PHP/Class.SecureMail.php");
 	include("../../Class.Shop.php");
+	include("../../core/Sanitize.php");
 	
-	$shop = new Shop();
+	$shop = new Shop;
+	$sanitizer 	= new Sanitizer;
 	
 	$hostaddr = $shop->getbase();
 	
@@ -31,7 +33,7 @@
 	$shop->invoiceid('set',$invoiceid+1);
 
 	$sitecurrency = $shop->getsitecurrency('../../server/config/site.conf.json','../../server/config/currencies.conf.json');
-	$shippingcountry = $shop->sanitize('Germany','encode');
+	$shippingcountry = $sanitizer->sanitize('Germany','encode');
 	$siteconf = $shop->load_json("../../server/config/shipping.conf.json");
 	$countryprice = $shop->getcountryprice($siteconf,$shippingcountry);
 	
@@ -52,7 +54,7 @@
 		if(strlen($result["site.email"]) > 64) {
 			$email = $shop->decrypt($result["site.email"]);
 			} else {
-			$email = $shop->sanitize($result["site.email"],'email');
+			$email = $sanitizer->sanitize($result["site.email"],'email');
 		}
 	}
 	
@@ -63,7 +65,7 @@
 	
 	if($result["site.title"] != '') {
 		if(strlen($result["site.title"]) > 10) {
-			$shopname = $shop->sanitize($result["site.title"],'unicode');
+			$shopname = $sanitizer->sanitize($result["site.title"],'unicode');
 			} else {
 			$shopname = 'Webshop owner';
 		}

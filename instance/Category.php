@@ -4,8 +4,9 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	
-	$shop  		  = new Shop();
-	$cryptography = new Cryptography();
+	$shop  		  = new Shop;
+	$cryptography = new Cryptography;
+	$sanitizer    = new Sanitizer;
 	
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];
@@ -15,12 +16,12 @@
 	}
 	
 	if(isset($_GET['cat'])) {
-		$cat   = str_replace('-',' ',$shop->sanitize($_GET['cat'],'cat'));
+		$cat   = str_replace('-',' ',$sanitizer->sanitize($_GET['cat'],'cat'));
 		$catid = $shop->getcatId($cat,$subcat=false);
 	}
 	
 	if(isset($_GET['subcat'])) {
-		$subcat   = str_replace('-',' ',$shop->sanitize($_GET['subcat'],'cat'));
+		$subcat   = str_replace('-',' ',$sanitizer->sanitize($_GET['subcat'],'cat'));
 		$subcatid = $shop->getcatId($cat,$subcat);
 	}
 ?>

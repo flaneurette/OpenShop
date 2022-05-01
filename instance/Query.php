@@ -2,14 +2,16 @@
 
 include("../resources/PHP/Header.inc.php");
 include("../resources/PHP/Class.Session.php");
+include("../core/Sanitize.php");
 
-$session = new Session();
+$session 	= new Session;
+$sanitizer 	= new Sanitizer;
 
 if(isset($shop)) {
 	$host = $shop->gethost("../server/config/site.conf.json");
 	} else {
 	require("../resources/PHP/Class.Shop.php");
-	$shop  = new Shop();
+	$shop  = new Shop;
 	$host 		= $shop->gethost("../server/config/site.conf.json");
 	$host_path 	= $shop->gethost("../server/config/site.conf.json",true);
 }
@@ -45,14 +47,14 @@ if(isset($_GET['action'])) {
 	
 	if(preg_match("/[a-zA-Z]/i",$action)) {
 			
-		$action = $shop->sanitize($action,'alpha');
+		$action = $sanitizer->sanitize($action,'alpha');
 		
 		switch($action) {
 			
 				case 'prepayment':
 				
 				if(!isset($_SESSION['email'])) {
-					$_SESSION['email'] = $shop->sanitize(base64_decode($_POST['email']),'email');
+					$_SESSION['email'] = $sanitizer->sanitize(base64_decode($_POST['email']),'email');
 				}
 				
 				echo "1";
@@ -68,7 +70,7 @@ if(isset($_GET['action'])) {
 				$result_title = $shop->getasetting($siteconf_admin,'site.title');
 				$result_domain = $shop->getasetting($siteconf_admin,'site.domain');
 			
-				$shopname 	= $shop->sanitize($result_title["site.title"],'unicode');
+				$shopname 	= $sanitizer->sanitize($result_title["site.title"],'unicode');
 				$shopdomain = $result_domain["site.domain"];
 				
 				// site.email is also used as 'from' e-mail address, unless you change it...
@@ -77,7 +79,7 @@ if(isset($_GET['action'])) {
 					if(strlen($result_admin["site.email"]) > 64) {
 						$email_from = $shop->decrypt($result_admin["site.email"]);
 						} else {
-						$email_from = $shop->sanitize($result_admin["site.email"],'email');
+						$email_from = $sanitizer->sanitize($result_admin["site.email"],'email');
 					}
 				}
 
@@ -95,7 +97,7 @@ if(isset($_GET['action'])) {
 
 					if(isset($_SESSION['email'])) {
 						
-						$email = $shop->sanitize($_SESSION['email'],'email');
+						$email = $sanitizer->sanitize($_SESSION['email'],'email');
 						
 							require("../resources/PHP/Class.SecureMail.php");
 							
@@ -123,7 +125,7 @@ if(isset($_GET['action'])) {
 				case 'paid':
 				
 				// update stock here.
-				header('Location: '.$host.'/payment/paid/index.php?token='.$shop->sanitize($_SESSION['token'],'alphanum'), true, 302);
+				header('Location: '.$host.'/payment/paid/index.php?token='.$sanitizer->sanitize($_SESSION['token'],'alphanum'), true, 302);
 				exit;
 				
 				break;	
@@ -141,34 +143,34 @@ if(isset($_POST['action'])) {
 	
 	if(preg_match("/[a-zA-Z]/i",$action)) {
 		
-		$action = $shop->sanitize($action,'alpha');
+		$action = $sanitizer->sanitize($action,'alpha');
 		
 		switch($action) {
 			
 			case 'addtocart':
 			
-				$id  = (int)$shop->sanitize($_POST['id'],'num');
-				$qty = (int)$shop->sanitize($_POST['qty'],'num');
+				$id  = (int)$sanitizer->sanitize($_POST['id'],'num');
+				$qty = (int)$sanitizer->sanitize($_POST['qty'],'num');
 				
 				$variants = [];
 				
 				if(isset($_POST['vrs1'])) {
 					if($_POST['vrs1'] != 'undefined') {
-						$vrs1 = $shop->sanitize($_POST['vrs1'],'alphanum');
+						$vrs1 = $sanitizer->sanitize($_POST['vrs1'],'alphanum');
 						array_push($variants,$vrs1);
 					} else {}
 				}
 
 				if(isset($_POST['vrs2'])) {	
 					if($_POST['vrs2'] != 'undefined') {
-						$vrs2 = $shop->sanitize($_POST['vrs2'],'alphanum');
+						$vrs2 = $sanitizer->sanitize($_POST['vrs2'],'alphanum');
 						array_push($variants,$vrs2);
 					} else {}
 				}
 
 				if(isset($_POST['vrs3'])) {
 					if($_POST['vrs3'] != 'undefined') {
-						$vrs3 = $shop->sanitize($_POST['vrs3'],'alphanum');
+						$vrs3 = $sanitizer->sanitize($_POST['vrs3'],'alphanum');
 						array_push($variants,$vrs3);
 					} else {}
 				}
@@ -194,19 +196,19 @@ if(isset($_POST['action'])) {
 
 				if(isset($_POST['id'])) {	
 					if($_POST['id'] != 'undefined') {
-						$divid  = (int)$shop->sanitize($_POST['id'],'unicode');
+						$divid  = (int)$sanitizer->sanitize($_POST['id'],'unicode');
 					}
 				}
 				
 				if(isset($_POST['productid'])) {	
 					if($_POST['productid'] != 'undefined') {
-						$id  = (int)$shop->sanitize($_POST['productid'],'num');
+						$id  = (int)$sanitizer->sanitize($_POST['productid'],'num');
 					}
 				}		
 				
 				if(isset($_POST['box'])) {	
 					if($_POST['box'] != false) {
-						$variantselected = strtolower($shop->sanitize($_POST['box'],'alphanum')); 
+						$variantselected = strtolower($sanitizer->sanitize($_POST['box'],'alphanum')); 
 						} else {
 						$variantselected = 'variant1';
 					}
@@ -250,7 +252,7 @@ if(isset($_POST['action'])) {
 
 							if($iv[$i]['product.status'] == '1') {
 								if($_POST['bid']) { 
-									$bid = $shop->sanitize(base64_decode($_POST['bid']),'alphanum');
+									$bid = $sanitizer->sanitize(base64_decode($_POST['bid']),'alphanum');
 									if($bid) {
 										$key = array_search($bid,explode(',',$iv[$i][$variantselected]));
 									}
@@ -275,7 +277,7 @@ if(isset($_POST['action'])) {
 			
 			case 'deletefromcart':
 			
-				$id = (int)$shop->sanitize($_POST['id'],'num');
+				$id = (int)$sanitizer->sanitize($_POST['id'],'num');
 				
 				if($id) {
 					$_SESSION['cart'] = $session->deletefromcart($id);
@@ -289,8 +291,8 @@ if(isset($_POST['action'])) {
 			
 			case 'updatecart':
 			
-				$id = (int)$shop->sanitize($_POST['id'],'num');
-				$qty = (int)$shop->sanitize($_POST['qty'],'num');
+				$id = (int)$sanitizer->sanitize($_POST['id'],'num');
+				$qty = (int)$sanitizer->sanitize($_POST['qty'],'num');
 				
 				if($id) {
 					$_SESSION['cart'] = $session->updatecart($id,$qty);
@@ -303,19 +305,19 @@ if(isset($_POST['action'])) {
 			
 			case 'emptycart':
 				
-				$cartid = (int)$shop->sanitize($_POST['cartid'],'num');
+				$cartid = (int)$sanitizer->sanitize($_POST['cartid'],'num');
 				$_SESSION['cart'] = [];
 				echo "Cart was emptied.";
 				
 			break;			
 			
 			case 'voucher':
-				$code = $shop->sanitize($_POST['code'],'alpha');
+				$code = $sanitizer->sanitize($_POST['code'],'alpha');
 			break;
 			
 			case 'wishlist':
-				$product = $shop->sanitize($_POST['product'],'alpha'); 
-				$tr 	 = $shop->sanitize($_POST['tr'],'alpha'); 
+				$product = $sanitizer->sanitize($_POST['product'],'alpha'); 
+				$tr 	 = $sanitizer->sanitize($_POST['tr'],'alpha'); 
 			break;	
 			
 			case 'query':

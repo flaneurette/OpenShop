@@ -3,7 +3,7 @@
 	include("../resources/PHP/Header.inc.php");
 	include("../resources/PHP/Class.Shop.php");
 		
-	$shop  = new Shop();
+	$shop  = new Shop;
 		
 	$reason = (int)$_REQUEST['reason'];
 

@@ -5,9 +5,10 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	
-	$shop  		  = new Shop();
+	$shop  		  = new Shop;
 	$cryptography = new Cryptography();
-	$session 	  = new Session();
+	$session 	  = new Session;
+	$sanitizer 	  = new Sanitizer;
 	
 	$session->sessioncheck();
 	
@@ -130,11 +131,11 @@ include("../resources/PHP/Header.php");
 							}
 								
 							if($value[$k][0] == 'product.description') {
-								$productdesc = $shop->sanitize($value[$k][1],'encode');	
+								$productdesc = $sanitizer->sanitize($value[$k][1],'encode');	
 							}
 
 							if($value[$k][0] == 'product.title') {
-								$producttitle = $shop->sanitize($value[$k][1],'encode');	
+								$producttitle = $sanitizer->sanitize($value[$k][1],'encode');	
 							}
 
 						}

@@ -2,7 +2,7 @@
 
 include("../resources/PHP/Header.inc.php");
 include("../resources/PHP/Class.Shop.php");
-$shop  = new Shop();
+$shop  = new Shop;
 
 if(isset($_GET['streamtoken']))  {
 	if($_GET['streamtoken'] == $_SESSION['streamtoken']) {

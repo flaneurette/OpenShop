@@ -1,13 +1,16 @@
 <?php
 
 	error_reporting(0);
-
+	
 	include("../resources/PHP/Header.inc.php");
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
+	include("../core/Formatter.php");
 	
-	$shop  		  = new Shop();
-	$cryptography = new Cryptography();
+	$shop  		  = new Shop;
+	$cryptography = new Cryptography;
+	$formatter 	  = new Formatter;
+	$sanitizer	  = new Sanitizer;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
@@ -16,13 +19,13 @@
 	$productid = false;
 	
 	if(isset($_REQUEST['cat'])) {
-		$cat 		= $shop->sanitize($_REQUEST['cat'],'cat');
-		$product 	= $shop->sanitize($_REQUEST['product'],'cat');
-		$productid	= (int)$shop->sanitize($_REQUEST['productid'],'num');
-		$page 		= $shop->sanitize($_REQUEST['page'],'num');	
+		$cat 		= $sanitizer->sanitize($_REQUEST['cat'],'cat');
+		$product 	= $sanitizer->sanitize($_REQUEST['product'],'cat');
+		$productid	= (int)$sanitizer->sanitize($_REQUEST['productid'],'num');
+		$page 		= $sanitizer->sanitize($_REQUEST['page'],'num');	
 		
 		if(isset($_REQUEST['subcat'])) {
-			$scat 		= $shop->sanitize($_REQUEST['subcat'],'cat');
+			$scat 		= $sanitizer->sanitize($_REQUEST['subcat'],'cat');
 			$subcat  	= $shop->getcatId($cat,$scat);
 		}
 		
@@ -112,56 +115,56 @@ include("../resources/PHP/Header.php");
 							if($iv[$i]['product.status'] == '1') {
 
 
-									$shop->sanitize($iv[$i]["product.id"],'trim') ? $product_id = $shop->cleaninput($iv[$i]["product.id"]) : $product_id = false; 
-									$shop->sanitize($iv[$i]["product.title"],'trim') ? $product_title = $shop->cleaninput($iv[$i]["product.title"]) : $product_title = false; 
-									$shop->sanitize($iv[$i]["product.description"],'trim') ? $product_description = $shop->cleaninput($iv[$i]["product.description"]) : $product_description = false; 
-									$shop->sanitize($iv[$i]["product.category"],'trim') ? $product_category = $shop->cleaninput($iv[$i]["product.category"]) : $product_category = false; 
-									$shop->sanitize($iv[$i]["product.stock"],'trim') ? $product_stock= $shop->cleaninput($iv[$i]["product.stock"]) : $product_stock = false; 
-									$shop->sanitize($iv[$i]["product.price"],'trim') ? $product_price = $shop->cleaninput($iv[$i]["product.price"]) : $product_price = false; 
-									$shop->sanitize($iv[$i]["product.image"],'trim') ? $product_image = $shop->cleaninput($iv[$i]["product.image"]) : $product_image = false; 
-									$shop->sanitize($iv[$i]["product.catno"],'trim') ? $product_catno = $shop->cleaninput($iv[$i]["product.catno"]) : $product_catno = false; 
-									$shop->sanitize($iv[$i]["product.stock"],'trim') ? $product_stock = $shop->cleaninput($iv[$i]["product.stock"]) : $product_stock = false; 
-									$shop->sanitize($iv[$i]["product.quantity"],'trim') ? $product_quantity = $shop->cleaninput($iv[$i]["product.quantity"]) : $product_quantity = false; 
-									$shop->sanitize($iv[$i]["product.format"],'trim') ? $product_format = $shop->cleaninput($iv[$i]["product.format"]) : $product_format = false; 
-									$shop->sanitize($iv[$i]["product.type"],'trim') ? $product_type = $shop->cleaninput($iv[$i]["product.type"]) : $product_type = false; 
-									$shop->sanitize($iv[$i]["product.weight"],'trim') ? $product_weight = $shop->cleaninput($iv[$i]["product.weight"]) : $product_weight = false; 
-									$shop->sanitize($iv[$i]["product.condition"],'trim') ? $product_condition = $shop->cleaninput($iv[$i]["product.condition"]) : $product_condition = false; 
-									$shop->sanitize($iv[$i]["product.ean"],'trim') ? $product_ean = $shop->cleaninput($iv[$i]["product.ean"]) : $product_ean = false; 
-									$shop->sanitize($iv[$i]["product.sku"],'trim') ? $product_sku = $shop->cleaninput($iv[$i]["product.sku"]) : $product_sku = false; 
-									$shop->sanitize($iv[$i]["product.vendor"],'trim') ? $product_vendor = $shop->cleaninput($iv[$i]["product.vendor"]) : $product_vendor = false; 
-									$shop->sanitize($iv[$i]["product.price_min"],'trim') ? $product_price_min= $shop->cleaninput($iv[$i]["product.price_min"]) : $product_price_min = false; 
-									$shop->sanitize($iv[$i]["product.price_max"],'trim') ? $product_price_max = $shop->cleaninput($iv[$i]["product.price_max"]) : $product_price_max = false; 
-									$shop->sanitize($iv[$i]["product.price_varies"],'trim') ? $product_price_varies = $shop->cleaninput($iv[$i]["product.price_varies"]) : $product_price_varies = false; 
-									$shop->sanitize($iv[$i]["product.date"],'trim') ? $product_date = $shop->cleaninput($iv[$i]["product.date"]) : $product_date = false; 
-									$shop->sanitize($iv[$i]["product.url"],'trim') ? $product_url = $shop->cleaninput($iv[$i]["product.url"]) : $product_url = false; 
-									$shop->sanitize($iv[$i]["product.tags"],'trim') ? $product_tags = $shop->cleaninput($iv[$i]["product.tags"]) : $product_tags = false; 
-									$shop->sanitize($iv[$i]["product.images"],'trim') ? $product_images = $shop->cleaninput($iv[$i]["product.images"]) : $product_images = false; 
-									$shop->sanitize($iv[$i]["product.featured"],'trim') ? $product_featured = $shop->cleaninput($iv[$i]["product.featured"]) : $product_featured = false; 
-									$shop->sanitize($iv[$i]["product.featured_location"],'trim') ? $product_featured_location = $shop->cleaninput($iv[$i]["product.featured_location"]) : $product_featured_location = false; 
-									$shop->sanitize($iv[$i]["product.featured_carousel"],'trim') ? $product_featured_carousel = $shop->cleaninput($iv[$i]["product.featured_carousel"]) : $product_featured_carousel = false; 
-									$shop->sanitize($iv[$i]["product.featured_image"],'trim') ? $product_featured_image = $shop->cleaninput($iv[$i]["product.featured_image"]) : $product_featured_image = false; 
-									$shop->sanitize($iv[$i]["product.content"],'trim') ? $product_content = $shop->cleaninput($iv[$i]["product.content"]) : $product_content = false; 
-									$shop->sanitize($iv[$i]["product.variants"],'trim') ? $product_variants = $shop->cleaninput($iv[$i]["product.variants"]) : $product_variants = false; 
-									$shop->sanitize($iv[$i]["product.available"],'trim') ? $product_available = $shop->cleaninput($iv[$i]["product.available"]) : $product_available = false; 
-									$shop->sanitize($iv[$i]["product.selected_variant"],'trim') ? $product_selected_variant = $shop->cleaninput($iv[$i]["product.selected_variant"]) : $product_selected_variant = false; 
-									$shop->sanitize($iv[$i]["product.collections"],'trim') ? $product_collections = $shop->cleaninput($iv[$i]["product.collections"]) : $product_collections = false; 
-									$shop->sanitize($iv[$i]["product.options"],'trim') ? $product_options = $shop->cleaninput($iv[$i]["product.options"]) : $product_options = false; 
-									$shop->sanitize($iv[$i]["variant.title1"],'trim') ? $variant_title_1 = $shop->cleaninput($iv[$i]["variant.title1"]) : $variant_title_1 = false; 
-									$shop->sanitize($iv[$i]["variant.title2"],'trim') ? $variant_title_2 = $shop->cleaninput($iv[$i]["variant.title2"]) : $variant_title_2 = false; 
-									$shop->sanitize($iv[$i]["variant.title3"],'trim') ? $variant_title_3 = $shop->cleaninput($iv[$i]["variant.title3"]) : $variant_title_3 = false; 	
-									$shop->sanitize($iv[$i]["variant.image1"],'trim') ? $variant_image_1 = $shop->cleaninput($iv[$i]["variant.image1"]) : $variant_image_1 = false; 
-									$shop->sanitize($iv[$i]["variant.image2"],'trim') ? $variant_image_2 = $shop->cleaninput($iv[$i]["variant.image2"]) : $variant_image_2 = false; 
-									$shop->sanitize($iv[$i]["variant.image3"],'trim') ? $variant_image_3 = $shop->cleaninput($iv[$i]["variant.image3"]) : $variant_image_3 = false;
-									$shop->sanitize($iv[$i]["variant.option1"],'trim') ? $variant_option_1 = $shop->cleaninput($iv[$i]["variant.option1"]) : $variant_option_1 = false;
-									$shop->sanitize($iv[$i]["variant.option2"],'trim') ? $variant_option_2 = $shop->cleaninput($iv[$i]["variant.option2"]) : $variant_option_2 = false;
-									$shop->sanitize($iv[$i]["variant.option3"],'trim') ? $variant_option_3 = $shop->cleaninput($iv[$i]["variant.option3"]) : $variant_option_3 = false;
-									$shop->sanitize($iv[$i]["variant.price1"],'trim') ? $variant_price_1 = $shop->cleaninput($iv[$i]["variant.price1"]) : $variant_price_1 = false;
-									$shop->sanitize($iv[$i]["variant.price2"],'trim') ? $variant_price_2 = $shop->cleaninput($iv[$i]["variant.price2"]) : $variant_price_2 = false;
-									$shop->sanitize($iv[$i]["variant.price3"],'trim') ? $variant_price_3 = $shop->cleaninput($iv[$i]["variant.price3"]) : $variant_price_3 = false;
+									$sanitizer->sanitize($iv[$i]["product.id"],'trim') ? $product_id = $shop->cleaninput($iv[$i]["product.id"]) : $product_id = false; 
+									$sanitizer->sanitize($iv[$i]["product.title"],'trim') ? $product_title = $shop->cleaninput($iv[$i]["product.title"]) : $product_title = false; 
+									$sanitizer->sanitize($iv[$i]["product.description"],'trim') ? $product_description = $shop->cleaninput($iv[$i]["product.description"]) : $product_description = false; 
+									$sanitizer->sanitize($iv[$i]["product.category"],'trim') ? $product_category = $shop->cleaninput($iv[$i]["product.category"]) : $product_category = false; 
+									$sanitizer->sanitize($iv[$i]["product.stock"],'trim') ? $product_stock= $shop->cleaninput($iv[$i]["product.stock"]) : $product_stock = false; 
+									$sanitizer->sanitize($iv[$i]["product.price"],'trim') ? $product_price = $shop->cleaninput($iv[$i]["product.price"]) : $product_price = false; 
+									$sanitizer->sanitize($iv[$i]["product.image"],'trim') ? $product_image = $shop->cleaninput($iv[$i]["product.image"]) : $product_image = false; 
+									$sanitizer->sanitize($iv[$i]["product.catno"],'trim') ? $product_catno = $shop->cleaninput($iv[$i]["product.catno"]) : $product_catno = false; 
+									$sanitizer->sanitize($iv[$i]["product.stock"],'trim') ? $product_stock = $shop->cleaninput($iv[$i]["product.stock"]) : $product_stock = false; 
+									$sanitizer->sanitize($iv[$i]["product.quantity"],'trim') ? $product_quantity = $shop->cleaninput($iv[$i]["product.quantity"]) : $product_quantity = false; 
+									$sanitizer->sanitize($iv[$i]["product.format"],'trim') ? $product_format = $shop->cleaninput($iv[$i]["product.format"]) : $product_format = false; 
+									$sanitizer->sanitize($iv[$i]["product.type"],'trim') ? $product_type = $shop->cleaninput($iv[$i]["product.type"]) : $product_type = false; 
+									$sanitizer->sanitize($iv[$i]["product.weight"],'trim') ? $product_weight = $shop->cleaninput($iv[$i]["product.weight"]) : $product_weight = false; 
+									$sanitizer->sanitize($iv[$i]["product.condition"],'trim') ? $product_condition = $shop->cleaninput($iv[$i]["product.condition"]) : $product_condition = false; 
+									$sanitizer->sanitize($iv[$i]["product.ean"],'trim') ? $product_ean = $shop->cleaninput($iv[$i]["product.ean"]) : $product_ean = false; 
+									$sanitizer->sanitize($iv[$i]["product.sku"],'trim') ? $product_sku = $shop->cleaninput($iv[$i]["product.sku"]) : $product_sku = false; 
+									$sanitizer->sanitize($iv[$i]["product.vendor"],'trim') ? $product_vendor = $shop->cleaninput($iv[$i]["product.vendor"]) : $product_vendor = false; 
+									$sanitizer->sanitize($iv[$i]["product.price_min"],'trim') ? $product_price_min= $shop->cleaninput($iv[$i]["product.price_min"]) : $product_price_min = false; 
+									$sanitizer->sanitize($iv[$i]["product.price_max"],'trim') ? $product_price_max = $shop->cleaninput($iv[$i]["product.price_max"]) : $product_price_max = false; 
+									$sanitizer->sanitize($iv[$i]["product.price_varies"],'trim') ? $product_price_varies = $shop->cleaninput($iv[$i]["product.price_varies"]) : $product_price_varies = false; 
+									$sanitizer->sanitize($iv[$i]["product.date"],'trim') ? $product_date = $shop->cleaninput($iv[$i]["product.date"]) : $product_date = false; 
+									$sanitizer->sanitize($iv[$i]["product.url"],'trim') ? $product_url = $shop->cleaninput($iv[$i]["product.url"]) : $product_url = false; 
+									$sanitizer->sanitize($iv[$i]["product.tags"],'trim') ? $product_tags = $shop->cleaninput($iv[$i]["product.tags"]) : $product_tags = false; 
+									$sanitizer->sanitize($iv[$i]["product.images"],'trim') ? $product_images = $shop->cleaninput($iv[$i]["product.images"]) : $product_images = false; 
+									$sanitizer->sanitize($iv[$i]["product.featured"],'trim') ? $product_featured = $shop->cleaninput($iv[$i]["product.featured"]) : $product_featured = false; 
+									$sanitizer->sanitize($iv[$i]["product.featured_location"],'trim') ? $product_featured_location = $shop->cleaninput($iv[$i]["product.featured_location"]) : $product_featured_location = false; 
+									$sanitizer->sanitize($iv[$i]["product.featured_carousel"],'trim') ? $product_featured_carousel = $shop->cleaninput($iv[$i]["product.featured_carousel"]) : $product_featured_carousel = false; 
+									$sanitizer->sanitize($iv[$i]["product.featured_image"],'trim') ? $product_featured_image = $shop->cleaninput($iv[$i]["product.featured_image"]) : $product_featured_image = false; 
+									$sanitizer->sanitize($iv[$i]["product.content"],'trim') ? $product_content = $shop->cleaninput($iv[$i]["product.content"]) : $product_content = false; 
+									$sanitizer->sanitize($iv[$i]["product.variants"],'trim') ? $product_variants = $shop->cleaninput($iv[$i]["product.variants"]) : $product_variants = false; 
+									$sanitizer->sanitize($iv[$i]["product.available"],'trim') ? $product_available = $shop->cleaninput($iv[$i]["product.available"]) : $product_available = false; 
+									$sanitizer->sanitize($iv[$i]["product.selected_variant"],'trim') ? $product_selected_variant = $shop->cleaninput($iv[$i]["product.selected_variant"]) : $product_selected_variant = false; 
+									$sanitizer->sanitize($iv[$i]["product.collections"],'trim') ? $product_collections = $shop->cleaninput($iv[$i]["product.collections"]) : $product_collections = false; 
+									$sanitizer->sanitize($iv[$i]["product.options"],'trim') ? $product_options = $shop->cleaninput($iv[$i]["product.options"]) : $product_options = false; 
+									$sanitizer->sanitize($iv[$i]["variant.title1"],'trim') ? $variant_title_1 = $shop->cleaninput($iv[$i]["variant.title1"]) : $variant_title_1 = false; 
+									$sanitizer->sanitize($iv[$i]["variant.title2"],'trim') ? $variant_title_2 = $shop->cleaninput($iv[$i]["variant.title2"]) : $variant_title_2 = false; 
+									$sanitizer->sanitize($iv[$i]["variant.title3"],'trim') ? $variant_title_3 = $shop->cleaninput($iv[$i]["variant.title3"]) : $variant_title_3 = false; 	
+									$sanitizer->sanitize($iv[$i]["variant.image1"],'trim') ? $variant_image_1 = $shop->cleaninput($iv[$i]["variant.image1"]) : $variant_image_1 = false; 
+									$sanitizer->sanitize($iv[$i]["variant.image2"],'trim') ? $variant_image_2 = $shop->cleaninput($iv[$i]["variant.image2"]) : $variant_image_2 = false; 
+									$sanitizer->sanitize($iv[$i]["variant.image3"],'trim') ? $variant_image_3 = $shop->cleaninput($iv[$i]["variant.image3"]) : $variant_image_3 = false;
+									$sanitizer->sanitize($iv[$i]["variant.option1"],'trim') ? $variant_option_1 = $shop->cleaninput($iv[$i]["variant.option1"]) : $variant_option_1 = false;
+									$sanitizer->sanitize($iv[$i]["variant.option2"],'trim') ? $variant_option_2 = $shop->cleaninput($iv[$i]["variant.option2"]) : $variant_option_2 = false;
+									$sanitizer->sanitize($iv[$i]["variant.option3"],'trim') ? $variant_option_3 = $shop->cleaninput($iv[$i]["variant.option3"]) : $variant_option_3 = false;
+									$sanitizer->sanitize($iv[$i]["variant.price1"],'trim') ? $variant_price_1 = $shop->cleaninput($iv[$i]["variant.price1"]) : $variant_price_1 = false;
+									$sanitizer->sanitize($iv[$i]["variant.price2"],'trim') ? $variant_price_2 = $shop->cleaninput($iv[$i]["variant.price2"]) : $variant_price_2 = false;
+									$sanitizer->sanitize($iv[$i]["variant.price3"],'trim') ? $variant_price_3 = $shop->cleaninput($iv[$i]["variant.price3"]) : $variant_price_3 = false;
 
-									$shop->sanitize($iv[$i]["shipping.price"],'trim') ? $shipping_fixed_price = $shop->cleaninput($iv[$i]["shipping.price"]) : $shipping_fixed_price = false;
-									$shop->sanitize($iv[$i]["shipping.flatfee"],'trim') ? $shipping_flat_fee = $shop->cleaninput($iv[$i]["shipping.flatfee"]) : $shipping_flat_fee = false;
-									$shop->sanitize($iv[$i]["shipping.locations"],'trim') ? $shipping_locations = $shop->cleaninput($iv[$i]["shipping.locations"]) : $shipping_locations = false;
+									$sanitizer->sanitize($iv[$i]["shipping.price"],'trim') ? $shipping_fixed_price = $shop->cleaninput($iv[$i]["shipping.price"]) : $shipping_fixed_price = false;
+									$sanitizer->sanitize($iv[$i]["shipping.flatfee"],'trim') ? $shipping_flat_fee = $shop->cleaninput($iv[$i]["shipping.flatfee"]) : $shipping_flat_fee = false;
+									$sanitizer->sanitize($iv[$i]["shipping.locations"],'trim') ? $shipping_locations = $shop->cleaninput($iv[$i]["shipping.locations"]) : $shipping_locations = false;
 
 								if(trim($iv[$i]["variant.title1"]) != "") {
 									$variant_title1			= $shop->cleaninput($iv[$i]["variant.title1"]);
@@ -217,7 +220,7 @@ include("../resources/PHP/Header.php");
 											<div class="product-image">
 												<img src="'.$base_url.$product_image.'" onmouseup="mouse(\'11\');" onmousedown="mouse(\'11\');" onrightclick="mouse(\'11\');"/>
 											</div>
-												<div class="product-description">'.$shop->formatter($product_description,'product-description').'</div>
+												<div class="product-description">'.$formatter->format($product_description,'product-description').'</div>
 												<span class="product-price" id="price-update">'.$shop->getsitecurrency('server/config/site.conf.json','server/config/currencies.conf.json').' '.$product_price.'</span>'; 
 
 												if($optionbox1 != false) { 

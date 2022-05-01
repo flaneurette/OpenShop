@@ -7,15 +7,17 @@
 	
 	$cryptography = new Cryptography();
 	
-	$shop = new Shop();
-	$session = new Session();
+	$shop = new Shop;
+	$session = new Session;
+	$messages = new Message;
+	$sanitizer 	  = new Sanitizer;
 	
 	$session->sessioncheck();
 	$addedvalue = false;
 	
 	if(!empty($_GET)) {	
-		$shop->message('Checkout page cannot be accessed this way.');
-		$shop->showmessage();
+		$messages->message('Checkout page cannot be accessed this way.');
+		$messages->showmessage();
 		exit;
 	}
 	
@@ -24,21 +26,21 @@
 		$token = $_SESSION['token'];
 		
 			if($token != $_POST['token']) {
-				$shop->message('Token is incorrect.');
-				$shop->showmessage();
+				$messages->message('Token is incorrect.');
+				$messages->showmessage();
 				exit;
 			}
 	
 		} else {
 			
-		$shop->message('Token is incorrect or not set.');
-		$shop->showmessage();
+		$messages->message('Token is incorrect or not set.');
+		$messages->showmessage();
 		exit;
 	}
 		
 	if(!isset($_POST['checkout-post'])) {	
-		$shop->message('Checkout page could not be loaded from resource and cannot be accessed this way.');
-		$shop->showmessage();
+		$messages->message('Checkout page could not be loaded from resource and cannot be accessed this way.');
+		$messages->showmessage();
 		exit;
 	}
 	
@@ -52,18 +54,18 @@
 	// echo $shop->debug($_POST);
 	
 	if(isset($_POST['payment_gateway'])) {
-		$payment_gateway = $shop->sanitize($_POST['payment_gateway'],'encode');
+		$payment_gateway = $sanitizer->sanitize($_POST['payment_gateway'],'encode');
 		} else {
 		$payment_gateway = 'PayPal';
-		$shop->message('Payment Gateway not selected, assuming and defaulting to PayPal');
-		$shop->showmessage();
+		$messages->message('Payment Gateway not selected, assuming and defaulting to PayPal');
+		$messages->showmessage();
 	}
 	
 	if(isset($_POST['shipping_country'])) {
-		$shippingcountry = $shop->sanitize($_POST['shipping_country'],'encode');
+		$shippingcountry = $sanitizer->sanitize($_POST['shipping_country'],'encode');
 		} else {
-		$shop->message('Country not selected, cannot continue to checkout!');
-		$shop->showmessage();
+		$messages->message('Country not selected, cannot continue to checkout!');
+		$messages->showmessage();
 		exit;
 	}
 	
@@ -73,7 +75,7 @@
 		$_SESSION['carbonoffset'] = $carbonvalue;
 	}
 
-	$gateway = $shop->sanitize($payment_gateway,'alphanum');
+	$gateway = $sanitizer->sanitize($payment_gateway,'alphanum');
 				
 ?>
 <!DOCTYPE html>
@@ -426,8 +428,8 @@ include("../resources/PHP/Header.php");
 			// Set session data for payment gateway page.
 			$uniqueid 	= $cryptography->uniqueID();
 			
-			$_SESSION['cartid']   	= $shop->sanitize($uniqueid,'alphanum');
-			$_SESSION['tax'] 		=  str_replace('percnt','',$shop->sanitize($totaltax_session,'alphanum'));
+			$_SESSION['cartid']   	= $sanitizer->sanitize($uniqueid,'alphanum');
+			$_SESSION['tax'] 		=  str_replace('percnt','',$sanitizer->sanitize($totaltax_session,'alphanum'));
 			$_SESSION['subtotal']   = (int) $productsum_total;
 			$_SESSION['shipping']   = (int) $totalshipping;
 			$_SESSION['totalprice'] = (int) $total;
@@ -435,7 +437,7 @@ include("../resources/PHP/Header.php");
 			
 			if(isset($_POST['email'])) {
 				// we use this for pre-payment in paypal gateway.
-				$_SESSION['email'] = $shop->sanitize($_POST['email'],'email');
+				$_SESSION['email'] = $sanitizer->sanitize($_POST['email'],'email');
 			}
 		}
 		} else {

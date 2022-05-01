@@ -12,9 +12,9 @@
 	include("../../resources/PHP/Class.SecureMail.php");
 	include("../../Class.Shop.php");
 	
-	$shop = new Shop();
+	$shop = new Shop;
 
-	$session = new Session();
+	$session = new Session;
 	
 	$session->sessioncheck();
 	

@@ -3,41 +3,45 @@
 	include("../../resources/PHP/Header.inc.php");
 	include("../../resources/PHP/Class.Session.php");
 	include("../../resources/PHP/Class.Shop.php");
+	include("../../core/Message.php");
 	
-	$session = new Session();
+	$session = new Session;
+	$messages = new Message;
+	$sanitizer 	= new Sanitizer;
+
 	$session->sessioncheck();
 	
-	$shop  	= new Shop();
+	$shop  	= new Shop;
 	
 	$shopconf = $shop->load_json("../../server/config/paypal.json");
 
 	if(strtolower($_SERVER['REQUEST_METHOD']) != 'post') {
-		$shop->message('Checkout page cannot be accessed this way.');
-		$shop->showmessage();
+		$messages->message('Checkout page cannot be accessed this way.');
+		$messages->showmessage();
 		exit;
 	}
 
 	if(!empty($_GET)) {	
-		$shop->message('Checkout page cannot be accessed this way.');
-		$shop->showmessage();
+		$messages->message('Checkout page cannot be accessed this way.');
+		$messages->showmessage();
 		exit;
 	}
 
 	if(empty($_SESSION)) {	
-		$shop->message('Checkout page cannot be accessed this way.');
-		$shop->showmessage();
+		$messages->message('Checkout page cannot be accessed this way.');
+		$messages->showmessage();
 		exit;
 	}
 	
 	if(!isset($_SESSION['token'])) {
-		$shop->message('Token is not set.');
-		$shop->showmessage();
+		$messages->message('Token is not set.');
+		$messages->showmessage();
 		exit;	
 	}
 	
 	if(!isset($_SESSION['cartid'])) {
-		$shop->message('Cart ID is not set.');
-		$shop->showmessage();
+		$messages->message('Cart ID is not set.');
+		$messages->showmessage();
 		exit;
 	}	
 	
@@ -46,25 +50,25 @@
 		$token = $_SESSION['token'];
 		
 			if($token != $_POST['token']) {
-				$shop->message('Token is incorrect.');
-				$shop->showmessage();
+				$messages->message('Token is incorrect.');
+				$messages->showmessage();
 				exit;
 			}
 	
 		} else {
 			
-		$shop->message('Token is incorrect or not set.');
-		$shop->showmessage();
+		$messages->message('Token is incorrect or not set.');
+		$messages->showmessage();
 		exit;
 	}
 	
 	if(!isset($_POST['checkout-post-gateway'])) {	
-		$shop->message('Gateway page could not be loaded from resource and cannot be accessed this way.');
-		$shop->showmessage();
+		$messages->message('Gateway page could not be loaded from resource and cannot be accessed this way.');
+		$messages->showmessage();
 		exit;
 	}
 	
-	$cartid 			= $shop->sanitize($_SESSION['cartid'],'alphanum');
+	$cartid 			= $sanitizer->sanitize($_SESSION['cartid'],'alphanum');
 	
 	$productsum_total 	= (int) $_SESSION['subtotal'];
 	$country_price 		= (int) $_SESSION['shipping'];

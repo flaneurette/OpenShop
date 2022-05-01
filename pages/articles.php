@@ -4,7 +4,7 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	
-	$shop  		  = new Shop();
+	$shop  		  = new Shop;
 	$cryptography = new Cryptography();
 	
 	$token = $cryptography->getToken();

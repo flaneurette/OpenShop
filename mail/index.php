@@ -4,8 +4,10 @@ include("../resources/PHP/Header.inc.php");
 include("../resources/PHP/Class.Session.php");
 include("../resources/PHP/Class.SecureMail.php");
 include("../resources/PHP/Class.Shop.php");
+include_once("../core/Sanitize.php");
 	
-$shop = new Shop();
+$shop 		= new Shop;
+$sanitizer 	= new Sanitizer;
 	
 $setup = new \security\forms\SecureMail();
 $token = $setup->getToken();
@@ -25,7 +27,7 @@ if($result["site.email"] != '') {
 	if(strlen($result["site.email"]) > 64) {
 		$email = $shop->decrypt($result["site.email"]);
 		} else {
-		$email = $shop->sanitize($result["site.email"],'email');
+		$email = $sanitizer->sanitize($result["site.email"],'email');
 	}
 }
 ?>

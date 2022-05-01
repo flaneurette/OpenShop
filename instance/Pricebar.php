@@ -4,13 +4,14 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	
-	$shop  		  = new Shop();
-	$cryptography = new Cryptography();
+	$shop  		  = new Shop;
+	$cryptography = new Cryptography;
+	$sanitizer 	  = new Sanitizer;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
 	
-	$cat   = $shop->sanitize('index','cat');
+	$cat   = $sanitizer->sanitize('index','cat');
 	$catid = $shop->getcatId($cat,$subcat=false);
 ?>
 <!DOCTYPE html>

@@ -3,9 +3,9 @@
 
 	include("core/Cryptography.php");
 	
-	$shop  		  = new Shop();
-	$cryptography = new Cryptography();
-
+	$shop  		  = new Shop;
+	$cryptography = new Cryptography;
+	$sanitizer    = new Sanitizer;
 	// initialize and check session.
 	$token = $cryptography->getToken();
 
@@ -14,7 +14,7 @@
 		if(strlen($_SESSION['token']) < 128) {
 			$token = $cryptography->getToken();
 			} else {
-			$token = $shop->sanitize($_SESSION['token'],'alphanum'); 
+			$token = $sanitizer->sanitize($_SESSION['token'],'alphanum'); 
 		}
 		
 	} 
@@ -23,6 +23,6 @@
 	$_SESSION['token'] = $token;
 	
 	// initialize category
-	$category = $shop->sanitize('index','cat');
+	$category = $sanitizer->sanitize('index','cat');
 	$catid 	  = $shop->getcatId($category,$subcat=false);
 ?>
