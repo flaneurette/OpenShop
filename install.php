@@ -27,9 +27,12 @@
 
 	include("resources/PHP/Class.Shop.php");
 	include("core/Cryptography.php");
+	include("core/Backup.php");
 	
-	$shop = new Shop();
-	$cryptography = new Cryptography();
+	$shop = new Shop;
+	$cryptography = new Cryptography;
+	$sanitizer 	  = new Sanitizer;
+	$backups 	  = new Backup;
 	
 	$versioning = PHP_VERSION_ID;
 	$error = [];
@@ -88,10 +91,10 @@
 	*/
 	
 	if(isset($_SESSION['nonce'])) {
-		$nonce = $shop->sanitize($_SESSION['nonce'],'alphanum');
+		$nonce = $sanitizer->sanitize($_SESSION['nonce'],'alphanum');
 		} else {
 		$nonce = $cryptography->pseudoNonce();
-		$_SESSION['nonce'] = $shop->sanitize($nonce,'alphanum');
+		$_SESSION['nonce'] = $sanitizer->sanitize($nonce,'alphanum');
 	}
 
 	$session = fopen("administration/session.ses", "r") or die("<div class=\"installer-message\">Unable to open administration/session.ses. Cannot continue installation. Please make this file readable by chmodding it to at least 0755.</div>");
@@ -276,7 +279,7 @@
 			$session = fopen("administration/session.ses", "rw+") or die("<div class=\"installer-message\">Unable to open administration/session.ses. Cannot continue installation.</div>");
 			$tmp_nonce = $cryptography->getToken();
 			
-			$ip = $shop->sanitize($_SERVER['REMOTE_ADDR'],'field');
+			$ip = $sanitizer->sanitize($_SERVER['REMOTE_ADDR'],'field');
 			$install_nonce = sha1($ip . PHP_VERSION_ID . $tmp_nonce);
 			
 			$sdata 	 = fread($session,10);
@@ -293,9 +296,9 @@
 			
 				if(isset($_SESSION['nonce'])) {
 					
-					$nonce = $shop->sanitize($_SESSION['nonce'],'alphanum');
+					$nonce = $sanitizer->sanitize($_SESSION['nonce'],'alphanum');
 					
-					if($_SESSION['nonce'] != $shop->sanitize($_POST['nonce'])) {
+					if($_SESSION['nonce'] != $sanitizer->sanitize($_POST['nonce'])) {
 						echo '<div class="installer-message">Security Nonce is expired or missing.</div>';
 						exit;	
 					}
@@ -344,7 +347,7 @@
 					echo '<div class="installer-message">Shop folder cannot be empty, setup could not continue.</div>';
 					exit;				
 					} else {
-					$ts_shop_folder = $shop->sanitize($_POST['shop_folder'],'alpha');
+					$ts_shop_folder = $sanitizer->sanitize($_POST['shop_folder'],'alpha');
 				}
 
 
@@ -613,10 +616,10 @@ Allow from '.$ip.'
 					fclose($hta);
 				}
 
-				$username = $shop->sanitize($_POST['admin_username'],'unicode');
-				$password = $shop->sanitize($_POST['admin_password'],'query');
-				$ip 	  = $shop->sanitize($_POST['admin_ip'],'table');
-				$root 	  = $shop->sanitize($_SERVER['DOCUMENT_ROOT'],'table');
+				$username = $sanitizer->sanitize($_POST['admin_username'],'unicode');
+				$password = $sanitizer->sanitize($_POST['admin_password'],'query');
+				$ip 	  = $sanitizer->sanitize($_POST['admin_ip'],'table');
+				$root 	  = $sanitizer->sanitize($_SERVER['DOCUMENT_ROOT'],'table');
 				
 				create_htpasswd($username,$password);
 				create_htaccess($ip,$root,$ts_shop_folder);
@@ -627,19 +630,19 @@ Allow from '.$ip.'
 				*/	
 				
 				$keys = 'server/config/site.conf.json';
-				$shop->backup($keys);
+				$backups->backup($keys);
 				$json = $shop->load_json($keys); 
 				
 				$json[0]["site.canonical"] 	= $ts_shop_folder;
-				$json[0]["site.url"] 		= $shop->sanitize($_POST['admin_website'],'url');
-				$json[0]["site.domain"] 	= $shop->sanitize($_POST['admin_website'],'url');
-				$json[0]["site.currency"] 	= $shop->sanitize($_POST['admin_currency'],'num');
-				$json[0]["site.email"] 		= $shop->sanitize($_POST['admin_email'],'url');
+				$json[0]["site.url"] 		= $sanitizer->sanitize($_POST['admin_website'],'url');
+				$json[0]["site.domain"] 	= $sanitizer->sanitize($_POST['admin_website'],'url');
+				$json[0]["site.currency"] 	= $sanitizer->sanitize($_POST['admin_currency'],'num');
+				$json[0]["site.email"] 		= $sanitizer->sanitize($_POST['admin_email'],'url');
 
 				if($_POST['admin_encryption'] == '1') {
-					$json[0]["site.email"] = $cryptography->encrypt($shop->sanitize($_POST['admin_email'],'url'));
+					$json[0]["site.email"] = $cryptography->encrypt($sanitizer->sanitize($_POST['admin_email'],'url'));
 					} else {
-					$json[0]["site.email"] = $shop->sanitize($_POST['admin_email'],'url');
+					$json[0]["site.email"] = $sanitizer->sanitize($_POST['admin_email'],'url');
 				}
 				
 				if($_POST['theme'] == 'default') {
@@ -663,29 +666,29 @@ Allow from '.$ip.'
 				}
 
 				if(isset($_POST['admin_title'])) {
-					$json[0]["site.title"] = $shop->sanitize($_POST['admin_title'],'unicode');
-					$json[0]["site.meta.title"] = $shop->sanitize($_POST['admin_description'],'unicode'); 
+					$json[0]["site.title"] = $sanitizer->sanitize($_POST['admin_title'],'unicode');
+					$json[0]["site.meta.title"] = $sanitizer->sanitize($_POST['admin_description'],'unicode'); 
 				}
 				
 				if(isset($_POST['admin_description'])) {
-					$json[0]["site.description"] = $shop->sanitize($_POST['admin_description'],'unicode'); 
-					$json[0]["site.meta.description"] = $shop->sanitize($_POST['admin_description'],'unicode'); 
+					$json[0]["site.description"] = $sanitizer->sanitize($_POST['admin_description'],'unicode'); 
+					$json[0]["site.meta.description"] = $sanitizer->sanitize($_POST['admin_description'],'unicode'); 
 				}
 				
 				if(isset($_POST['socialmedia_option1'])) {
-					$json[0]["site.socialmedia.option1"] = $shop->sanitize($_POST['socialmedia_option1'],'url'); 
+					$json[0]["site.socialmedia.option1"] = $sanitizer->sanitize($_POST['socialmedia_option1'],'url'); 
 				}
 				if(isset($_POST['socialmedia_option2'])) {
-					$json[0]["site.socialmedia.option2"] = $shop->sanitize($_POST['socialmedia_option2'],'url');
+					$json[0]["site.socialmedia.option2"] = $sanitizer->sanitize($_POST['socialmedia_option2'],'url');
 				}
 				if(isset($_POST['socialmedia_option3'])) {
-					$json[0]["site.socialmedia.option3"] = $shop->sanitize($_POST['socialmedia_option3'],'url');
+					$json[0]["site.socialmedia.option3"] = $sanitizer->sanitize($_POST['socialmedia_option3'],'url');
 				}
 				if(isset($_POST['socialmedia_option4'])) {
-					$json[0]["site.socialmedia.option4"] = $shop->sanitize($_POST['socialmedia_option4'],'url');
+					$json[0]["site.socialmedia.option4"] = $sanitizer->sanitize($_POST['socialmedia_option4'],'url');
 				}
 				if(isset($_POST['socialmedia_option5'])) {
-					$json[0]["site.socialmedia.option5"] = $shop->sanitize($_POST['socialmedia_option5'],'url');
+					$json[0]["site.socialmedia.option5"] = $sanitizer->sanitize($_POST['socialmedia_option5'],'url');
 				}
 		
 				$shop->storedata($keys,$json);
@@ -695,10 +698,10 @@ Allow from '.$ip.'
 				*/
 				
 				$keys_paypal = 'server/config/paypal.json';
-				$shop->backup($keys_paypal);
+				$backups->backup($keys_paypal);
 				$json_paypal = $shop->load_json($keys_paypal); 		
-				$json_paypal[0]["paypal.domain"] = $shop->sanitize($_POST['admin_website'],'url');		
-				$json_paypal[0]["paypal.email"] = $shop->sanitize($_POST['admin_paypal_email'],'url');
+				$json_paypal[0]["paypal.domain"] = $sanitizer->sanitize($_POST['admin_website'],'url');		
+				$json_paypal[0]["paypal.email"] = $sanitizer->sanitize($_POST['admin_paypal_email'],'url');
 				
 				$shop->storedata($keys_paypal,$json_paypal);
 
@@ -707,15 +710,15 @@ Allow from '.$ip.'
 		*/
 				
 		echo '<div class="installer-message-success">';
-		echo 'OpenShop was installed and should function correctly! If not, please read the manual on Github: https://github.com/flaneurette/tiny-shop'. PHP_EOL;
-		echo 'Please delete the install.php file, or <a href="install.php?delete='.$shop->sanitize($nonce,'alphanum').'">click here.</a> to let OpenShop do it for you'. PHP_EOL;
+		echo 'OpenShop was installed and should function correctly! If not, please read the manual on Github: https://github.com/flaneurette/OpenShop'. PHP_EOL;
+		echo 'Please delete the install.php file, or <a href="install.php?delete='.$sanitizer->sanitize($nonce,'alphanum').'">click here.</a> to let OpenShop do it for you'. PHP_EOL;
 		echo '</div>';	
 		
 	} elseif(isset($_POST['setup-complete']) == 1) {
 		
 		echo '<div class="installer-message-success">';
-		echo 'OpenShop was installed and should function correctly! If not, please read the manual on Github: https://github.com/flaneurette/tiny-shop'. PHP_EOL;
-		echo 'Please delete the install.php file, or <a href="install.php?delete='.$shop->sanitize($nonce,'alphanum').'">click here.</a> to let OpenShop do it for you'. PHP_EOL;
+		echo 'OpenShop was installed and should function correctly! If not, please read the manual on Github: https://github.com/flaneurette/OpenShop'. PHP_EOL;
+		echo 'Please delete the install.php file, or <a href="install.php?delete='.$sanitizer->sanitize($nonce,'alphanum').'">click here.</a> to let OpenShop do it for you'. PHP_EOL;
 		echo '</div>';		
 
 		// make files non-writeable again.
@@ -741,11 +744,11 @@ Allow from '.$ip.'
 		<div id="ts-shop-cart-form">
 					<form name="" action="" method="post">
 						<input name="setup" value="1" type="hidden">
-						<input name="nonce" value="<?php echo $shop->sanitize($nonce,'alphanum');?>" type="hidden">
+						<input name="nonce" value="<?php echo $sanitizer->sanitize($nonce,'alphanum');?>" type="hidden">
 						Shop title: <input name="admin_title" value="OpenShop webshop" type="text"> 
 						Shop description: <input name="admin_description" value="OpenShop webshop is cool!" type="text"> 
 						Website: <input name="admin_website" value="https://<?php echo $host;?>" type="text"> 
-						Shop folder name /shop/ (without slashes) <input name="shop_folder" value="<?php echo $shop->sanitize($shopfolder,'alphanum');?>" type="text" alt="Without slashes" title="Without slashes">
+						Shop folder name /shop/ (without slashes) <input name="shop_folder" value="<?php echo $sanitizer->sanitize($shopfolder,'alphanum');?>" type="text" alt="Without slashes" title="Without slashes">
 						Website e-mail: <input name="admin_website_email" value="info@website.com" type="text">
 						<hr />
 						Theme: <select name="theme"> 
@@ -772,7 +775,7 @@ Allow from '.$ip.'
 							<option value="1">Yes</option>
 						</select> <sup>(if NO, it will be visible to everyone)</sup>
 						<hr />
-						Admin IP: <input name="admin_ip" value="<?php echo  $shop->sanitize($_SERVER['REMOTE_ADDR'],'table');?>" type="text">
+						Admin IP: <input name="admin_ip" value="<?php echo  $sanitizer->sanitize($_SERVER['REMOTE_ADDR'],'table');?>" type="text">
 						<hr />
 						<div id="paypal">PayPal e-mail (to accept payments on):</div> <input id="paypal-email" name="admin_paypal_email" value="" type="text">
 						<hr />

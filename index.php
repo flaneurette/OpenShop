@@ -1,7 +1,7 @@
 <?php
-	include("resources/php/header.inc.php");
-	include("resources/php/class.Shop.php");
-	include("instance/init.php");
+	include("resources/PHP/Header.inc.php");
+	include("resources/PHP/Class.Shop.php");
+	include("instance/Init.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,7 @@
 	</head>
 	<body>
 	<?php
-	include("resources/php/header.php");
+	include("resources/PHP/Header.php");
 	?>
 		<div id="cart-contents"><a href="<?php echo $host;?>cart/">View Cart</a></div>
 			<div id="wrapper">
@@ -25,7 +25,7 @@
 						<?php
 						echo $shop->categories($selected=false,'left');
 						if($pricebar != false) { 
-						    include("instance/priceapp.php");
+						    include("instance/Priceapp.php");
 						}
 						?>
 						</div>
@@ -41,7 +41,7 @@
 		<?php
 		// Initialize logging for webshop traffic.
 		$shop->logging('shop');
-		include("resources/php/footer.php");
+		include("resources/PHP/Footer.php");
 		?>
 		<script language="JavaScript">
 		<!-- Initialize the menu selection -->
