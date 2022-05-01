@@ -6,7 +6,7 @@ include_once("Backup.php");
 
 class Converter {
 	
-	CONST CSV					= "inventory/csv/";
+	CONST CSV				= "inventory/csv/";
 	CONST SERVERCSV				= "server/config/csv/";
 	CONST LOGGINGDIR 			= "server/logging/";
 	CONST BACKUPS				= "inventory/backups/";
@@ -14,7 +14,7 @@ class Converter {
 	CONST FILE_ENC				= "UTF-8";
 	CONST FILE_OS				= "WINDOWS-1252"; // only for JSON and CSV, not the server architecture.
 	CONST MAXINT  				= 9999999999;
-	CONST DEPTH					= 10024;
+	CONST DEPTH				= 10024;
 	
 	public function __construct($params = array()) 
 	{ 
