@@ -1,26 +1,96 @@
 <?php
 
-class Logging {
+include_once("Message.php");
+include_once("Sanitize.php");
+include_once("Backup.php");
+
+class Converter {
+	
+	CONST CSV					= "inventory/csv/";
+	CONST SERVERCSV				= "server/config/csv/";
+	CONST LOGGINGDIR 			= "server/logging/";
+	CONST BACKUPS				= "inventory/backups/";
+	CONST BACKUPEXT				= ".bak"; 
+	CONST FILE_ENC				= "UTF-8";
+	CONST FILE_OS				= "WINDOWS-1252"; // only for JSON and CSV, not the server architecture.
+	CONST MAXINT  				= 9999999999;
+	CONST DEPTH					= 10024;
 	
 	public function __construct($params = array()) 
 	{ 
-		$this->init($params);
+		$this->messages  = new Message;
+		$this->sanitizer = new Sanitizer;
+		$this->backups	 = new Backup;
+		
+		$this->serverconfig_csv = [
+			'currencies.conf.csv',
+			'messages.conf.csv',
+			'orders.conf.csv',
+			'shipping.conf.csv',
+			'shop.conf.csv',
+			'site.conf.csv',
+			'tax.conf.csv',
+			'payment.conf.csv',
+			'paypal.csv'];
+		
+		$this->serverconfig_json = [
+			'currencies.conf.json',
+			'messages.conf.json',
+			'orders.conf.json',
+			'shipping.conf.json',
+			'shop.conf.json',
+			'site.conf.json',
+			'tax.conf.json',
+			'payment.conf.json',
+			'paypal.json'];
 	}
 	
-     /**
-	* Initializes object.
-	* @param array $params
-	* @throws Exception
-      */	
+	/**
+	* Parsing CSV values
+	* @param string $values
+	* @return string
+	*/	
+	public function csvstring($values) {
+
+		$data = '';
+		$cv = count($values);
 	
-    public function init($params)
-    {
-			
-		try {
-			isset($params['var'])  ? $this->var  = $params['var'] : false; 
-			} catch(Exception $e) {}
-    }
-	
+		if($cv >=1) {
+					
+				for($i=0; $i < $cv; $i++) {
+							
+						if(is_array($values[$i])) {
+
+							$tmpvalue = '"';
+							$c = count($values[$i]);
+									
+							for($j=0;$j<$c;$j++) {
+								$tmpvalue .= $values[$i][$j];
+									if($c >=1 && $j < ($c-1)) {
+										$tmpvalue .= ',';
+									} 
+							}
+							
+							if($cv >=1) {
+								if($i == ($cv-1)) {
+									$data .= $tmpvalue .= '"';
+									} else {
+									$data .= $tmpvalue .= '",';
+								}
+							}
+									
+						} else {			
+							if(stristr($values[$i],',')) {
+							$data .= '"'.$values[$i].'",';
+							} else {
+							$data .= $values[$i].',';
+						}
+					}
+				}
+		}			
+		return $data;
+	}
+				
 	/**
 	* Converter for data, types and strings.
 	* @param string $string
@@ -35,7 +105,7 @@ class Logging {
 			case 'csv_to_json':
 			
 				if(!isset($file)) {
-					$this->message('Please choose a CSV file to convert.');
+					$this->messages->message('Please choose a CSV file to convert.');
 					break;
 				}
 
@@ -46,7 +116,7 @@ class Logging {
 				}
 				
 				// Back-up CSV before processing.
-				$this->backup($server_path.'/csv/'.$name,'../'.self::BACKUPS); 
+				$this->backups->backup($server_path.'/csv/'.$name,'../'.self::BACKUPS); 
 				
 				$csv1 = explode("\r\n", $file);
 				$c1 = count($csv1);
@@ -116,7 +186,7 @@ class Logging {
 				}
 					
 				// Back-up JSON before processing.
-				$this->backup($server_path.$name,'../'.self::BACKUPS); 
+				$this->backups->backup($server_path.$name,'../'.self::BACKUPS); 
 				
 				$json_data =  json_decode($file, true, self::DEPTH, JSON_BIGINT_AS_STRING);
 				
@@ -156,12 +226,12 @@ class Logging {
 			case 'json_to_csv':
 
 				if(!defined(self::SHOP)) {
-					$this->message('Conversion failed: JSON file not found.');
+					$this->messages->message('Conversion failed: JSON file not found.');
 					break;
 				}
 				
 				if(!defined(self::CSV)) {
-					$this->message('Conversion failed: CSV file not found.');
+					$this->messages->message('Conversion failed: CSV file not found.');
 					break;
 				}
 				
@@ -200,7 +270,6 @@ class Logging {
 		
 		return $data;
 	}
-	
 }
 
 ?>
