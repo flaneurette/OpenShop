@@ -1,5 +1,8 @@
 <?php
 
+include_once("Message.php");
+include_once("Sanitize.php");
+
 class Cryptography {
 
 	CONST MINHASHBYTES			= 32; 			// Min. of bytes for secure hash.
@@ -12,6 +15,8 @@ class Cryptography {
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
+		$this->messages = new Message;
+		$this->sanitizer = new Sanitizer;
 	}
 	
 	public function password()
@@ -26,13 +31,12 @@ class Cryptography {
 	*/	
 	
     public function init($params)
-    	{
+    {
 			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
     }
-
 
 	public function pseudoNonce($max=0xffffffff) {
 		$tmp_nonce = mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max);
@@ -64,9 +68,9 @@ class Cryptography {
 		if(isset($this->token) && $this->token != false) 
 		{ 
 			if(strlen($this->token) < 128) {
-				// $this->sessionmessage('Issue found: session token is too short.'); 
+				$this->messages->message('Issue found: session token is too short.'); 
 				} else {
-				return $this->sanitize($this->token,'alphanum'); 
+				return $this->sanitizer->sanitize($this->token,'alphanum'); 
 			}
 		} else { 
 		return $token;
@@ -109,7 +113,7 @@ class Cryptography {
 	public function encrypt($plaintext) {
 
 		if (!function_exists('openssl_encrypt')) {
-			$this->message('Encryption failed: OpenSSL is not supported or enabled on this PHP instance.');
+			$this->messages->message('Encryption failed: OpenSSL is not supported or enabled on this PHP instance.');
 			return false;
     	}
 		
@@ -131,7 +135,7 @@ class Cryptography {
 	public function decrypt($ciphertext) {
 		
 		if (!function_exists('openssl_decrypt')) {
-			$this->message('Decryption failed: OpenSSL is not supported or enabled on this PHP instance.');
+			$this->messages->message('Decryption failed: OpenSSL is not supported or enabled on this PHP instance.');
 			return false;
     	}
 		
@@ -151,5 +155,4 @@ class Cryptography {
 	}
 	
 }
-
 ?>

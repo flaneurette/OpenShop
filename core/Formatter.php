@@ -1,10 +1,12 @@
 <?php
 
+include_once("Sanitize.php");
+
 class Formatter {
 	
 	public function __construct($params = array()) 
 	{ 
-		$this->init($params);
+		$this->sanitizer = new Sanitizer;
 	}
 	
 	/**
@@ -13,15 +15,7 @@ class Formatter {
 	* @throws Exception
 	*/	
 	
-    public function init($params)
-    {
-			
-		try {
-			isset($params['var'])  ? $this->var  = $params['var'] : false; 
-			} catch(Exception $e) {}
-    }
-	
-	public function store($string,$method) {
+	public function format($string,$method) {
 		
 		$returnstring = '';
 		
@@ -29,12 +23,12 @@ class Formatter {
 			
 			case 'product-description':
 
-			$returnstring = $this->sanitize($string,'encode');
+			$returnstring = $this->sanitizer->sanitize($string,'encode');
 			$returnstring = substr($returnstring,0,512);
 			
 			$find = ['\n','\r','\t'];
 			$replace = ['<br />','<br />','&emsp;'];
-			$returnstring = str_ireplace($find,$replace,htmlspecialchars($returnstring, ENT_QUOTES, self::PHPENCODING));
+			$returnstring = str_ireplace($find,$replace,htmlspecialchars($returnstring, ENT_QUOTES, 'UTF-8'));
 			return nl2br($returnstring);
 		
 			break;

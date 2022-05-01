@@ -3,7 +3,7 @@
 	session_start();
 
 	include("../../resources/PHP/Class.Shop.php");
-	$shop  = new Shop();
+	$shop  = new Shop;
 
 	if(!isset($_SESSION['admin-uuid']) || empty($_SESSION['admin-uuid'])) {
 		exit;

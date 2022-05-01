@@ -5,7 +5,7 @@
 	include("../../resources/PHP/Class.Shop.php");
 	include("../../core/Cryptography.php");
 	
-	$shop  		  = new Shop();
+	$shop  		  = new Shop;
 	$cryptography = new Cryptography();
 
 	if(!isset($_SESSION['admin-uuid']) || empty($_SESSION['admin-uuid'])) {

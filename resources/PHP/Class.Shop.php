@@ -1,9 +1,11 @@
 <?php
 
+include_once(__DIR__."/../../core/Sanitize.php");
+
 class Shop {
 
 	CONST SHOPVERSION 			= "?cache-control=3.2"; // increment if major changes are made to the shop database.
-	CONST INVENTORY_PATH 			= "";
+	CONST INVENTORY_PATH 		= "";
 	CONST SITECONF				= "server/config/site.conf.json";
 	CONST CURRENCIES			= "server/config/currencies.conf.json";
 	CONST SHOPCONF				= "server/config/shop.conf.json";
@@ -12,10 +14,10 @@ class Shop {
 	CONST CATEGORIES			= "inventory/categories.json";
 	CONST SUBCATEGORIES			= "inventory/subcategories.json";
 	CONST NAVIGATION 			= "inventory/navigation.json";
-	CONST BLOG				= "inventory/blog.json";
+	CONST BLOG					= "inventory/blog.json";
 	CONST ARTICLES				= "inventory/articles.json";
-	CONST PAGES				= "inventory/pages.json";
-	CONST CSV				= "inventory/csv/";
+	CONST PAGES					= "inventory/pages.json";
+	CONST CSV					= "inventory/csv/";
 	CONST SERVERCSV				= "server/config/csv/";
 	CONST LOGGINGDIR 			= "server/logging/";
 	CONST BACKUPS				= "inventory/backups/";
@@ -23,15 +25,17 @@ class Shop {
 	CONST FILE_ENC				= "UTF-8";
 	CONST FILE_OS				= "WINDOWS-1252"; // only for JSON and CSV, not the server architecture.
 	CONST MAXINT  				= 9999999999;
-	CONST DEPTH				= 10024;
+	CONST DEPTH					= 10024;
 	CONST MAXTITLE				= 255; // Max length of title.
-	CONST MAXDESCRIPTION			= 500; // Max length of description.
+	CONST MAXDESCRIPTION		= 500; // Max length of description.
 
 	CONST PHPENCODING 			= 'UTF-8';		// Characterset of PHP functions: (htmlspecialchars, htmlentities) 
 	
 	CONST GATEWAYS 	= ["ACH","Alipay","Apple Pay","Bancontact","BenefitPay","Boleto Bancario","Citrus Pay","EPS","Fawry","Giropay","Google Pay","PayPal","KNET","Klarna","Mada","Multibanco","OXXO","Pago FÃƒÂ¡cil","Poli","Przelewy24","QPAY","Rapipago","SEPA Direct Debit","Sofort","Stripe","Via Baloto","iDEAL"];
 	
 	public function __construct() {
+		
+		$this->sanitizer = new Sanitizer;
 		
 		$incomplete = false;
 		$this->maxcats = 0;
@@ -57,27 +61,6 @@ class Shop {
 		isset($_GET['cat']) 			? 	$this->cat 		= $_GET['cat'] : false;
 		isset($_GET['subcat']) 			? 	$this->subcat 		= $_GET['subcat'] : false;
 		
-		$this->serverconfig_csv = [
-			'currencies.conf.csv',
-			'messages.conf.csv',
-			'orders.conf.csv',
-			'shipping.conf.csv',
-			'shop.conf.csv',
-			'site.conf.csv',
-			'tax.conf.csv',
-			'payment.conf.csv',
-			'paypal.csv'];
-		
-		$this->serverconfig_json = [
-			'currencies.conf.json',
-			'messages.conf.json',
-			'orders.conf.json',
-			'shipping.conf.json',
-			'shop.conf.json',
-			'site.conf.json',
-			'tax.conf.json',
-			'payment.conf.json',
-			'paypal.json'];
 	}
 
 	public function host() {
@@ -138,7 +121,7 @@ class Shop {
 	{
 		$url = self::INVENTORY; 
 		
-		$url  = $this->sanitize($url,'json');
+		$url  = $this->sanitizer->sanitize($url,'json');
 		$url .= '.json';
 		
 		$file  = $this->traverse($url);
@@ -399,10 +382,10 @@ class Shop {
 		$hostaddr = $this->getbase(false,true);
 	
 		if(isset($this->scripturl)) {
-			$script_url 	= $this->sanitize($this->scripturl,'alpha');
+			$script_url 	= $this->sanitizer->sanitize($this->scripturl,'alpha');
 		}
 		if(isset($this->requesturi)) {
-			$request_uri 	= $this->sanitize($this->requesturi,'alpha');
+			$request_uri 	= $this->sanitizer->sanitize($this->requesturi,'alpha');
 		}
 
 		if(strstr($request_uri,'category')) {
@@ -580,7 +563,7 @@ class Shop {
 					$c = count($selected);
 					
 					if($selected[0] != false) {
-						$subcatselected = $this->sanitize($selected[0],'cat');
+						$subcatselected = $this->sanitizer->sanitize($selected[0],'cat');
 					} else {
 						$subcatselected = false;
 					}						
@@ -765,7 +748,7 @@ class Shop {
 					$var1 = $this->cleaninput($c['variant.title1']); 
 					$var2  = $this->cleaninput($c['variant.title2']);
 					$var3  = $this->cleaninput($c['variant.title3']);
-					$find  = $this->sanitize($query,'search');
+					$find  = $this->sanitizer->sanitize($query,'search');
 					if(is_array($find)) {
 						$find 	= implode(',',$find);
 					}
@@ -816,7 +799,7 @@ class Shop {
 					$title = $this->cleaninput($c['product.title']); 
 					$desc  = $this->cleaninput($c['product.description']);
 					$tags  = $this->cleaninput($c['product.tags']);
-					$find  = $this->sanitize($query,'search');
+					$find  = $this->sanitizer->sanitize($query,'search');
 			
 					if(strlen($find) >=3) { 
 						if(stristr($title,$find)) {
@@ -860,7 +843,7 @@ class Shop {
 			if(!isset($this->minprice)) {
 				$minprice = 1;
 				} else {
-				$minprice = $this->sanitize((int)$this->minprice,'num');
+				$minprice = $this->sanitizer->sanitize((int)$this->minprice,'num');
 			}
 			
 			for($k = $min; $k < count($productlist); $k++) {	
@@ -1166,7 +1149,7 @@ class Shop {
 								
 					if(stristr($variant,',')) {
 									
-						$optionbox = '<select name="'.$this->sanitize($box,'option').'" id="'.$this->sanitize($box,'option').'" onchange="javascript:OpenShop.updateprices(\''.$productId.'\',\'price-update\',\''.$cryptography->getToken().'\',\''.$this->getbase().'cart/addtocart/\',\''.$this->sanitize($box,'option').'\',\''.$box.'\');">';
+						$optionbox = '<select name="'.$this->sanitizer->sanitize($box,'option').'" id="'.$this->sanitizer->sanitize($box,'option').'" onchange="javascript:OpenShop.updateprices(\''.$productId.'\',\'price-update\',\''.$cryptography->getToken().'\',\''.$this->getbase().'cart/addtocart/\',\''.$this->sanitizer->sanitize($box,'option').'\',\''.$box.'\');">';
 		
 						$opts 	= explode(',',$option);
 						$n 		=  count($opts);
@@ -1182,9 +1165,9 @@ class Shop {
 							for($i = 0; $i < $n; $i++) {
 
 								if($np > 0) {
-									$optionbox .= '<option value="'.$this->sanitize($opts[$i],'option').'">'.$this->sanitize($opts[$i],'option').' -> price: '.$this->sanitize($optsprices[$i],'num').'</option>';
+									$optionbox .= '<option value="'.$this->sanitizer->sanitize($opts[$i],'option').'">'.$this->sanitizer->sanitize($opts[$i],'option').' -> price: '.$this->sanitizer->sanitize($optsprices[$i],'num').'</option>';
 									} else {
-									$optionbox .= '<option value="'.$this->sanitize($opts[$i],'option').'">'.$this->sanitize($opts[$i],'option').'</option>';
+									$optionbox .= '<option value="'.$this->sanitizer->sanitize($opts[$i],'option').'">'.$this->sanitizer->sanitize($opts[$i],'option').'</option>';
 								}
 							}
 						}
@@ -1257,7 +1240,7 @@ class Shop {
 							if($key == 'category.title') {
 								
 								if($value !='' || $value != null) {
-								$html .= "<option value=\"".$this->sanitize($value,'option')."\">".$this->sanitize($value,'unicode')."</option>";
+								$html .= "<option value=\"".$this->sanitizer->sanitize($value,'option')."\">".$this->sanitizer->sanitize($value,'unicode')."</option>";
 									foreach($subcategory as $subrow)
 									{
 										
@@ -1267,7 +1250,7 @@ class Shop {
 												
 											if($subrow['sub.category.title'] !='' || $subrow['sub.category.title'] != null) {
 
-												$html .= "<option value=\"".$this->sanitize($value,'option').'/'.$this->sanitize($subrow['sub.category.title'],'option')."\"> - ".$this->sanitize($subrow['sub.category.title'],'unicode')."</option>";
+												$html .= "<option value=\"".$this->sanitizer->sanitize($value,'option').'/'.$this->sanitizer->sanitize($subrow['sub.category.title'],'option')."\"> - ".$this->sanitizer->sanitize($subrow['sub.category.title'],'unicode')."</option>";
 											}
 										}
 									}
@@ -1291,7 +1274,7 @@ class Shop {
 						foreach($row as $key => $value)
 						{
 							if($key == 'category.title') {
-								$html .= "<option value=\"".$this->sanitize($value,'option')."\">".$this->sanitize($value,'option')."</option>";
+								$html .= "<option value=\"".$this->sanitizer->sanitize($value,'option')."\">".$this->sanitizer->sanitize($value,'option')."</option>";
 							}
 						}
 					}		
@@ -1311,7 +1294,7 @@ class Shop {
 						foreach($row as $key => $value)
 						{
 							if($key == 'sub.category.title') {
-								$html .= "<option value=\"".$this->sanitize($value,'option')."\">".$this->sanitize($value,'option')."</option>";
+								$html .= "<option value=\"".$this->sanitizer->sanitize($value,'option')."\">".$this->sanitizer->sanitize($value,'option')."</option>";
 							}
 						}
 					}		
@@ -1360,7 +1343,7 @@ class Shop {
 			if($json !== null) {
 				foreach($json[0][$keys] as $key => $value)
 				{
-					$html.= "<option value=\"".$this->sanitize($value,'option')."\">".$this->sanitize($value,'option')."</option>";			
+					$html.= "<option value=\"".$this->sanitizer->sanitize($value,'option')."\">".$this->sanitizer->sanitize($value,'option')."</option>";			
 				}		
 			}
 		return $html;
@@ -1376,9 +1359,9 @@ class Shop {
 				{
 					if(!in_array($key,$igoreset)) {
 						if($value == 0) {
-						$html.= "<option value=\"".$this->sanitize($key,'option')."\" disabled>".str_replace('shipping.','',$this->cleaninput($key))."</option>";
+						$html.= "<option value=\"".$this->sanitizer->sanitize($key,'option')."\" disabled>".str_replace('shipping.','',$this->cleaninput($key))."</option>";
 						} else {
-						$html.= "<option value=\"".$this->sanitize($key,'option')."\">".str_replace('shipping.','',$this->cleaninput($key))."</option>";
+						$html.= "<option value=\"".$this->sanitizer->sanitize($key,'option')."\">".str_replace('shipping.','',$this->cleaninput($key))."</option>";
 							if($freeshipping == false) {
 								$html.= "<option disabled>-> shipping price: ".(float)$value."</option>";
 							}
@@ -1402,9 +1385,9 @@ class Shop {
 				foreach($currencies[0] as $key => $value)
 				{
 					if($disallowed != false && (strtolower($value) == strtolower($disallowed))) {
-						$html .= "<option value=\"".$this->sanitize($key,'num')."\" disabled>".$this->cleaninput($currencies[0][$i]['sign'])."</option>";
+						$html .= "<option value=\"".$this->sanitizer->sanitize($key,'num')."\" disabled>".$this->cleaninput($currencies[0][$i]['sign'])."</option>";
 						} else {
-						$html .= "<option value=\"".$this->sanitize($key,'num')."\">".$this->cleaninput($currencies[0][$i]['sign'])."</option>";
+						$html .= "<option value=\"".$this->sanitizer->sanitize($key,'num')."\">".$this->cleaninput($currencies[0][$i]['sign'])."</option>";
 					}
 					$i++;
 				}		
@@ -1517,234 +1500,7 @@ class Shop {
 			return $html;
 	}
 
-	/**
-	* Parsing CSV values
-	* @param string $values
-	* @return string
-	*/	
-	public function csvstring($values) {
-
-		$data = '';
-		$cv = count($values);
-	
-		if($cv >=1) {
-					
-				for($i=0; $i < $cv; $i++) {
-							
-						if(is_array($values[$i])) {
-
-							$tmpvalue = '"';
-							$c = count($values[$i]);
-									
-							for($j=0;$j<$c;$j++) {
-								$tmpvalue .= $values[$i][$j];
-									if($c >=1 && $j < ($c-1)) {
-										$tmpvalue .= ',';
-									} 
-							}
-							
-							if($cv >=1) {
-								if($i == ($cv-1)) {
-									$data .= $tmpvalue .= '"';
-									} else {
-									$data .= $tmpvalue .= '",';
-								}
-							}
-									
-						} else {			
-							if(stristr($values[$i],',')) {
-							$data .= '"'.$values[$i].'",';
-							} else {
-							$data .= $values[$i].',';
-						}
-					}
-				}
-		}			
-		return $data;
-	}
-				
-	/**
-	* Converter for data, types and strings.
-	* @param string $string
-	* @return array
-	*/	
-	public function convert($file,$method,$name=false,$backup=false){
-		
-	$data = [];
-	
-		switch($method) {
-			
-			case 'csv_to_json':
-			
-				if(!isset($file)) {
-					$this->message('Please choose a CSV file to convert.');
-					break;
-				}
-
-				if(in_array($name,$this->serverconfig_csv)) {
-					$server_path = '../server/config/';
-					} else {
-					$server_path = '../inventory/';
-				}
-				
-				// Back-up CSV before processing.
-				$this->backup($server_path.'/csv/'.$name,'../'.self::BACKUPS); 
-				
-				$csv1 = explode("\r\n", $file);
-				$c1 = count($csv1);
-				
-				$csv2 = explode("\n", $file);
-				$c2 = count($csv2);
-				
-				if($c1 <= $c2) {
-					$counter = $c1;
-					$csv = $csv1;
-					} else {
-					$counter = $c2;
-					$csv = $csv2;
-				}
-				
-				$buildcsv = "";
-
-				$find = ["\r\n","\n\r","\n","\r","\t"];
-				$replace = ["\\n","\\n","\\n","","\\t"];
-							
-				for($i=0;$i<$counter;$i++) {
-					if(strlen($csv[$i]) <= 4) { 
-						if($i < ($counter-1) ) {
-							$buildcsv .= "\\n" . str_ireplace($find,$replace,$csv[$i]);
-						} 
-					} else {
-						$csv[$i] = str_ireplace($find,$replace,$csv[$i]);
-						$buildcsv .= $csv[$i].PHP_EOL;
-					}
-				}
-
-				$find 		= ["\n\r\n", "\r\n\\n", "\r\n\\n", "\r\n\\n", "\r\n\\n", "\n\n\\n", "\r\\n",  "\r\s\n"];
-				$replace 	= ["\\n\\n", "\\n\\n",  "\\n\\n",  "\\n\\n",  "\\n\\n",  "\\n\\n",  "\\n\\n", "\\n\\n"];
-
-				$buildcsv = str_ireplace($find,$replace,$buildcsv);
-
-					$data = array_map("str_getcsv", explode("\n", $buildcsv));
-					$columns = $data[0];
-					
-							foreach ($data as $row_index => $row_data) {
-								if($row_index === 0) continue;
-								$data[$row_index] = [];
-								foreach ($row_data as $column_index => $column_value) {
-									$label = $columns[$column_index];
-									$data[$row_index][$label] = $column_value;       
-								}
-								unset($data[0]);
-							}
-							
-							$c = count($data);
-							if($c > 1) {
-								unset($data[$c]);
-							}
-							
-				$data = array_values($data);
-				
-			break;
-
-			case 'json_to_csv_admin':
-				
-				if($name) {
-					if(in_array($name,$this->serverconfig_json)) {
-						$server_path = '../'.self::SERVERCSV;
-						} else {
-						$server_path = '../'.self::CSV;
-					}
-				}
-					
-				// Back-up JSON before processing.
-				$this->backup($server_path.$name,'../'.self::BACKUPS); 
-				
-				$json_data =  json_decode($file, true, self::DEPTH, JSON_BIGINT_AS_STRING);
-				
-				array_keys($json_data);
-
-				$csv 	= '';
-				$header = [];
-				$data 	= [];
-				
-				$csv_keys = array_keys($json_data[0]);
-
-				for($i=0; $i < count($csv_keys); $i++) {
-					$csv .= $csv_keys[$i] . ',';
-				}	
-	
-				$csv .= PHP_EOL;
-
-				$csv_vals = array_values($json_data);
-				
-				for($i=0; $i < count($csv_vals); $i++) {
-
-					$csv .=  $this->csvstring(array_values($csv_vals[$i])) . PHP_EOL;
-				}
-
-				$find 	 = ['.json','../','./','\\'];
-				$replace = ['.csv','','',''];
-				
-				$csv_file_upload = $server_path . str_ireplace($find,$replace,$name);
-				
-				$pointer = fopen($csv_file_upload,'w');
-				fwrite($pointer,$csv);
-
-				$data = $csv;
-				
-			break;
-			
-			case 'json_to_csv':
-
-				if(!defined(self::SHOP)) {
-					$this->message('Conversion failed: JSON file not found.');
-					break;
-				}
-				
-				if(!defined(self::CSV)) {
-					$this->message('Conversion failed: CSV file not found.');
-					break;
-				}
-				
-				$json_data = $this->convert(self::SHOP,'json_decode');
-				$csv_file = fopen(self::CSV, 'w');
-				
-				$header = false;
-				
-				foreach ($json_data as $line){
-
-					if (empty($header)) {
-						$header = array_keys($line);
-						fputcsv($f, $header);
-						$header = array_flip($header);
-					}
-					
-					$data = array($line['type']);
-					foreach ($line as $value) {
-						array_push($data,$value);
-					}
-					
-					array_push($data,$line['stream_type']);
-					fputcsv($csv_file, $data);
-				}
-				
-			break;
-			
-			case 'json_decode':
-			$data = json_decode(file_get_contents($file), true, self::DEPTH, JSON_BIGINT_AS_STRING);
-			break;
-
-			case 'json_encode':
-			$data = json_encode($shop, JSON_PRETTY_PRINT);
-			break;
-		}
-		
-		return $data;
-	}
-
 	public function traverse($string) {
-		
 		
 		// prepare string by removing all illegal characters.
 		$find = ['../','./','%','#','&'];
@@ -1774,14 +1530,18 @@ class Shop {
 		}
 
 		// a file path must start with either inventory/ or server/config/
-		if(substr($urlstring,0,10) == 'inventory/') {
+		if(substr($urlstring,0,10) == 'inventory/') 
+		{
 			$url = $urlstring;
 			} elseif(substr($urlstring,0,14) == 'server/config/') {
 			$url = $urlstring;
+			
 			} else {
-				echo $this->debug($urlstring);
-			$this->message("Error: JSON file could not be loaded due to possible directory traversal.");
-			exit;			    
+				require("../../core/Debug.php");
+				$debug = new Debug();
+				echo $debug->output($urlstring);
+				$this->message("Error: JSON file could not be loaded due to possible directory traversal.");
+				exit;			    
 		}	
 		
 		// try to locate the file, rewind if needed.
@@ -1802,15 +1562,15 @@ class Shop {
 		
 		$storing  = 1;
 		$logfile  = self::LOGGINGDIR;
-		$logfile .= $this->sanitize($dir,'alphanum') . '/log.log';		
+		$logfile .= $this->sanitizer->sanitize($dir,'alphanum') . '/log.log';		
 		
-		$remoteaddr	 	= $this->sanitize($this->remoteaddr,'log',50);
-		$useragent 		= $this->sanitize($this->useragent,'log',250);
-		$scriptname 	= $this->sanitize($this->scriptname,'log',255);
-		$querystring 	= $this->sanitize($this->querystring,'log',500);
+		$remoteaddr	 	= $this->sanitizer->sanitize($this->remoteaddr,'log',50);
+		$useragent 		= $this->sanitizer->sanitize($this->useragent,'log',250);
+		$scriptname 	= $this->sanitizer->sanitize($this->scriptname,'log',255);
+		$querystring 	= $this->sanitizer->sanitize($this->querystring,'log',500);
 		
 		if(isset($this->referer)) {
-			$referer  = $this->sanitize($this->referer,'log',500);	
+			$referer  = $this->sanitizer->sanitize($this->referer,'log',500);	
 			} else {
 			$referer  = '';
 		}
@@ -1843,23 +1603,10 @@ class Shop {
 							$refer = 'no-referer';
 						}
 					$log = date("F j, Y, g:i a") . ' - '. $remoteaddr.' - '.$useragent.' - '. $refer.' - '.$scriptname. ' - '.$querystring. PHP_EOL;
-					@file_put_contents($logfile, $this->sanitize($log,'log'), FILE_APPEND);
+					@file_put_contents($logfile, $this->sanitizer->sanitize($log,'log'), FILE_APPEND);
 				}
 			}
 		}
-	}
-	
-	public function backup($url,$dir=false) 
-	{	
-		if($dir != false) {
-			$find 	 = ['../inventory/','../inventory/csv/','../','../../'];
-			$replace = ['','','',''];
-			$copy 	 = $dir.str_ireplace($find,$replace,$url).self::BACKUPEXT;
-			} else {
-			$copy 	= $url.self::BACKUPEXT;
-		}
-		// TODO: find out scope, for better security.
-		@copy($url, $copy);
 	}
 
 	/**
@@ -1917,180 +1664,6 @@ class Shop {
 		}
 		
 		return $returnstring;
-	}	
-	
-
-	/**
-	* Sanitizes user-input
-	* @param string
-	* @return string
-	*/
-	
-	public function sanitize($string,$method='',$len=false) 
-	{
-		
-		$data = '';
-		
-		switch($method) {
-			
-			case 'alpha':
-				$this->data =  preg_replace('/[^a-zA-Z]/','', $string);
-			break;
-			
-			case 'trim':
-				
-				if(isset($string)) {
-					
-					if(trim($string) != "") {
-						$this->data = $string;
-						} elseif(strlen($string) > 2) {
-						$this->data = $string;
-						} else {
-						$this->data = false;
-					}
-					
-				} else {
-					$this->data = false;
-				}
-				
-			break;		
-			
-			case 'num':
-			
-			if($string > self::MAXINT) {
-				return false;
-				} else {
-				$this->data =  preg_replace('/[^0-9]/m','', $string);
-			}
-				
-			break;
-			
-			case 'dir':
-				$this->data =  preg_replace('/[^a-zA-Z-0-9\.\/]/m','', $string);
-			break;			
-
-			case 'email':
-			$this->data = preg_replace('/[^a-zA-Z-0-9\-\_.@\/]/m','', $string);
-			break;
-
-			case 'search':
-			$this->data = preg_replace('/[^a-zA-Z-0-9\-\s\/]/m','', $string);
-			break;
-			
-			case 'cat':
-			$this->data = preg_replace('/[^a-zA-Z-0-9\-_\/]/m','', $string);
-			break;
-			
-			case 'alphanum':
-				$this->data =  preg_replace('/[^a-zA-Z-0-9]/m','', $string);
-			break;
-			
-			case 'field':
-				$this->data =  preg_replace('/[^a-zA-Z-0-9\-\_.@\/]/','', $string);
-			break;
-
-			case 'option':
-				$string =  preg_replace('/[^a-zA-Z-0-9\-\_.]/','', $string);
-				$this->data = htmlspecialchars($string,ENT_QUOTES,self::PHPENCODING);
-			break;
-			
-			case 'query':
-				$search  = ['`','"','\'',';'];
-				$replace = ['','','',''];
-				$this->data = str_replace($search,$replace,$string);
-			break;
-			
-			case 'cols':
-				// comma is allowed for selecting multiple columns.
-				$search  = ['`','"','\'',';'];
-				$replace = ['','','',''];
-				$this->data = str_replace($search,$replace,$string);
-			break;
-			
-			case 'table':
-				$search  = ['`','"',',','\'',';','$','%','>','<'];
-				$replace = ['','','','','','','','',''];
-				$this->data = str_replace($search,$replace,$string);
-			break;
-			
-			case 'unicode':
-				$this->data =  preg_replace("/[^[:alnum:][:space:]]/u", '', $string);
-			break;
-			
-			case 'encode':
-				$this->data =  htmlspecialchars($string,ENT_QUOTES,self::PHPENCODING);
-			break;
-			
-			case 'log':
-			
-				if($len == false) {
-					$len = 255;
-				}
-	
-				if(strlen($string) > $len) {
-					$this->data = false;
-					} else {
-					$this->data =  htmlspecialchars($string,ENT_QUOTES,self::PHPENCODING);
-				}
-				
-			break;			
-			
-			case 'entities':
-				$this->data =  htmlentities($string, ENT_QUOTES | ENT_HTML5, self::PHPENCODING);
-			break;
-			
-			case 'url':
-				$search  = ['`','"',',','\'',';','$','%','>','<','\/'];
-				$replace = ['','','','','','','','','','/'];
-				$this->data = stripslashes(str_replace($search,$replace,$string));
-			break;
-			
-			case 'domain':
-				$search = ['http://','www.'];
-				$replace = ['',''];
-				$this->data =  str_ireplace($search,$replace,$string);
-			break;
-			
-			case 'image':
-				$search  = ['..','`','"',',','\'',';','%','>','<',];
-				$replace = ['','','','','','','','',''];
-				$this->data = stripslashes(str_ireplace($search,$replace,$string));
-			break;
-
-			case 'json':
-				$find = ['.json','./','../','\\','..','?','<','>'];
-				$replace = ['','','','','','','',''];
-				$this->data = str_ireplace($find,$replace,$string);
-			break;
-			
-			default:
-			return $this->data;
-			
-			}
-		return $this->data;
-	}
-	
-	public function formatter($string,$method) {
-		
-		$returnstring = '';
-		
-		switch($method) {
-			
-			case 'product-description':
-
-			$returnstring = $this->sanitize($string,'encode');
-			$returnstring = substr($returnstring,0,512);
-			
-			$find = ['\n','\r','\t'];
-			$replace = ['<br />','<br />','&emsp;'];
-			$returnstring = str_ireplace($find,$replace,htmlspecialchars($returnstring, ENT_QUOTES, self::PHPENCODING));
-			return nl2br($returnstring);
-		
-			break;
-			
-		}
-		
-		return $returnstring;
 	}
 
 	/**
@@ -2121,38 +1694,6 @@ class Shop {
 			$string = preg_replace('/[^a-zA-Z-0-9\-]/','', $string);
 			return str_replace('-',' ',strtolower($string));
 		}
-	}
-	
-	public function message($value) 
-	{
-		if(isset($this->messages)) { 
-			if(count($this->messages) > 10) {
-				$this->messages = array(); 
-			}
-			array_push($this->messages,$value);  
-			} else { 
-			$this->messages = array(); 
-		} 	
-	}
-
-	public function showmessage() 
-	{ 
-		if(isset($this->messages)) { 
-			echo "<pre>"; 
-			echo "<strong>Message:</strong>\r\n"; 
-			foreach($this->messages as $message) { 
-				echo $message . "\r\n" ; 
-			} echo "</pre>"; 
-		} 
-		$this->messages = array();
-	} 
-	
-	public function debug($rawdata) 
-	{
-		$string  = "<pre>";
-		$string .= print_r($rawdata);
-		$string .= "</pre>";
-		return $string;
 	}
 }
 

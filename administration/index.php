@@ -15,9 +15,12 @@
 	include("../resources/PHP/Class.ImageSanitize.php");
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
+	include("../core/JSON.Converter.php");
 	
-	$shop  		  = new Shop();
-	$cryptography = new Cryptography();
+	$shop  		  = new Shop;
+	$cryptography = new Cryptography;
+	$sanitizer 	  = new Sanitizer;
+	$converter 	  = new Converter;
 
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];
@@ -111,13 +114,13 @@ This part of the page should be placed behind a password protected area. No warr
 					$file = file_get_contents($uploaded_file); 
 					$name = $_FILES['json_file']['name'][$i];
 					
-					$upload = $shop->convert($file,'json_to_csv_admin',$name,'../inventory/backups/');
+					$upload = $converter->convert($file,'json_to_csv_admin',$name,'../inventory/backups/');
 
-					echo $j ."<div class=\"message\">Successfully upload ".$shop->sanitize($_FILES['json_file']['name'][$i],'table')." JSON and converted to CSV.</div>";
+					echo $j ."<div class=\"message\">Successfully upload ".$sanitizer->sanitize($_FILES['json_file']['name'][$i],'table')." JSON and converted to CSV.</div>";
 				
 				} else {
 					
-				echo $shop->sanitize($_FILES['json_file']['error'][$i],'table');
+				echo $sanitizer->sanitize($_FILES['json_file']['error'][$i],'table');
 			}
 			$j++;
 		}
@@ -150,7 +153,7 @@ This part of the page should be placed behind a password protected area. No warr
 				
 				$file = iconv('windows-1252', 'utf-8', file_get_contents($_FILES['csv_file']['tmp_name'][$i]));
 				
-				$showfile =  $shop->convert($file,'csv_to_json',$_FILES['csv_file']['name'][$i],'../inventory/backups/');
+				$showfile =  $converter->convert($file,'csv_to_json',$_FILES['csv_file']['name'][$i],'../inventory/backups/');
 				$f = str_replace('.csv','',$_FILES['csv_file']['name'][$i]);
 				
 				if(in_array($_FILES['csv_file']['name'][$i],$serverconfig_csv)) {
@@ -159,11 +162,11 @@ This part of the page should be placed behind a password protected area. No warr
 					$server_path = '../inventory/';
 				}
 
-				@chmod($server_path.$shop->sanitize($f,'alphanum').'.json',0777);
-				@chmod($server_path.'/csv/'.$shop->sanitize($_FILES['csv_file']['name'][$i]),0777);
+				@chmod($server_path.$sanitizer->sanitize($f,'alphanum').'.json',0777);
+				@chmod($server_path.'/csv/'.$sanitizer->sanitize($_FILES['csv_file']['name'][$i]),0777);
 
-				$json_upload = $shop->storedata($server_path.$shop->sanitize($f,'table').'.json',$showfile,'json'); 
-				$csv_upload = $shop->storedata($server_path.'/csv/'.$shop->sanitize($f,'table').'.csv',$file,'csv'); 
+				$json_upload = $shop->storedata($server_path.$sanitizer->sanitize($f,'table').'.json',$showfile,'json'); 
+				$csv_upload = $shop->storedata($server_path.'/csv/'.$sanitizer->sanitize($f,'table').'.csv',$file,'csv'); 
 
 					if($json_upload != true) {
 						
@@ -175,14 +178,14 @@ This part of the page should be placed behind a password protected area. No warr
 						
 						} else {
 							
-						echo "<div class=\"message\">".$j.": Successfully upload ".$shop->sanitize(str_ireplace('.csv','',$_FILES['csv_file']['name'][$i]),'alphanum').".csv and converted to JSON.</div>";
-						@chmod($server_path.$shop->sanitize($f,'alphanum').'.json',0755);
-						@chmod($server_path.'/csv/'.$shop->sanitize($_FILES['csv_file']['name'][$i]),0755);
+						echo "<div class=\"message\">".$j.": Successfully upload ".$sanitizer->sanitize(str_ireplace('.csv','',$_FILES['csv_file']['name'][$i]),'alphanum').".csv and converted to JSON.</div>";
+						@chmod($server_path.$sanitizer->sanitize($f,'alphanum').'.json',0755);
+						@chmod($server_path.'/csv/'.$sanitizer->sanitize($_FILES['csv_file']['name'][$i]),0755);
 					}
 
 				} else {
 					
-				echo $shop->sanitize($_FILES['csv_file']['error'][$i],'table');
+				echo $sanitizer->sanitize($_FILES['csv_file']['error'][$i],'table');
 			}
 			$j++;
 		}
@@ -207,19 +210,19 @@ This part of the page should be placed behind a password protected area. No warr
 				if($_POST['destination'] != '') {
 
 						$destination  = '../resources/images/';
-						$catfolder = strtolower($shop->sanitize($_POST['destination'],'dir'));
+						$catfolder = strtolower($sanitizer->sanitize($_POST['destination'],'dir'));
 						
 						if(strstr($catfolder,'../') || strstr($catfolder,'./'))  {
 							echo "<div class=\"alertmessage\">Directory traversal is not allowed.</div>".PHP_EOL;
 							exit;
 						} else {
 							
-							$destination .= strtolower($shop->sanitize($_POST['destination'],'dir'));
+							$destination .= strtolower($sanitizer->sanitize($_POST['destination'],'dir'));
 				
 							if (!is_dir($destination)) {
 								$createdir = mkdir($destination, 0777, true);
 								if($createdir == true) {
-									echo "<div class=\"message\">Directory did not exist, OpenShop created the new directory. (Be mindful that OpenShop does not allow special characters in directory names, including spaces).<br/>The new directory is named: ".$shop->sanitize($destination,'encode')."</div>".PHP_EOL;
+									echo "<div class=\"message\">Directory did not exist, OpenShop created the new directory. (Be mindful that OpenShop does not allow special characters in directory names, including spaces).<br/>The new directory is named: ".$sanitizer->sanitize($destination,'encode')."</div>".PHP_EOL;
 									$createdir = true;
 								} 
 							}
@@ -243,7 +246,7 @@ This part of the page should be placed behind a password protected area. No warr
 
 								if($_FILES['files']['error'][0] != 1) {
 											if($createdir) { 
-												move_uploaded_file($_FILES['files']['tmp_name'][$g], strtolower($destination).'/'.$shop->sanitize($_FILES['files']['name'][$g],'image')) or die('error: could not upload image.'); 
+												move_uploaded_file($_FILES['files']['tmp_name'][$g], strtolower($destination).'/'.$sanitizer->sanitize($_FILES['files']['name'][$g],'image')) or die('error: could not upload image.'); 
 												echo "<div class=\"message\">Image successfully uploaded.</div>";
 											}					
 										} else {

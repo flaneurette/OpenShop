@@ -15,13 +15,12 @@ class Debug {
 	
     public function init($params)
     {
-			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
     }
 	
-	public function debug($rawdata) 
+	public function output($rawdata) 
 	{
 		$string  = "<pre>";
 		$string .= print_r($rawdata);

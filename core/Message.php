@@ -1,10 +1,14 @@
 <?php
 
+include_once("Debug.php");
+
 class Message {
 	
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
+		$this->debug = new Debug;
+		isset($_SESSION['messages']) ? $this->messages = $_SESSION['messages'] : array();
 	}
 	
 	/**
@@ -15,7 +19,6 @@ class Message {
 	
     public function init($params)
     {
-			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
@@ -33,17 +36,18 @@ class Message {
 		} 	
 	}
 
-	public function showmessage() 
+	public function showmessage($messages) 
 	{ 
-		if(isset($this->messages)) { 
+		if(isset($messages)) { 
 			echo "<pre>"; 
 			echo "<strong>Message:</strong>\r\n"; 
-			foreach($this->messages as $message) { 
+			foreach($messages as $message) { 
 				echo $message . "\r\n" ; 
 			} echo "</pre>"; 
 		} 
-		$this->messages = array();
+		$messages = array();
 	} 
+
 }
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-class Sanitize {
+class Sanitizer {
 	
 	
 	CONST PHPENCODING 	= 'UTF-8';		// Characterset of PHP functions: (htmlspecialchars, htmlentities)
@@ -25,7 +25,7 @@ class Sanitize {
 			} catch(Exception $e) {}
     }
 
-	public function clean($string,$method='',$len=false) 
+	public function sanitize($string,$method='',$len=false) 
 	{
 		
 		$data = '';

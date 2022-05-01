@@ -4,7 +4,7 @@ if(isset($shop)) {
 	$host = $shop->host();
 	} else {
 	require("class.Shop.php");
-	$shop  = new Shop();
+	$shop  = new Shop;
 	$host = $shop->host();
 }
 
@@ -42,8 +42,10 @@ if(isset($logging)) {
 	if(trim($logging) == '1' || strtolower(trim($logging)) == 'yes') {
 		
 		$logginglocations = $shop->cleaninput($site[0]['site.logging.locations']);
+		include_once(__DIR__."/../../core/Sanitize.php");
+		$sanitizer = new Sanitizer;
 		
-		$uri = $shop->sanitize($_SERVER['REQUEST_URI'],'dir');
+		$uri = $sanitizer->sanitize($_SERVER['REQUEST_URI'],'dir');
 
 		if(strlen($uri) <= 100) {
 			

@@ -1,5 +1,7 @@
 <?php
 
+// TODO: connect class, +May 2022
+
 class GetProducts {
 	
 	public function __construct($params = array()) 

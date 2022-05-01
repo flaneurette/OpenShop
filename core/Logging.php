@@ -21,7 +21,7 @@ class Logging {
 			} catch(Exception $e) {}
     }
 	
-	public function store($dir)  {
+	public function log($dir)  {
 		
 		$storing  = 1;
 		$logfile  = self::LOGGINGDIR;

@@ -1,7 +1,7 @@
 [
     {
         "category.id": "1",
-		"category.order": "1",
+        "category.order": "1",
         "category.title": "index",
         "category.description": "Index page",
         "category.short.text": "",
@@ -15,12 +15,11 @@
         "category.image.right": "",
         "category.status": "",
         "category.meta.title": "",
-        "category.meta.description": "",
-        "": ""
+        "category.meta.description": ""
     },
     {
         "category.id": "2",
-		"category.order": "2",
+        "category.order": "2",
         "category.title": "jewelry",
         "category.description": "jewelry",
         "category.short.text": "",
@@ -38,7 +37,7 @@
     },
     {
         "category.id": "3",
-		"category.order": "3",
+        "category.order": "3",
         "category.title": "watches",
         "category.description": "watches",
         "category.short.text": "",
@@ -56,9 +55,9 @@
     },
     {
         "category.id": "4",
-		"category.order": "4",
-        "category.title": "",
-        "category.description": "",
+        "category.order": "4",
+        "category.title": "test",
+        "category.description": "test",
         "category.short.text": "",
         "category.long.text": "",
         "category.maxproducts": "",
@@ -74,6 +73,7 @@
     },
     {
         "category.id": "5",
+        "category.order": "5",
         "category.title": "",
         "category.description": "",
         "category.short.text": "",
@@ -91,6 +91,7 @@
     },
     {
         "category.id": "6",
+        "category.order": "6",
         "category.title": "",
         "category.description": "",
         "category.short.text": "",
@@ -108,6 +109,7 @@
     },
     {
         "category.id": "7",
+        "category.order": "7",
         "category.title": "",
         "category.description": "",
         "category.short.text": "",
@@ -125,6 +127,7 @@
     },
     {
         "category.id": "8",
+        "category.order": "8",
         "category.title": "",
         "category.description": "",
         "category.short.text": "",
