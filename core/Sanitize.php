@@ -3,7 +3,7 @@
 class Sanitizer {
 	
 	
-	CONST PHPENCODING 	= 'UTF-8';		// Characterset of PHP functions: (htmlspecialchars, htmlentities)
+	CONST PHPENCODING 	= 'UTF-8'; // Characterset of PHP functions: (htmlspecialchars, htmlentities)
 	CONST MAXINT  		= 9999999999;
 	
 	public function __construct($params = array()) 
@@ -17,13 +17,13 @@ class Sanitizer {
 	* @throws Exception
 	*/	
 	
-    public function init($params)
-    {
+    	public function init($params)
+    	{
 			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
-    }
+    	}
 
 	public function sanitize($string,$method='',$len=false) 
 	{
