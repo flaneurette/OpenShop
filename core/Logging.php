@@ -3,6 +3,8 @@
 class Logging {
 	
 	CONST LOGGINGDIR  = "server/logging/";
+	CONST LOGFILE	  = "log.log";
+	CONST MAXLOGSIZE  = 3000000; // 3Mb
 	
 	public function __construct($params = array()) 
 	{ 
@@ -15,19 +17,19 @@ class Logging {
 	* @throws Exception
 	*/	
 	
-    public function init($params)
-    {
+    	public function init($params)
+    	{
 			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
-    }
+    	}
 	
 	public function log($dir)  {
 		
 		$storing  = 1;
 		$logfile  = self::LOGGINGDIR;
-		$logfile .= $this->sanitize($dir,'alphanum') . '/log.log';		
+		$logfile .= $this->sanitize($dir,'alphanum') . '/'. self::LOGFILE;		
 		
 		$remoteaddr	 = $this->sanitize($this->remoteaddr,'log',50);
 		$useragent 	= $this->sanitize($this->useragent,'log',250);
@@ -50,16 +52,16 @@ class Logging {
 			$storing += 1;
 		}
 		if($querystring == false) {
-			//$storing += 1;
+			// $storing += 1;
 		}
 		if($referer == false) {
-			//$storing += 1;
+			// $storing += 1;
 		}	
 
 		if($storing == 1) {
 			if(file_exists($logfile)) {
-				if(filesize($logfile) > 3000000) {
-					//empty log
+				if(filesize($logfile) > self::MAXLOGSIZE) {
+					// empty log
 					@file_put_contents($logfile, "");
 					} else {
 						if(isset($this->referer)) {
