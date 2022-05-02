@@ -5,12 +5,12 @@ include_once("Sanitize.php");
 
 class Cryptography {
 
-	CONST MINHASHBYTES			= 32; 			// Min. of bytes for secure hash.
-	CONST MAXHASHBYTES			= 64; 			// Max. of bytes for secure hash, more increases cost. Max. recommended: 256 bytes.
-	CONST MINMERSENNE			= 0xff; 		// Min. value of the Mersenne twister.
-	CONST MAXMERSENNE			= 0xffffffff; 	// Max. value of the Mersenne twister.
+	CONST MINHASHBYTES = 32; 		// Min. of bytes for secure hash.
+	CONST MAXHASHBYTES = 64; 		// Max. of bytes for secure hash, more increases cost. Max. recommended: 256 bytes.
+	CONST MINMERSENNE  = 0xff; 		// Min. value of the Mersenne twister.
+	CONST MAXMERSENNE  = 0xffffffff; 	// Max. value of the Mersenne twister.
 	
-	private $pwd 	= 'ThisIsASecret';
+	private $pwd 	= 'ThisShouldBeAUniqueSecret'; // TODO +May 2022: Should be set upon installation
 	
 	public function __construct($params = array()) 
 	{ 
@@ -30,13 +30,13 @@ class Cryptography {
 	* @throws Exception
 	*/	
 	
-    public function init($params)
-    {
+    	public function init($params)
+    	{
 			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
-    }
+    	}
 
 	public function pseudoNonce($max=0xffffffff) {
 		$tmp_nonce = mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max).mt_rand(0,$max);
