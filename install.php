@@ -19,6 +19,8 @@
 
 <?php
 
+	error_reporting(E_ALL);
+	
 	session_start();
 
 	/***
@@ -737,7 +739,7 @@ Allow from '.$ip.'
 
 ?>
 
-<h2>Setup OpenShop</h2>
+<h1>Setup OpenShop</h1>
 <div>
 	<?php echo "All requirements were met. Continue to configure OpenShop";?>
 </div>
@@ -762,7 +764,20 @@ Allow from '.$ip.'
 						Currency:
 						<select name="admin_currency">
 						<?php
-						echo $shop->currencylist('bitcoin');
+						
+							$html = "";
+							
+							$currencies = $shop->load_json("server/config/currencies.conf.json");
+							
+								if($currencies !== null) {
+									$i=0;
+									foreach($currencies[0] as $key => $value)
+									{
+										$html .= "<option value=\"".$sanitizer->sanitize($key,'num')."\">".$currencies[0][$i]['sign']."</option>";
+										$i++;
+									}		
+								}
+								echo $html;
 						?>
 						</select>
 						<hr />
