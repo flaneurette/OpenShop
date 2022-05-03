@@ -124,19 +124,19 @@
 
 	if(!is_writable("inventory/backups/")) {
 		if(chmod("inventory/backups/",0777) == false) {
-			array_push($error, "Could not chmod the /inventory/backups/ directory. Please chmod the /inventory/backups/ folder manually to 0777, to write files to it.");
+			array_push($error, "Could not chmod the /inventory/backups/ directory. Please chmod the /inventory/backups/ folder manually to 0777.");
 		}
 	}
 	
 	if(!is_writable("server/config/site.conf.json")) {
 		if(chmod("server/config/site.conf.json",0777) == false) {
-			array_push($error, "Could not chmod the inventory. Please chmod the /inventory/ folder manually to 0777, to write files to it.");
+			array_push($error, "Could not chmod the inventory. Please chmod the /inventory/ folder manually to 0777.");
 		}
 	}
 
 	if(!is_writable("server/config/paypal.json")) {
 		if(chmod("server/config/paypal.json",0777) == false) {
-			array_push($error, "Could not chmod the paypal directory. Please chmod the /server/config/paypal.json folder manually to 0777, to write files to it.");
+			array_push($error, "Could not chmod the paypal directory. Please chmod the /server/config/paypal.json folder manually to 0777.");
 		}
 	}
 
@@ -154,30 +154,30 @@
 	
 	if(!is_writable("resources/images/")) {
 		if(chmod("resources/images/",0777) == false) {
-			array_push($error, "Could not chmod resources/images/. Please chmod the directory manually to 0777, to write files to it.");			
+			array_push($error, "Could not chmod resources/images/. Please chmod the directory manually to 0777.");			
 		}
 	}
 
 	if(!is_writable("resources/images/products/")) {
 		if(chmod("resources/images/products/",0777) == false) {
-			array_push($error, "Could not chmod resources/images/products/. Please chmod the directory manually to 0777, to write files to it.");			
+			array_push($error, "Could not chmod resources/images/products/. Please chmod the directory manually to 0777.");			
 		}
 	}
 	
 	if(!is_writable("resources/images/category/")) {
 		if(chmod("resources/images/category/",0777) == false) {
-			array_push($error, "Could not chmod resources/images/category/. Please chmod the directory manually to 0777, to write files to it.");			
+			array_push($error, "Could not chmod resources/images/category/. Please chmod the directory manually to 0777.");			
 		}
 	}	
 
 	if(!is_writable("administration/.htpasswd")) {
 
 		if(chmod("administration/",0777) == false) {
-			array_push($error, "Could not chmod the administration directory. Please chmod the /administration/ folder manually to 0777, to write files to it.");
+			array_push($error, "Could not chmod the administration directory. Please chmod the /administration/ folder manually to 0777.");
 		}
 		
 		if(chmod("administration/.htpasswd",0777) == false) {
-			array_push($error, "Could not chmod the .htpasswd file. Please chmod the file manually to 0777, to write files to it.");
+			array_push($error, "Could not chmod the .htpasswd file. Please chmod the file manually to 0777.");
 		}
 	}
 	
@@ -185,7 +185,7 @@
 	$httest = fopen("administration/.htpasswd", "w");
 	
 	if($httest == FALSE || $httest == false) {
-		array_push($error, "Could not open .htpassword for writing. Please make sure that the server is allowed to write to the administration folder. For example: In Apache, the folder should be chowned to www-data:www-data.");
+		array_push($error, "Could not open .htpassword for writing. In Apache, the folder should be chowned to www-data:www-data.");
 	}
 
 	/***
@@ -243,9 +243,16 @@
 		
 		echo '<h1>Installation failed.</h1>' . PHP_EOL . PHP_EOL;
 		
-			echo 'Could not install OpenShop. The following requirements were not met:'. PHP_EOL . PHP_EOL;
+		echo "<div class=\"installer-message\">";
+		echo "Please chown the shop folder to www-data:www-data or the user OpenShop is running under.<br /><br />";
+		echo "<code>chown -R www-data:www-data shopfolder</code><br /><br />";
+		echo "Usually, this will fix installer issues. It chowning does not work, proceed to the below instructions:";
+		echo "</div>";
+		
+		echo "Or:";
+	
 			echo '<pre>';
-					echo "<div class=\"installer-message\"><blockquote>";
+					echo "<div class=\"installer-message\">";
 					
 						$i=1;
 						
@@ -254,14 +261,8 @@
 							$i++;
 						}
 						
-					echo "</blockquote></div>";
+					echo "</div>";
 				
-				echo 'Please install and configure the above missing extensions or libraries.'. PHP_EOL . PHP_EOL;
-				
-				echo '<hr />' . PHP_EOL . PHP_EOL;
-				echo '<h1>Additional information:</h1>' . PHP_EOL . PHP_EOL;
-				
-				phpinfo();
 			echo '</pre>';
 			
 			exit;

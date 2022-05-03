@@ -7,7 +7,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 body {
-	 padding: 15px; 
+	padding: 45px; 
 	font-size: 1em;
 	font-family: "Helvetica Neue", Arial, "Noto Sans", sans-serif;
 	font-size: 1rem;
@@ -63,6 +63,14 @@ div {
 	*/
 }
 
+#wrapper {
+	border: 1px solid #999;
+    padding: 80px;
+    width: 60%;
+	border-radius: .55rem;
+}
+
+
 h1 {
 	color: #000;
 	font-family: 'Playfair Display', Georgia, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", serif;
@@ -86,7 +94,7 @@ textarea {
 	font-weight: 400;
 	line-height: 1.5;
 	color: #495057;
-	background-color: #ccc;
+	background-color: #efe;
 	border: 1px solid #ced4da;
 	border-radius: .15rem;
 	margin-bottom:5px;
@@ -342,7 +350,7 @@ h1 {
 
 .installer-message {
 	clear:both;
-	padding: 8px;
+	padding: 18px;
 	margin:	 8px;
 	font-size:12.5px;
 	background-color:#ff8990;
@@ -351,13 +359,13 @@ h1 {
 }
 	
 .installer-message-success {
-	clear:both;
-	padding: 8px;
-	margin:	 8px;
-	font-size:12.5px;
-	background-color: #0ff990;
-	border: 1px solid #00b900;
-	font-family:sans-serif, arial;
+	clear: both;
+    padding: 18px;
+    margin: 8px;
+    font-size: 12.5px;
+    background-color: #cf6;
+    border: 1px solid #00b900;
+    font-family: sans-serif, arial
 }
 
 #paypal {
@@ -366,5 +374,5 @@ h1 {
 }
 
 #paypal-email {
-	background-color: #00f166;
+	background-color: #cf6;
 }
