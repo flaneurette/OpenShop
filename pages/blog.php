@@ -48,7 +48,7 @@ include("../resources/PHP/Header.php");
 
 <div id="wrapper">
 
-	<h1>Blog</h1>
+	<h2>Blog</h2>
 		
 	<div id="ts-shop-page"></div>
 <?php

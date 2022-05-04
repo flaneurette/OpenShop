@@ -39,6 +39,7 @@ class Shop {
 		
 		$incomplete = false;
 		$this->maxcats = 0;
+		$this->subcategories = [];
 		
 		$host = $this->getbase();
 		
@@ -605,9 +606,9 @@ class Shop {
 				if($c['category.title'] !='') {
 					
 					if(isset($catselected) == isset($c['category.title'])) {
-						$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-cat-selected" onclick="OpenShop.toggle(\''.($c['category.id']-1).'\',\''.$totalcats.'\');" id="cat'.($c['category.id']-1).'"><a href="'.$hostaddr.'category/'.$this->seoUrl($c['category.title']).'/">'.$c['category.title'].'</a></li>'.PHP_EOL;
+						$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-cat-selected" onclick="OpenShop.toggle(\''.($c['category.id']-1).'\',\''.$totalcats.'\');" id="cat'.($c['category.id']-1).'"><a href="'.$hostaddr.'category/'.$this->seoUrl($c['category.title']).'/">'.ucfirst($c['category.title']).'</a></li>'.PHP_EOL;
 						} else {
-						$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-cat" onclick="OpenShop.toggle(\''.($c['category.id']-1).'\',\''.$totalcats.'\');" id="cat'.($c['category.id']-1).'"><a href="'.$hostaddr.'category/'.$this->seoUrl($c['category.title']).'/">'.$c['category.title'].'</a></li>'.PHP_EOL;
+						$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-cat" onclick="OpenShop.toggle(\''.($c['category.id']-1).'\',\''.$totalcats.'\');" id="cat'.($c['category.id']-1).'"><a href="'.$hostaddr.'category/'.$this->seoUrl($c['category.title']).'/">'.ucfirst($c['category.title']).'</a></li>'.PHP_EOL;
 					}
 					
 					$catid = (int)$c['category.id'];
@@ -617,14 +618,19 @@ class Shop {
 					if($totalsubcats >=1) {
 						foreach($subcategories as $sc) {	
 							if($catid == $sc['sub.category.cat.id']) {
+								
+								$subcat = '<a href="'.$hostaddr.'subcategory/'.$this->seoUrl($c['category.title']).'/'.$this->seoUrl($sc['sub.category.title']).'/">'.ucfirst($sc['sub.category.title']).'</a>';
+
+								array_push($this->subcategories,$subcat);
+								
 								if($j == 0) {
 									$html .= '<ul class="ts-shop-'.$cssdirection.'-navigation-subcat" id="toggle'.($c['category.id']-1).'">'.PHP_EOL;
 								}
 								
 								if(isset($subcatselected) == isset($sc['sub.category.title'])) {
-								$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-subcat-item-selected"><a href="'.$hostaddr.'subcategory/'.$this->seoUrl($c['category.title']).'/'.$this->seoUrl($sc['sub.category.title']).'/">'.$sc['sub.category.title'].'</a></li>'.PHP_EOL;
+								$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-subcat-item-selected">'.$subcat.'</li>'.PHP_EOL;
 									} else {
-								$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-subcat-item"><a href="'.$hostaddr.'subcategory/'.$this->seoUrl($c['category.title']).'/'.$this->seoUrl($sc['sub.category.title']).'/">'.$sc['sub.category.title'].'</a></li>'.PHP_EOL;	
+								$html .= '<li class="ts-shop-'.$cssdirection.'-navigation-subcat-item">'.$subcat.'</li>'.PHP_EOL;	
 								}
 								$j++;
 							}

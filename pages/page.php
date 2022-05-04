@@ -49,7 +49,7 @@ include("../resources/PHP/Header.php");
 
 <div id="wrapper">
 
-	<h1>Pages</h1>
+	<h2>Pages</h2>
 		
 	<div id="ts-shop-page"></div>
 <?php
