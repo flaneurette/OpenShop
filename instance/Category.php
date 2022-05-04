@@ -103,6 +103,7 @@ include("../resources/PHP/Header.php");
 </div>
 
 <?php
+include("../instance/Shopfloor.php");
 include("../resources/PHP/Footer.php");
 ?>
 <script>

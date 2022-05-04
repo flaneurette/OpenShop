@@ -45,7 +45,7 @@ include("../resources/PHP/Header.php");
 <div id="bio-wrapper">
 
 <div id="ts-shop-cart-form">
-<h1>Shopping Cart</h1>
+<h2>Shopping Cart</h2>
 
 	<?php 
 		
@@ -237,7 +237,7 @@ include("../resources/PHP/Header.php");
 		?>
 		</div>
 		<hr />
-		<h1>Checkout</h1>
+		<h2>Checkout</h2>
 		<hr />
 			<span>e-mailaddress:</span>
 			<div><input type="text" name="email" id="email-prepayment" size="25" value="" style="width:250px;" /></div>
