@@ -41,6 +41,7 @@
 		<?php
 		// Initialize logging for webshop traffic.
 		$shop->logging('shop');
+		include("instance/Shopfloor.php");
 		include("resources/PHP/Footer.php");
 		?>
 		<script language="JavaScript">
