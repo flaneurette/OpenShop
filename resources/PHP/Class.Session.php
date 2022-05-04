@@ -147,7 +147,7 @@ class Session {
 		
 		if($c > 0 ) { 
 
-			for($i = 0; $i <= $c; $i++) {
+			for($i = 0; $i < $c; $i++) {
 				
 					if(!isset($_SESSION['cart'][$i]['product.id'])) {
 						return 'Session could not be initialized due to offset error. Please reload the page.';
