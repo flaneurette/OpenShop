@@ -1266,3 +1266,26 @@ label {
 	padding:5px;
 	margin-top:80px;
 }
+
+#shop-floor {
+	position: absolute;
+    overflow-y: hidden;
+    clear: both;
+    /* width: 100%; */
+    background-color: #ddd;
+    height: 500px;
+    left: 0;
+    right: 0;
+    bottom: 10;
+    border-top: 5px solid #dcdcdc;
+	padding-left:170px;
+	padding-top:60px;
+}
+
+.shop-floor-item {
+	float:left;
+	width:100px;
+	border:1px solid #777;
+	text-align:center;
+	margin:10px;
+}
