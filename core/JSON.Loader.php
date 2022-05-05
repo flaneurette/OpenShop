@@ -24,12 +24,12 @@ class JSONLoader {
 	* @throws Exception
 	*/	
 	
-    public function init($params)
-    {
+   	public function init($params)
+	{
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
-    }
+   	}
 
 	public function load_json($url) 
 	{
