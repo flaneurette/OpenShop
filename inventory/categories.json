@@ -56,8 +56,8 @@
     {
         "category.id": "4",
         "category.order": "4",
-        "category.title": "test",
-        "category.description": "test",
+        "category.title": "",
+        "category.description": "",
         "category.short.text": "",
         "category.long.text": "",
         "category.maxproducts": "",

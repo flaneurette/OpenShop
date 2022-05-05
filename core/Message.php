@@ -8,6 +8,7 @@ class Message {
 	{ 
 		$this->init($params);
 		$this->debug = new Debug;
+		$this->messages = [];
 		isset($_SESSION['messages']) ? $this->messages = $_SESSION['messages'] : array();
 	}
 	
@@ -36,16 +37,16 @@ class Message {
 		} 	
 	}
 
-	public function showmessage($messages) 
+	public function showmessage() 
 	{ 
-		if(isset($messages)) { 
+		if(isset($this->messages)) { 
 			echo "<pre>"; 
 			echo "<strong>Message:</strong>\r\n"; 
-			foreach($messages as $message) { 
+			foreach($this->messages as $message) { 
 				echo $message . "\r\n" ; 
 			} echo "</pre>"; 
 		} 
-		$messages = array();
+		$this->messages = array();
 	} 
 
 }

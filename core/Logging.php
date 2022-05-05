@@ -1,5 +1,7 @@
 <?php
 
+require_once("Sanitize.php");
+
 class Logging {
 	
 	CONST LOGGINGDIR  = "server/logging/";
@@ -9,6 +11,7 @@ class Logging {
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
+		$this->sanitizer = new Sanitizer;
 	}
 	
 	/**
@@ -25,19 +28,19 @@ class Logging {
 			} catch(Exception $e) {}
     	}
 	
-	public function log($dir)  {
+	public function logging($dir)  {
 		
 		$storing  = 1;
 		$logfile  = self::LOGGINGDIR;
-		$logfile .= $this->sanitize($dir,'alphanum') . '/'. self::LOGFILE;		
+		$logfile .= $this->sanitizer->sanitize($dir,'alphanum') . '/'. self::LOGFILE;		
 		
-		$remoteaddr	 = $this->sanitize($this->remoteaddr,'log',50);
-		$useragent 	= $this->sanitize($this->useragent,'log',250);
-		$scriptname 	= $this->sanitize($this->scriptname,'log',255);
-		$querystring 	= $this->sanitize($this->querystring,'log',500);
+		$remoteaddr	 	= $this->sanitizer->sanitize($_SERVER['REMOTE_ADDR'],'log',50);
+		$useragent 		= $this->sanitizer->sanitize($_SERVER['HTTP_USER_AGENT'],'log',250);
+		$scriptname 	= $this->sanitizer->sanitize($_SERVER['SCRIPT_NAME'],'log',255);
+		$querystring 	= $this->sanitizer->sanitize($_SERVER['QUERY_STRING'],'log',500);
 		
 		if(isset($this->referer)) {
-			$referer  = $this->sanitize($this->referer,'log',500);	
+			$referer  = $this->sanitizer->sanitize($this->referer,'log',500);	
 			} else {
 			$referer  = '';
 		}
@@ -70,7 +73,7 @@ class Logging {
 							$refer = 'no-referer';
 						}
 					$log = date("F j, Y, g:i a") . ' - '. $remoteaddr.' - '.$useragent.' - '. $refer.' - '.$scriptname. ' - '.$querystring. PHP_EOL;
-					@file_put_contents($logfile, $this->sanitize($log,'log'), FILE_APPEND);
+					@file_put_contents($logfile, $this->sanitizer->sanitize($log,'log'), FILE_APPEND);
 				}
 			}
 		}

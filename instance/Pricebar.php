@@ -3,10 +3,12 @@
 	include("../resources/PHP/Header.inc.php");
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
+	require_once("../core/Logging.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography;
 	$sanitizer 	  = new Sanitizer;
+	$logger 	  = new Logging;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
@@ -66,7 +68,8 @@ include("../resources/PHP/Header.php");
 	</div>
 
 	<?php
-	$shop->logging('shop');
+	$logger->logging('Pricebar');
+	include("../instance/Shopfloor.php");
 	include("../resources/PHP/Footer.php");
 	?>
 	<script>

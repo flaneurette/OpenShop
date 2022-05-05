@@ -2,7 +2,8 @@
 
 	include("../resources/PHP/Header.inc.php");
 	include("../resources/PHP/Class.Shop.php");
-	include("../core/Cryptography.php");
+	include_once("../core/Cryptography.php");
+	include_once("../core/Logging.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography;
@@ -66,7 +67,9 @@ include("../resources/PHP/Header.php");
 	</div>
 
 	<?php
-	$shop->logging('shop');
+	$logging = new Logging;
+	$logging ->logging('Refine');
+	include("../instance/Shopfloor.php");
 	include("../resources/PHP/Footer.php");
 	?>
 	<script>

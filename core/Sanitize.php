@@ -17,14 +17,59 @@ class Sanitizer {
 	* @throws Exception
 	*/	
 	
-    	public function init($params)
-    	{
+    public function init($params)
+    {
 			
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
-    	}
+	}
 
+
+	/**
+	* Max string of user-input
+	* @param string, length and dots.
+	* @return string
+	*/
+	
+	public function maxstring($string,$len,$dots) 
+	{
+		$wordarray = explode(' ',$string);
+		
+		$returnstring = '';
+		
+		$c = count($wordarray);
+		
+		for($i = 0; $i < $c; $i++) {
+			
+			if(strlen($returnstring) >= $len) {
+				break;
+			} else {
+				$returnstring .= $wordarray[$i] . ' ';
+			}
+		}
+		
+		if($dots == true) {
+			$returnstring .= '...';
+		}
+		
+		return $returnstring;
+	}
+	
+	/**
+	* Sanitizes user-input
+	* @param string
+	* @return string
+	*/
+	public function cleaninput($string) 
+	{
+		if(is_array($string)) {
+			return @array_map("htmlspecialchars", $string, array(ENT_QUOTES, self::PHPENCODING));
+			} else {
+			return htmlspecialchars($string, ENT_QUOTES, self::PHPENCODING);
+		}
+	}
+	
 	public function sanitize($string,$method='',$len=false) 
 	{
 		
@@ -169,6 +214,38 @@ class Sanitizer {
 		return $this->data;
 	}
 	
+	public function format($string,$method=false) {
+		
+		$returnstring = '';
+		
+		switch($method) {
+			
+			case 'product-description':
+
+			$returnstring = $this->sanitize($string,'encode');
+			$returnstring = substr($returnstring,0,512);
+			
+			$find = ['\n','\r','\t'];
+			$replace = ['<br />','<br />','&emsp;'];
+			$returnstring = str_ireplace($find,$replace,htmlspecialchars($returnstring, ENT_QUOTES, 'UTF-8'));
+			return nl2br($returnstring);
+		
+			break;
+			
+			default:
+			$returnstring = $this->sanitize($string,'encode');
+			$returnstring = substr($returnstring,0,512);
+			
+			$find = ['\n','\r','\t'];
+			$replace = ['<br />','<br />','&emsp;'];
+			$returnstring = str_ireplace($find,$replace,htmlspecialchars($returnstring, ENT_QUOTES, 'UTF-8'));
+			return nl2br($returnstring);
+			
+			break;			
+		}
+		
+		return $returnstring;
+	}
 }
 
 ?>

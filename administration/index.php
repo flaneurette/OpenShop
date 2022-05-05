@@ -16,11 +16,13 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	include("../core/JSON.Converter.php");
+	include("../core/StoreData.php");
 	
-	$shop  		  = new Shop;
-	$cryptography = new Cryptography;
-	$sanitizer 	  = new Sanitizer;
-	$converter 	  = new Converter;
+	$shop  		  		= new Shop;
+	$cryptography 		= new Cryptography;
+	$sanitizer 	  		= new Sanitizer;
+	$converter 	  		= new Converter;
+	$storagecontainer 	= new StoreData;
 
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];
@@ -165,8 +167,8 @@ This part of the page should be placed behind a password protected area. No warr
 				@chmod($server_path.$sanitizer->sanitize($f,'alphanum').'.json',0777);
 				@chmod($server_path.'/csv/'.$sanitizer->sanitize($_FILES['csv_file']['name'][$i]),0777);
 
-				$json_upload = $shop->storedata($server_path.$sanitizer->sanitize($f,'table').'.json',$showfile,'json'); 
-				$csv_upload = $shop->storedata($server_path.'/csv/'.$sanitizer->sanitize($f,'table').'.csv',$file,'csv'); 
+				$json_upload = $storagecontainer->storedata($server_path.$sanitizer->sanitize($f,'table').'.json',$showfile,'json'); 
+				$csv_upload = $storagecontainer->storedata($server_path.'/csv/'.$sanitizer->sanitize($f,'table').'.csv',$file,'csv'); 
 
 					if($json_upload != true) {
 						

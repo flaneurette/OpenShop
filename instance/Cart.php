@@ -203,14 +203,14 @@ include("../resources/PHP/Header.php");
 			}
 			
 			$cobox = false;
-			$siteconf1 = $shop->load_json("../server/config/shipping.conf.json");
-			$siteconf2 = $shop->load_json("../server/config/site.conf.json");
+			$siteconf1 = $shop->json->load_json("../server/config/shipping.conf.json");
+			$siteconf2 = $shop->json->load_json("../server/config/site.conf.json");
 			
 			$carbonoffsetting = $shop->getasetting($siteconf2,'site.carbonoffset');
 
-			if($carbonoffsetting["site.carbonoffset"] == '1') {
+			if($carbonoffsetting == '1') {
 				
-				$coprices = $carbonoffsetting["site.carbonoffset.prices"];
+				$coprices = $carbonoffsetting;
 				
 				if(stristr($coprices,',')) {
 					

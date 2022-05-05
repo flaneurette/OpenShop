@@ -7,10 +7,9 @@
 	
 	$cryptography = new Cryptography();
 	
-	$shop = new Shop;
-	$session = new Session;
-	$messages = new Message;
-	$sanitizer 	  = new Sanitizer;
+	$shop 			= new Shop;
+	$session 		= new Session;
+	$sanitizer 	  	= new Sanitizer;
 	
 	$session->sessioncheck();
 	$addedvalue = false;
@@ -282,7 +281,7 @@ include("../resources/PHP/Header.php");
 				}
 			}
 			
-			$siteconf = $shop->load_json("../server/config/shipping.conf.json");
+			$siteconf = $shop->json->load_json("../server/config/shipping.conf.json");
 			$countryprice = $shop->getcountryprice($siteconf,$shippingcountry);
 	
 			if($countryprice != false) {
@@ -294,9 +293,9 @@ include("../resources/PHP/Header.php");
 			// free shipping logic.
 			
 			$free = false;
-			$siteconf 	= $shop->load_json("../server/config/site.conf.json");
+			$siteconf 	= $shop->json->load_json("../server/config/site.conf.json");
 			$freeshipping = $shop->getasetting($siteconf,'site.freeshipping');
-			$freeshipping = $freeshipping["site.freeshipping"];
+			$freeshipping = $freeshipping;
 			
 			if($freeshipping != '' || $freeshipping != null) {
 				if((int)$freeshipping >= 1) {
@@ -336,7 +335,7 @@ include("../resources/PHP/Header.php");
 				// there was a product without tax, get country tax.
 				$country_tx = str_replace('shipping.','',$shippingcountry);
 				$shippingcountry = 'tax.' . strtolower($country_tx);
-				$json = $shop->load_json("../server/config/tax.conf.json");
+				$json = $shop->json->load_json("../server/config/tax.conf.json");
 							
 					if($json !== null) {
 						if($json[0][$shippingcountry] != null && $json[0][$shippingcountry] != '') {

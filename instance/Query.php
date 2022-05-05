@@ -11,7 +11,7 @@ if(isset($shop)) {
 	$host = $shop->gethost("../server/config/site.conf.json");
 	} else {
 	require("../resources/PHP/Class.Shop.php");
-	$shop  = new Shop;
+	$shop  		= new Shop;
 	$host 		= $shop->gethost("../server/config/site.conf.json");
 	$host_path 	= $shop->gethost("../server/config/site.conf.json",true);
 }

@@ -1,5 +1,7 @@
 <?php
 
+require_once("Backup.php");
+
 class StoreData {
 	
 	
@@ -9,6 +11,7 @@ class StoreData {
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
+		$this->backups = new Backup;
 	}
 	
 	/**
@@ -23,6 +26,22 @@ class StoreData {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
     }
+	
+	/**
+	* Encodes JSON object
+	* @param shop
+	* @return void
+	*/
+	
+	public function encode($json) 
+	{
+		if($json === false || $json === NULL) {
+			$this->message("Error: Could not load JSON. JSON data is either false or NULL.");
+			exit;
+			} else {
+			return json_encode($json, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);	
+		}
+	}
 	
 	/**
 	* Store data used in admin and install
@@ -40,7 +59,7 @@ class StoreData {
 			}
 			
 			if($backup != false) {
-				$this->backup($url,$backup);
+				$this->backups->backup($url,$backup);
 			}
 
 			file_put_contents($url,$json, LOCK_EX);
