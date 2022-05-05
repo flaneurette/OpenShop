@@ -29,12 +29,13 @@
 
 	include("resources/PHP/Class.Shop.php");
 	include("core/Cryptography.php");
-	include("core/Backup.php");
+	include("core/StoreData.php");
 	
 	$shop = new Shop;
-	$cryptography = new Cryptography;
-	$sanitizer 	  = new Sanitizer;
-	$backups 	  = new Backup;
+	$cryptography 		= new Cryptography;
+	$sanitizer 	  		= new Sanitizer;
+	$backups 	 		= new Backup;
+	$storagecontainer 	= new StoreData;
 	
 	$versioning = PHP_VERSION_ID;
 	$error = [];
@@ -634,7 +635,7 @@ Allow from '.$ip.'
 				
 				$keys = 'server/config/site.conf.json';
 				$backups->backup($keys);
-				$json = $shop->load_json($keys); 
+				$json = $shop->json->load_json($keys); 
 				
 				$json[0]["site.canonical"] 	= $ts_shop_folder;
 				$json[0]["site.url"] 		= $sanitizer->sanitize($_POST['admin_website'],'url');
@@ -694,7 +695,7 @@ Allow from '.$ip.'
 					$json[0]["site.socialmedia.option5"] = $sanitizer->sanitize($_POST['socialmedia_option5'],'url');
 				}
 		
-				$shop->storedata($keys,$json);
+				$storagecontainer->storedata($keys,$json);
 
 				/***
 				/* Store PayPal JSON configuration.
@@ -702,11 +703,11 @@ Allow from '.$ip.'
 				
 				$keys_paypal = 'server/config/paypal.json';
 				$backups->backup($keys_paypal);
-				$json_paypal = $shop->load_json($keys_paypal); 		
+				$json_paypal = $shop->json->load_json($keys_paypal); 		
 				$json_paypal[0]["paypal.domain"] = $sanitizer->sanitize($_POST['admin_website'],'url');		
 				$json_paypal[0]["paypal.email"] = $sanitizer->sanitize($_POST['admin_paypal_email'],'url');
 				
-				$shop->storedata($keys_paypal,$json_paypal);
+				$storagecontainer->storedata($keys_paypal,$json_paypal);
 
 		/***
 		/* If successful, show the following message.
@@ -767,7 +768,7 @@ Allow from '.$ip.'
 						
 							$html = "";
 							
-							$currencies = $shop->load_json("server/config/currencies.conf.json");
+							$currencies = $shop->json->load_json("server/config/currencies.conf.json");
 							
 								if($currencies !== null) {
 									$i=0;

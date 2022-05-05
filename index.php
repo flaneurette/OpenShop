@@ -2,6 +2,7 @@
 	include("resources/PHP/Header.inc.php");
 	include("resources/PHP/Class.Shop.php");
 	include("instance/Init.php");
+	include_once("core/Logging.php");
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,14 +34,17 @@
 						<div id="ts-shop-nav">
 						<?php
 						$products = $shop->getproducts('list','index',false,false,false,$token);
-						echo $products[1];	
+						if(isset($products)) {
+							echo $products[1];
+						}						
 						?>
 					</div>
 				</div>
 			</div>
 		<?php
 		// Initialize logging for webshop traffic.
-		$shop->logging('shop');
+		$logging = new Logging;
+		$logging ->logging('shop');
 		include("instance/Shopfloor.php");
 		include("resources/PHP/Footer.php");
 		?>
