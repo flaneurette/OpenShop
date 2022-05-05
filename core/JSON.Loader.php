@@ -6,10 +6,10 @@ require_once("Sanitize.php");
 
 class JSONLoader {
 	
-	CONST INVENTORY_PATH 		= "";
-	CONST SITECONF				= "server/config/site.conf.json";
-	CONST INVENTORY				= "inventory/shop.json";
-	CONST DEPTH					= 10024;
+	CONST INVENTORY_PATH 	= "";
+	CONST SITECONF		= "server/config/site.conf.json";
+	CONST INVENTORY		= "inventory/shop.json";
+	CONST DEPTH		= 10024;
 		
 	public function __construct($params = array()) 
 	{ 
