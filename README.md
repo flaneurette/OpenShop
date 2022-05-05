@@ -77,7 +77,7 @@ OpenShop checks all requirements and if satisfied, the package should be install
 <a name="Requirements"></a>
 
 # Requirements
-- PHP 5.6+ (the higher the better) PHP 8 is supported, but might not be optimized.
+- PHP 5.6+ (the higher the better) PHP 8 is supported!
 - PHP extensions (the installer will check on them and prompt for missing extensions)
 - Sendmail or Postfix
 - Server module: (Apache) mod_rewrite for .htaccess functionalities. The .htaccess is written dynamically upon installing. By default, a standard .htaccess is present.
