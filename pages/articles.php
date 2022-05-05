@@ -1,11 +1,13 @@
 <?php
 
-	include("../resources/PHP/Header.inc.php");
-	include("../resources/PHP/Class.Shop.php");
-	include("../core/Cryptography.php");
+	require_once("../resources/PHP/Header.inc.php");
+	require_once("../resources/PHP/Class.Shop.php");
+	require_once("../core/Cryptography.php");
+	require_once("../core/Sanitize.php");
 	
 	$shop  		  = new Shop;
-	$cryptography = new Cryptography();
+	$cryptography = new Cryptography;
+	$sanitizer 	  = new Sanitizer;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
@@ -71,31 +73,31 @@ include("../resources/PHP/Header.php");
 						<div class="ts-shop-page-item-header-focus">
 						<?php
 						if(strlen($row['article.image.header']) > 30) {
-							echo '<img src="' . str_replace('../','',$baseurl.$shop->cleanInput($row['article.image.header'])) . '" />';
+							echo '<img src="' . str_replace('../','',$baseurl.$sanitizer->cleaninput($row['article.image.header'])) . '" />';
 						}
 						?>
 						</div>
 						<div class="ts-shop-page-item-main">
 							<div class="ts-shop-page-item-title">
-							<h1><?php echo $shop->cleanInput($row['article.title']);?></h1>
+							<h1><?php echo $sanitizer->cleaninput($row['article.title']);?></h1>
 							</div>
 							<div class="ts-shop-page-item-titles">
 								<?php 
 								
 								if(isset($row['article.handle']) != '') {
-									echo '<span class="ts-shop-page-item-author">By '.$shop->cleanInput($row['article.handle']).'</span>';
+									echo '<span class="ts-shop-page-item-author">By '.$sanitizer->cleaninput($row['article.handle']).'</span>';
 									} elseif(isset($row['article.author']) != '') { 
-									echo '<span class="ts-shop-page-item-author">By '.$shop->cleanInput($row['article.author']).'</span>';
+									echo '<span class="ts-shop-page-item-author">By '.$sanitizer->cleaninput($row['article.author']).'</span>';
 								} else {}
 								
 								?>
-								<span class="ts-shop-page-item-date"><?php echo $shop->cleanInput($row['article.published']);?></span>
+								<span class="ts-shop-page-item-date"><?php echo $sanitizer->cleaninput($row['article.published']);?></span>
 							</div>
-							<div class="ts-shop-page-item-textbox"><?php echo $shop->cleanpageoutput($row['article.long.text']);?></div>
+							<div class="ts-shop-page-item-textbox"><?php echo $sanitizer->format($row['article.long.text']);?></div>
 							
 							</div>
 							<div class="ts-shop-page-item-main-footer">
-								<span class="ts-shop-page-item-tags"><?php echo $shop->cleanInput($row['article.tags']);?></span>
+								<span class="ts-shop-page-item-tags"><?php echo $sanitizer->cleaninput($row['article.tags']);?></span>
 							</div>
 						</div>	
 					</div>
@@ -111,32 +113,32 @@ include("../resources/PHP/Header.php");
 				<div class="ts-shop-page-item-header">
 				<?php
 				if(strlen($row['article.image.header']) > 30) {
-					echo '<img src="'.$shop->cleanInput($row['article.image.header']).'" />';
+					echo '<img src="'.$sanitizer->cleaninput($row['article.image.header']).'" />';
 				}
 				?>
 				</div>
 				<div class="ts-shop-page-item-main">
 					<div class="ts-shop-page-item-title">
-					<h1><?php echo $shop->cleanInput($row['article.title']);?></h1>
+					<h1><?php echo $sanitizer->cleaninput($row['article.title']);?></h1>
 					</div>
 					<div class="ts-shop-page-item-titles">
 								<?php 
 								
 								if($row['article.handle'] != '') {
-									echo '<span class="ts-shop-page-item-author">By '.$shop->cleanInput($row['article.handle']).'</span>';
+									echo '<span class="ts-shop-page-item-author">By '.$sanitizer->cleaninput($row['article.handle']).'</span>';
 									} elseif($row['article.author'] != '') { 
-									echo '<span class="ts-shop-page-item-author">By '.$shop->cleanInput($row['article.author']).'</span>';
+									echo '<span class="ts-shop-page-item-author">By '.$sanitizer->cleaninput($row['article.author']).'</span>';
 								} else {}
 								
 								?>
-						<span class="ts-shop-page-item-date"><?php echo $shop->cleanInput($row['article.published']);?></span>
+						<span class="ts-shop-page-item-date"><?php echo $sanitizer->cleaninput($row['article.published']);?></span>
 					</div>
-					<div class="ts-shop-page-item-textbox"><?php echo $shop->cleanInput($row['article.short.text']);?></div>
+					<div class="ts-shop-page-item-textbox"><?php echo $sanitizer->cleaninput($row['article.short.text']);?></div>
 					
 					</div>
 					<div class="ts-shop-page-item-main-footer">
-						<span class="ts-shop-page-item-rm"><a href="<?php echo (int)$shop->cleanInput($row['article.id']);?>/<?php echo $shop->seoUrl($shop->cleanInput($row['article.title']));?>/">read more &raquo;</a></span> 
-						<span class="ts-shop-page-item-tags"><?php echo $shop->cleanInput($row['article.tags']);?></span>
+						<span class="ts-shop-page-item-rm"><a href="<?php echo (int)$sanitizer->cleaninput($row['article.id']);?>/<?php echo $shop->seoUrl($sanitizer->cleaninput($row['article.title']));?>/">read more &raquo;</a></span> 
+						<span class="ts-shop-page-item-tags"><?php echo $sanitizer->cleaninput($row['article.tags']);?></span>
 					</div>
 				</div>	
 			</div>

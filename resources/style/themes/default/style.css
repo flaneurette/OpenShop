@@ -1209,17 +1209,20 @@ label {
 }
 
 .product-images {
-	clear:auto;
-	min-width:70%;
-	float: left;	
-	margin:5px;
+    clear: auto;
+    min-width: 70%;
+    float: left;
+    margin: 5px;
+	padding: 0px;
+    padding-right: 5px;
 }
 
 .product-images-item {
 	float:left;
 	margin:auto;
 	width: 10%;
-	padding:5px;
+	padding:0px;
+	padding-right:5px;
 	height: 80px;
 }
 .product-images-item img {

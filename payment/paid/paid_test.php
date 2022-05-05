@@ -3,11 +3,11 @@
 	include("../../resources/PHP/Header.inc.php");
 	include("../../resources/PHP/Class.Session.php");
 	include("../../resources/PHP/Class.SecureMail.php");
-	include("../../Class.Shop.php");
-	include("../../core/Sanitize.php");
+	include("../../resources/PHP/Class.Shop.php");
+	include("../../core/Invoicer.php");
 	
-	$shop = new Shop;
-	$sanitizer 	= new Sanitizer;
+	$shop 		= new Shop;
+	$invoicer   = new Invoicer;
 	
 	$hostaddr = $shop->getbase();
 	
@@ -20,17 +20,17 @@
 
 		// edit this to test the mail function:
 
-		$receiver_email = 'you@domain.tld';
-		$payer_email = 'buyer@gmail.com';
-		$email = 'admin@yourdomain.tld';
+		$receiver_email = 'info@example.com';
+		$payer_email = 'info@example.com';
+		$email = 'info@example.com';
 
 	$paypalinvoice = 1223;
 	
 	$dir = 	'../../server/config/orders.conf.json';
 	
-	$invoiceid = $shop->invoiceid($dir,'get');
+	$invoiceid = $invoicer->invoiceid($dir,'get');
 	
-	$shop->invoiceid('set',$invoiceid+1);
+	$invoicer->invoiceid('set',$invoiceid+1);
 
 	$sitecurrency = $shop->getsitecurrency('../../server/config/site.conf.json','../../server/config/currencies.conf.json');
 	$shippingcountry = $sanitizer->sanitize('Germany','encode');

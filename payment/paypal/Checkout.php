@@ -3,17 +3,18 @@
 	include("../../resources/PHP/Header.inc.php");
 	include("../../resources/PHP/Class.Session.php");
 	include("../../resources/PHP/Class.Shop.php");
-	include("../../core/Message.php");
+	include("../../core/Invoicer.php");
 	
 	$session = new Session;
 	$messages = new Message;
 	$sanitizer 	= new Sanitizer;
+	$invoicer   = new Invoicer;
 
 	$session->sessioncheck();
 	
 	$shop  	= new Shop;
 	
-	$shopconf = $shop->load_json("../../server/config/paypal.json");
+	$shopconf = $shop->json->load_json("../../server/config/paypal.json");
 
 	if(strtolower($_SERVER['REQUEST_METHOD']) != 'post') {
 		$messages->message('Checkout page cannot be accessed this way.');
@@ -79,7 +80,7 @@
 	
 	$dir = 	'../../server/config/orders.conf.json';
 	
-	$invoiceid = $shop->invoiceid($dir,'get');
+	$invoiceid = $invoicer->invoiceid($dir,'get');
 	
 	if($invoiceid > 0) {
 		$invoiceid = ($invoiceid +1);
@@ -103,12 +104,12 @@
 	$shipping_price = $country_price;
 	
 	// PayPal variables: only edit this in paypal.json!
-	$paypal_domain 			= $shop->cleanInput($shopconf[0]['paypal.domain']);
-	$paypal_cancel_page 		= $shop->cleanInput($shopconf[0]['paypal.cancel.page']);
-	$paypal_return_page 		= $shop->cleanInput($shopconf[0]['paypal.return.page']);
-	$paypal_email 			= $shop->cleanInput($shopconf[0]['paypal.email']);
-	$paypal_notify_url 		= $shop->cleanInput($shopconf[0]['paypal.notify.url']);
-	$paypal_currency_code 		= $shop->cleanInput($shopconf[0]['paypal.currency.code']);
+	$paypal_domain 			= $sanitizer->cleaninput($shopconf[0]['paypal.domain']);
+	$paypal_cancel_page 		= $sanitizer->cleaninput($shopconf[0]['paypal.cancel.page']);
+	$paypal_return_page 		= $sanitizer->cleaninput($shopconf[0]['paypal.return.page']);
+	$paypal_email 			= $sanitizer->cleaninput($shopconf[0]['paypal.email']);
+	$paypal_notify_url 		= $sanitizer->cleaninput($shopconf[0]['paypal.notify.url']);
+	$paypal_currency_code 		= $sanitizer->cleaninput($shopconf[0]['paypal.currency.code']);
 	$paypal_invoice_number 		= $invoiceid;
 	
 	if(empty($paypal_invoice_number)) {
@@ -116,20 +117,20 @@
 		$paypal_invoice_number 	= 1;
 	}
 	
-	$paypal_image_url 			= $shop->cleanInput($shopconf[0]['paypal.image.url']);
+	$paypal_image_url 			= $sanitizer->cleaninput($shopconf[0]['paypal.image.url']);
 	
 	if(empty($paypal_image_url)) {
 		$paypal_image_url 		= 'http://www.paypal.com/en_US/i/btn/x-click-but01.gif';
 	}
 	
-	$paypal_no_note 			= $shop->cleanInput($shopconf[0]['paypal.no.note']);
-	$paypal_no_shipping 		= $shop->cleanInput($shopconf[0]['paypal.no.shipping']);
-	$paypal_on0 				= $shop->cleanInput($shopconf[0]['paypal.on0']);
-	$paypal_on1 				= $shop->cleanInput($shopconf[0]['paypal.on1']);
-	$paypal_os0 				= $shop->cleanInput($shopconf[0]['paypal.os0']);
-	$paypal_os1 				= $shop->cleanInput($shopconf[0]['paypal.os1']);
-	$paypal_show_user_details 	= $shop->cleanInput($shopconf[0]['paypal.show.user.details']);
-	$paypal_store_user_details 	= $shop->cleanInput($shopconf[0]['paypal.store.user.details']);
+	$paypal_no_note 			= $sanitizer->cleaninput($shopconf[0]['paypal.no.note']);
+	$paypal_no_shipping 		= $sanitizer->cleaninput($shopconf[0]['paypal.no.shipping']);
+	$paypal_on0 				= $sanitizer->cleaninput($shopconf[0]['paypal.on0']);
+	$paypal_on1 				= $sanitizer->cleaninput($shopconf[0]['paypal.on1']);
+	$paypal_os0 				= $sanitizer->cleaninput($shopconf[0]['paypal.os0']);
+	$paypal_os1 				= $sanitizer->cleaninput($shopconf[0]['paypal.os1']);
+	$paypal_show_user_details 	= $sanitizer->cleaninput($shopconf[0]['paypal.show.user.details']);
+	$paypal_store_user_details 	= $sanitizer->cleaninput($shopconf[0]['paypal.store.user.details']);
 	
 	/*
 	* doc: https://developer.paypal.com/docs/paypal-payments-standard/integration-guide/Appx-websitestandard-htmlvariables/#individual-items-variables

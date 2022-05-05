@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__."/../../core/Logging.php");
+
 if(isset($shop)) {
 	$host = $shop->host();
 	} else {
@@ -8,15 +10,17 @@ if(isset($shop)) {
 	$host = $shop->host();
 }
 
+$logger = new Logging;
+
 $logging 		= false;
 $logginglocations 	= false;
 $path 			= '';
-$site 			= $shop->load_json("server/config/site.conf.json");
-$title 			= $shop->cleaninput($site[0]['site.title']);
-$logging 		= $shop->cleaninput($site[0]['site.logging']);
-$searchbar  	= $shop->cleaninput($site[0]['site.searchbar']);
-$pricebar  		= $shop->cleaninput($site[0]['site.pricebar']);
-$optionbar  	= $shop->cleaninput($site[0]['site.optionbar']);
+$site 			= $shop->json->load_json("server/config/site.conf.json");
+$title 			= $shop->sanitizer->cleaninput($site[0]['site.title']);
+$logging 		= $shop->sanitizer->cleaninput($site[0]['site.logging']);
+$searchbar  	= $shop->sanitizer->cleaninput($site[0]['site.searchbar']);
+$pricebar  		= $shop->sanitizer->cleaninput($site[0]['site.pricebar']);
+$optionbar  	= $shop->sanitizer->cleaninput($site[0]['site.optionbar']);
 
 
 if(!$searchbar) {
@@ -34,18 +38,16 @@ if(!$optionbar) {
 if(!$pricebar) {
 	$pricebar	= false;
 } else {
-	$pricebarvalues  = $shop->cleaninput($site[0]['site.pricebar.values']);
+	$pricebarvalues  = $shop->sanitizer->cleaninput($site[0]['site.pricebar.values']);
 }
 
 if(isset($logging)) {
 	
 	if(trim($logging) == '1' || strtolower(trim($logging)) == 'yes') {
 		
-		$logginglocations = $shop->cleaninput($site[0]['site.logging.locations']);
-		include_once(__DIR__."/../../core/Sanitize.php");
-		$sanitizer = new Sanitizer;
+		$logginglocations = $shop->sanitizer->cleaninput($site[0]['site.logging.locations']);
 		
-		$uri = $sanitizer->sanitize($_SERVER['REQUEST_URI'],'dir');
+		$uri = $shop->sanitizer->sanitize($_SERVER['REQUEST_URI'],'dir');
 
 		if(strlen($uri) <= 100) {
 			
@@ -90,11 +92,11 @@ if(isset($logging)) {
 		if(stristr($logginglocations,',')) {
 			$locations = explode(',',$logginglocations);
 			if(in_array($path,$locations)) {
-				$shop->logging($path);
+				$logger->logging($path);
 			}
 		} else {
 			if(strlen($logginglocations) >=4) {
-				$shop->logging($path);
+				$logger->logging($path);
 			}
 		}
 	}

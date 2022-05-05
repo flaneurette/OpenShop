@@ -5,12 +5,13 @@
 	include("../../resources/PHP/Class.SecureMail.php");
 	include("../../resources/PHP/Class.Shop.php");
 	include("../../core/Message.php");
-	include("../../core/Sanitize.php");
+	include("../../core/Invoicer.php");
 	
-	$shop 	  = new Shop;
-	$session  = new Session;
-	$messages = new Message;
+	$shop 	  	= new Shop;
+	$session  	= new Session;
+	$messages 	= new Message;
 	$sanitizer 	= new Sanitizer;
+	$invoicer   = new Invoicer;
 		
 	$hostaddr = $shop->getbase();
 	
@@ -21,7 +22,7 @@
 		$token = $_SESSION['token'];
 		
 			if($token != $_GET['token']) {
-				$messages->message('Transaction completed, however token is incorrect. Please contact the shop owner if issues arrive through either e-mail or the contact form. N.B. The shopowner has not been notified of this error.');
+				$message = $messages->message('Transaction completed, however token is incorrect. Please contact the shop owner if issues arrive through either e-mail or the contact form. N.B. The shopowner has not been notified of this error.');
 				$messages->showmessage();
 				exit;
 			}
@@ -52,7 +53,7 @@
 	
 	$dir = 	'../../server/config/orders.conf.json';
 	
-	$invoiceid = $shop->invoiceid($dir,'get');
+	$invoiceid = $invoicer->invoiceid($dir,'get');
 	
 	if($paypalinvoice != $invoiceid) {
 
@@ -61,12 +62,12 @@
 				$invoicediff = ($invoiceid - $_SESSION['invoiceid']);
 
 				if($invoicediff == 1) {
-					$shop->invoiceid($dir,'set',$invoiceid+1);
+					$invoicer->invoiceid($dir,'set',$invoiceid+1);
 					} elseif($invoicediff > 1) {
 					// certainly race condition.
 					// mail shop owner here
 					} else {
-					$shop->invoiceid($dir,'set',$invoiceid+1);
+					$invoicer->invoiceid($dir,'set',$invoiceid+1);
 				}
 	
 	} else {
