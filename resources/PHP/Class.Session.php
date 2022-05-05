@@ -142,8 +142,12 @@ class Session {
 			$obj['product.qty'] = 1;
 		}
 	
-		
-		$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
+		if(isset($_SESSION['cart'])) {
+			$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
+		} else {
+			$_SESSION['cart'] = [];
+			$_SESSION['cart'] = $this->unique_array($_SESSION['cart'], 'product.id');
+		}
 		
 		if($c > 0 ) { 
 
