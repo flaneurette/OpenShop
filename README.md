@@ -33,7 +33,6 @@ Is a barebones opensource webshop software, written in PHP and flat file JSON.
 1. [CSV files of interest](#CSV-files-of-interest)
 1. [JSON values and parameters](#JSON-values-and-parameters)
 1. [Custom programming](#Custom-programming)
-1. [Loading a JSON file](#Loading-a-JSON-file)
 1. [Product list demo](#Product-list-demo)
 1. [Security Policy](#Security-Policy)
 1. [Reporting a Vulnerability](#Reporting-a-Vulnerability)
@@ -522,26 +521,7 @@ $products = $shop->getproducts('list','index');
 echo $products[1];
 			
 ```
-<a name="Loading-a-JSON-file"></a>
 
-# Loading a JSON file
-```
-include("resources/php/header.inc.php");
-include("class.Shop.php");
-
-$shop     = new Shop();
-
-$shopconf = $shop->load_json("server/config/shop.conf.json");
-
-foreach($shopconf as $row)
-{
-	foreach($row as $key => $value)
-	{
-	echo "<b>".$key."</b>".':'.$value.'<br>';
-	}
-}
-	
-```
 <a name="Product-list-demo"></a>
 
 # Product list demo
