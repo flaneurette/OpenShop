@@ -1,10 +1,17 @@
+<?php
+
+require_once("core/PriceBar.php");
+$pricebar = new PriceBar;
+
+?>
 <div id="pricebar">
-	<div class="pricebar-item">PRICEBAR</div>
+	<h2>PRICEBAR</h2>
 				<div>
 						<ul>
 								<?php 
+										
 										if(isset($pricebarvalues)) {
-											echo $shop->getpricebar($pricebarvalues);
+											echo $pricebar->getpricebar($pricebarvalues);
 										}
 								?>
 						</ul>

@@ -6,10 +6,10 @@ require_once("Sanitize.php");
 
 class JSONLoader {
 	
-	CONST INVENTORY_PATH 	= "";
-	CONST SITECONF		= "server/config/site.conf.json";
-	CONST INVENTORY		= "inventory/shop.json";
-	CONST DEPTH		= 10024;
+	CONST INVENTORY_PATH 		= "";
+	CONST SITECONF				= "server/config/site.conf.json";
+	CONST INVENTORY				= "inventory/shop.json";
+	CONST DEPTH					= 10024;
 		
 	public function __construct($params = array()) 
 	{ 
@@ -24,12 +24,12 @@ class JSONLoader {
 	* @throws Exception
 	*/	
 	
-   	public function init($params)
-	{
+    public function init($params)
+    {
 		try {
 			isset($params['var'])  ? $this->var  = $params['var'] : false; 
 			} catch(Exception $e) {}
-   	}
+    }
 
 	public function load_json($url) 
 	{

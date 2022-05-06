@@ -3,13 +3,16 @@
 	include("resources/PHP/Class.Shop.php");
 	include("instance/Init.php");
 	include_once("core/Logging.php");
+	include_once("core/Meta.php");
+	
+	$metafactory = new Meta;
 ?>
 <!DOCTYPE html>
 <html>
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=0.73">
 	<?php
-	echo $shop->getmeta();				
+	echo $metafactory->getmeta();				
 	?>
 	</head>
 	<body>

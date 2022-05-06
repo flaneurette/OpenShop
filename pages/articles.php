@@ -4,10 +4,12 @@
 	require_once("../resources/PHP/Class.Shop.php");
 	require_once("../core/Cryptography.php");
 	require_once("../core/Sanitize.php");
+	include_once("../core/Meta.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography;
 	$sanitizer 	  = new Sanitizer;
+	$metafactory  = new Meta;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
@@ -36,7 +38,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=0.73">
 	
 <?php
-	echo $shop->getmeta("../server/config/site.conf.json");				
+	echo $metafactory->getmeta("../server/config/site.conf.json");				
 ?>
 
 <link rel="stylesheet" type="text/css" href="<?php echo $baseurl;?>resources/style/pages.css">

@@ -4,11 +4,13 @@
 	include("../resources/PHP/Class.Session.php");
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
+	include_once("../core/Meta.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography();
 	$session 	  = new Session;
 	$sanitizer 	  = new Sanitizer;
+	$metafactory  = new Meta;
 	
 	$session->sessioncheck();
 	
@@ -33,7 +35,7 @@
 	<head>
 	<meta name="viewport" content="width=device-width, initial-scale=0.73">
 	<?php
-	echo $shop->getmeta();				
+	echo $metafactory->getmeta();				
 	?>
 	</head>
 <body>

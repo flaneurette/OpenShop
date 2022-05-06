@@ -4,10 +4,12 @@
 	include("../resources/PHP/Class.Shop.php");
 	include_once("../core/Cryptography.php");
 	include_once("../core/Logging.php");
+	include_once("../core/Meta.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography;
 	$sanitizer 	= new Sanitizer;
+	$metafactory  = new Meta;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
@@ -20,7 +22,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=0.73">
 <?php
-echo $shop->getmeta();				
+echo $metafactory->getmeta();				
 ?>
 </head>
 <body>

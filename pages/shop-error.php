@@ -2,8 +2,10 @@
 
 	include("../resources/PHP/Header.inc.php");
 	include("../resources/PHP/Class.Shop.php");
+	include_once("../core/Meta.php");
 		
 	$shop  = new Shop;
+	$metafactory = new Meta;
 		
 	$reason = (int)$_REQUEST['reason'];
 
@@ -31,7 +33,7 @@
 <html>
 	<head>
 	<?php
-	echo $shop->getmeta("../server/config/site.conf.json");				
+	echo $metafactory->getmeta("../server/config/site.conf.json");				
 	?>
 	</head>
 	<body>

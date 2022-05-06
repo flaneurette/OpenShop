@@ -191,6 +191,8 @@ if(isset($_POST['action'])) {
 			break;			
 			
 			case 'updatecartprice':
+			
+			echo "X";
 
 				// TODO SEP 2021: copy over this logic into cart, and recalculate.
 

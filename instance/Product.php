@@ -6,11 +6,13 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	include("../core/Formatter.php");
+	include_once("../core/Meta.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography;
 	$formatter 	  = new Formatter;
 	$sanitizer	  = new Sanitizer;
+	$metafactory  = new Meta;
 	
 	$token = $cryptography->getToken();
 	$_SESSION['token'] = $token;
@@ -45,7 +47,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=0.73">
 <?php
-echo $shop->getmeta(false,$productid);				
+echo $metafactory->getmeta(false,$productid);				
 ?>
 </head>
 
