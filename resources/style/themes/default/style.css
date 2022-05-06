@@ -269,7 +269,6 @@ li:first-child {
 .status-green {} 
 
 a:link, a:visited {
-	color: #663399;
 	text-decoration: none;
 	font-size:1.2em;
 }
