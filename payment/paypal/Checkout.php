@@ -4,11 +4,13 @@
 	include("../../resources/PHP/Class.Session.php");
 	include("../../resources/PHP/Class.Shop.php");
 	include("../../core/Invoicer.php");
+	include_once("../../core/Meta.php");
 	
-	$session = new Session;
-	$messages = new Message;
-	$sanitizer 	= new Sanitizer;
-	$invoicer   = new Invoicer;
+	$session     = new Session;
+	$messages    = new Message;
+	$sanitizer 	 = new Sanitizer;
+	$invoicer    = new Invoicer;
+	$metafactory = new Meta;
 
 	$session->sessioncheck();
 	
@@ -141,7 +143,7 @@
 <html>
 	<head>
 	<?php
-	echo $shop->getmeta("../../server/config/site.conf.json");				
+	echo $metafactory->getmeta("../../server/config/site.conf.json");				
 	?>
 	</head>
 <body>
