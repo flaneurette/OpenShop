@@ -64,6 +64,11 @@ OpenShop can be installed via two methods, composer and manual installation.
 ### Composer: 
 
 	composer require flaneurette/open-shop:dev-main
+- Make sure that the shop folder is properly chowned under the rights of apache or php, to prevent installer failures: 
+
+	`chown -R www-data:www-data shopfolder`
+- Run install.php in your browser and follow directions.
+
 ### Manual:
 
 - Clone or download the zip and upload them to a folder on your server.
