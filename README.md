@@ -3,7 +3,7 @@
 
 Is a barebones opensource webshop software, written in PHP and flat file JSON. 
 
-<img src="https://raw.githubusercontent.com/flaneurette/OpenShop/main/resources/images/product-screen.png" />
+<img src="https://raw.githubusercontent.com/flaneurette/OpenShop/main/resources/images/product-screen-demo.png" />
 
 # Table of Contents
 <details open>
@@ -28,6 +28,7 @@ Is a barebones opensource webshop software, written in PHP and flat file JSON.
 1. [Backups](#Backups)
 1. [SEO](#SEO)
 1. [Products](#Products)
+1. [Audio & Video](#Av)
 1. [Style and themes](#Style-and-themes)
 1. [Logging](#Logging)
 1. [CSV files of interest](#CSV-files-of-interest)
@@ -237,6 +238,12 @@ To place a product inside a category or subcategory, the subsequent csv files ne
 
 - Future of product modification.
 In a future version of OpenShop, all CSV files will be linked into a single Excel document, making it even more practical. In this way the whole shop can be modified from a single excel document.
+
+<a name="Av"></a>
+
+# Audio & Video
+
+OpenShop supports streaming of Audio and Video files. (MP3 and MP4 mpeg encodings only.)
 
 <a name="Style-and-themes"></a>
 
