@@ -245,6 +245,10 @@ In a future version of OpenShop, all CSV files will be linked into a single Exce
 
 OpenShop supports streaming of Audio and Video files. (MP3 and MP4 mpeg encodings only.)
 
+For audio and video streaming, streaming takes quite a lot of bandwidth. In this case, make sure your server has enough memory and slots to provide streaming. In most cases, it would be wise to stream audio and video from a different server than OpenShop is installed on. A subdomain with an approiate virtual instance migth be indicated. However, the best results for streaming will be accomplished from resourcing streams from a specialzed CDN server.
+
+URI locators to a audio or video streaming can be added into the shop.json, and is shown next to a product.
+
 <a name="Style-and-themes"></a>
 
 # Style and themes
