@@ -165,6 +165,19 @@ input[type="number"] {
     float: left;
 }
 
+.ts-shop-ul-li-item-qty input[type="number"] {
+	padding: 11px;
+    margin: 0px;
+    margin-right: 5px;
+    margin-top: 0px;
+    color: #495057;
+    width: 35px;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    float: left;
+}
+
 input[name="submit"] {
 	margin: 1em;
     margin-right: 0px;
