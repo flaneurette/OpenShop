@@ -401,7 +401,7 @@ class Shop {
 	* @param category: select shop category, if none is given it will list all products.
 	* @return $string, html or array (if method is requested.)
 	*/		
-	public function getproducts($method,$category,$string=false,$limit=false,$page=false,$token=false) 
+	public function getproducts($method,$category,$string=false,$limit=false,$page=false,$sorting=false,$sortvalue=false,$token=false) 
 	{
 	
 		$min 	= 0;
@@ -759,6 +759,42 @@ class Shop {
 		
 			// flip array order, as most products are added sequentially...
 			$ts = array_reverse($ts);	
+			
+			// sorting of products.
+			if($sorting == true) {
+				// sort array
+				if(isset($sortvalue)) {
+
+					$pieces = explode(':',$sortvalue,2);
+					
+					if(isset($pieces)) {
+						
+						switch(strtolower(trim($pieces[0]))) {
+							case 'price':
+							$sort  = array_column($ts, 'product.price');
+							break;
+							case 'title':
+							$sort  = array_column($ts, 'product.title');
+							break;
+						}
+						
+						if(isset($sort)) {
+							
+							switch(strtolower(trim($pieces[1]))) {
+								
+								case 'ascending':
+								array_multisort($sort, SORT_ASC, $ts);
+								break;
+								case 'descending':
+								case 'decending':
+								array_multisort($sort, SORT_DESC, $ts);
+								break;
+							}
+						}
+						
+					} else {}
+				}
+			}
 			
 			// pagination count correction.
 			$ts_pag = count($ts);

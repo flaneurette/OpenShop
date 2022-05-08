@@ -322,7 +322,6 @@ hr {
 	margin-top: 1rem;
 	margin-bottom: 1rem;
 	border: 0;
-	border-top: 1px solid rgba(0, 0, 0, .1);
 }
 
 /***
@@ -1043,6 +1042,28 @@ display: block;
 #pricebar ul li {
 	padding:5px;
 }
+
+#price-sort {
+	font-size: 14px; 
+    /* margin-top: 15px; */
+    padding: 0px;
+	margin:0px;
+    margin-right: -9px;
+    vertical-align: top; 
+	float:right;
+}
+
+#sort {
+	resize: horizontal;
+    float: right;
+    border: 1px solid #ced4da;
+    border-radius: 3px;
+    padding: 5px;
+    position: absolute;
+    margin-top: -30px;
+    margin-left: 5px;
+}
+
 
 #pb-1 {
 	background-color:#c5f5f5;

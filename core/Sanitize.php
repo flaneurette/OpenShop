@@ -118,7 +118,7 @@ class Sanitizer {
 			break;
 
 			case 'search':
-			$this->data = preg_replace('/[^a-zA-Z-0-9\-\s\/]/m','', $string);
+			$this->data = preg_replace('/[^a-zA-Z-0-9\-\s\:\/]/m','', $string);
 			break;
 			
 			case 'cat':

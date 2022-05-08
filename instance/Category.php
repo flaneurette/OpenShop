@@ -4,11 +4,16 @@
 	include("../resources/PHP/Class.Shop.php");
 	include("../core/Cryptography.php");
 	include_once("../core/Meta.php");
+	include_once("../core/Sorter.php");
 	
 	$shop  		  = new Shop;
 	$cryptography = new Cryptography;
 	$sanitizer    = new Sanitizer;
 	$metafactory  = new Meta;
+	$sorter 	  = new Sorter;
+	
+	$sorting = false;
+	$sortvalue = false;
 	
 	if(isset($_SESSION['token'])) {
 		$token = $_SESSION['token'];
@@ -26,6 +31,33 @@
 		$subcat   = str_replace('-',' ',$sanitizer->sanitize($_GET['subcat'],'cat'));
 		$subcatid = $shop->getcatId($cat,$subcat);
 	}
+
+	if(isset($_GET['sorting'])) {
+		if($_GET['sorting'] != '' || $_GET['sorting'] != null) {
+			$sorting = true;
+			$sortvalue = $sanitizer->sanitize($_GET['sorting'],'search');
+		}
+	}
+	
+	$uriparameters = $shop->getbase()."category";
+	
+	if(isset($cat)) {
+		$uriparameters .= '/'.$cat;
+	}
+	if(isset($subcat)) {
+		$uriparameters .= '/'.$subcat;
+	}	
+	
+	if(isset($_GET['page'])) {
+		if($_GET['page'] != '' || $_GET['page'] != null) {
+				$paginate = (int) $_GET['page'];
+				} else {
+				$paginate = false;
+			}
+		} else {
+		$paginate = false;
+	}
+				
 ?>
 <!DOCTYPE html>
 <html>
@@ -81,23 +113,23 @@ include("../resources/PHP/Header.php");
 		<div id="ts-shop-nav">
 				<?php
 				
-				if(isset($_GET['page'])) {
-					if($_GET['page'] != '' || $_GET['page'] != null) {
-						$paginate = (int) $_GET['page'];
-						} else {
-						$paginate = false;
-					}
-				} else {
-					$paginate = false;
-				}
-					
+				 if(isset($subcat) && $cat != 'index') {
+					echo $sorter->sorting($uriparameters.'/sort/','price','Sorting...,Price ascending,Price descending,Title acending,Title descending','Sorting...,Price:ascending,Price:descending,Title:ascending,Title:descending');
+				} elseif(isset($cat) && $cat != 'index') {
+
+				echo $sorter->sorting($uriparameters.'sort/','price','Sorting...,Price ascending,Price descending,Title acending,Title descending','Sorting...,Price:ascending,Price:descending,Title:ascending,Title:descending');
+
+				} else {}
+				
 				if(isset($subcat)) {
-					$products = $shop->getproducts('list',$subcat,false,false,$paginate,$_SESSION['token']);				
-					echo $products[1];
+					$products = $shop->getproducts('list',$subcat,false,false,$paginate,$sorting,$sortvalue,$_SESSION['token']);				
+					$productlist = $products[1];
 				} elseif(isset($cat)) {
-					$products = $shop->getproducts('list',$cat,false,false,$paginate,$_SESSION['token']);				
-					echo $products[1];
+					$products = $shop->getproducts('list',$cat,false,false,$paginate,$sorting,$sortvalue,$_SESSION['token']);				
+					$productlist = $products[1];
 				} else { }	
+
+				echo $productlist;
 
 				?>
 		</div>

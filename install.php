@@ -471,10 +471,18 @@ RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance
 RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/(.*)$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5&productid=$6 [NC,L]
 RewriteRule ^category/(.*)/(item)/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Product.php?cat=$1&product=$4&productid=$5 [NC,L]
 
+# category sorting
+RewriteRule ^category/(.*)/(.*)/(sort)/(.*)$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&page=$2&sorting=$4 [NC,L]
+RewriteRule ^category/(.*)/(sort)/(.*)$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&sorting=$3 [NC,L]
+
 # single cat pag.
 RewriteRule ^category/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&page=$2 [NC,L]
 # single cat
 RewriteRule ^category/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1 [NC,L]
+
+# subcategory sorting
+RewriteRule ^subcategory/(.*)/(.*)/(.*)/(sort)/(.*)$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&subcat=$2&page=$3&sorting=$5 [NC,L]
+RewriteRule ^subcategory/(.*)/(.*)/(sort)/(.*)$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&subcat=$2&sorting=$4 [NC,L]
 
 # subcat pag.
 RewriteRule ^subcategory/(.*)/(.*)/(.*)/$ /'.$ts_shop_folder.'/instance/Category.php?cat=$1&subcat=$2&page=$3 [NC,L]
