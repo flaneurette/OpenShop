@@ -506,7 +506,7 @@ RewriteRule ^'.$ts_shop_folder.'/articles/(.*)/(.*)/$ /'.$ts_shop_folder.'/pages
 RewriteRule ^search/(.*)$ /'.$ts_shop_folder.'/instance/Search.php [NC,L]
 RewriteRule ^refine/(.*)$ /'.$ts_shop_folder.'/instance/Refine.php [NC,L]
 
-RewriteRule ^bargain/(.*):(.*)$ /'.$ts_shop_folder.'/instance/pricebar.php?minprice=$1&maxprice=$2 [NC,L]
+RewriteRule ^bargain/(.*):(.*)$ /'.$ts_shop_folder.'/instance/Pricebar.php?minprice=$1&maxprice=$2 [NC,L]
 
 RewriteRule ^vacation/(.*)$ /'.$ts_shop_folder.'/pages/shop-error.php?reason=1 [NC,L]
 RewriteRule ^offline/(.*)$ /'.$ts_shop_folder.'/pages/shop-error.php?reason=2 [NC,L]
