@@ -407,8 +407,20 @@ include("../resources/PHP/Header.php");
 			<li class="ts-shop-ul-li-item">
 			<img src="../../resources/images/icons/carbon-offset.png" style="margin:0px;padding:0px;vertical-align:bottom;" /> 
 			<?php echo $sitecurrency.' '.$carbonvalue . '</li>'; 
-			}
+			} else {
 			?>			
+			<li class="ts-shop-ul-li-item">	
+			<!-- subtotal -->
+			<?php 			
+			echo $sitecurrency.' '.$productsum_total;
+			?>
+			</li>
+			<li class="ts-shop-ul-li-item">
+				 <?php echo $totalshipping;?>
+			</li>	
+			<?php 
+			}
+			?>
 			<li class="ts-shop-ul-li-item">
 				<?php echo $sitecurrency;?> <?php echo $total;?>	
 			</li>
