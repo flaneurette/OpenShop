@@ -3,7 +3,7 @@
 class Parser {
 	
 	CONST TEMPLATE_START 	= '{{';
-	CONST TEMPLATE_END 		= '}}';
+	CONST TEMPLATE_END 	= '}}';
 	
 	public function __construct($params = array()) 
 	{ 
