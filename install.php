@@ -33,8 +33,8 @@
 	
 	$shop = new Shop;
 	$cryptography 		= new Cryptography;
-	$sanitizer 	  		= new Sanitizer;
-	$backups 	 		= new Backup;
+	$sanitizer 	  	= new Sanitizer;
+	$backups 	 	= new Backup;
 	$storagecontainer 	= new StoreData;
 	
 	$versioning = PHP_VERSION_ID;
