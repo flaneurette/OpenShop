@@ -5,15 +5,15 @@ include_once("JSON.Loader.php");
 
 class Meta {
 	
-	CONST INVENTORY_PATH 		= "";
-	CONST SITECONF				= "server/config/site.conf.json";
-	CONST INVENTORY				= "inventory/shop.json";
+	CONST INVENTORY_PATH 	= "";
+	CONST SITECONF		= "server/config/site.conf.json";
+	CONST INVENTORY		= "inventory/shop.json";
 	
 	public function __construct($params = array()) 
 	{ 
 		$this->init($params);
 		$this->sanitizer = new Sanitizer;
-		$this->json	 	 = new JSONLoader;
+		$this->json	 = new JSONLoader;
 	}
 	
 	/**
