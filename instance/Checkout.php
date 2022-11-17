@@ -340,8 +340,10 @@ include("../resources/PHP/Header.php");
 				$json = $shop->json->load_json("../server/config/tax.conf.json");
 							
 					if($json !== null) {
-						if($json[0][$shippingcountry] != null && $json[0][$shippingcountry] != '') {
-							$totaltax = str_replace(['%',' '],['',''],$json[0][$shippingcountry]);
+						if(isset($json[0][$shippingcountry])) { 
+							if( $json[0][$shippingcountry] != null && $json[0][$shippingcountry] != '') {
+								$totaltax = str_replace(['%',' '],['',''],$json[0][$shippingcountry]);
+							}
 						}
 					}
 					
