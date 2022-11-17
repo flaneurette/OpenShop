@@ -4,6 +4,7 @@
 include_once(__DIR__."/../../core/Sanitize.php");
 include_once(__DIR__."/../../core/JSON.Loader.php");
 
+
 class Shop {
 
 	CONST SHOPVERSION 			= "?cache-control=3.3"; // increment if major changes are made to the shop database.
@@ -37,8 +38,8 @@ class Shop {
 	
 	public function __construct() {
 		
-		$this->sanitizer = new Sanitizer;
-		$this->json 	 = new JSONLoader;
+		$this->sanitizer 	= new Sanitizer;
+		$this->json 	 	= new JSONLoader;
 		
 		$incomplete = false;
 		$this->maxcats = 0;
@@ -417,7 +418,14 @@ class Shop {
 		isset($this->pageid) ? $this->page_id = (int)$this->pageid : $this->page_id = 1;	
 		isset($this->cat) ? $this->product_cat = $this->revSeo($this->cat) : $this->product_cat = $this->category;
 		isset($this->subcat) ? $this->product_subcat = $this->revSeo($this->subcat) : $this->product_subcat = false;	
-				
+		
+		if(isset($_SESSION['token'])) {
+			$token = $_SESSION['token'];
+		} else {
+			$token = $cryptography->getToken();
+			$_SESSION['token'] = $token;
+		}
+	
 		$hostaddr = $this->getbase();
 		
 		// Loading the shop configuration.
@@ -657,7 +665,7 @@ class Shop {
 			}
 			
 			// todo: fix bug on limit ~ amount
-			if($limit_products > $amount_products) {
+			if($limit_products  > $amount_products) {
 				$limit_products = $amount_products;
 			}
 			
@@ -697,7 +705,7 @@ class Shop {
 		$string_pag .= $max;
 		$string_pag .= '</div>';
 		$string_pag .= '<div id="ts-paginate-right">';
-		$string_pag .= 'Page '.$page_products.' of '. $pages; 
+		$string_pag .= 'Page '.$page_products.' of '.$pages; 
 		
 		if($page != $pages) {
 		   $string_pag .= '&nbsp;<span id="ts-paginate-arrow"><a href="'.($page_products+1).'/">&rarr;</a></span>';
