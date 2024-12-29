@@ -7,7 +7,7 @@ include_once(__DIR__."/../../core/JSON.Loader.php");
 
 class Shop {
 
-	CONST SHOPVERSION 			= "?cache-control=3.3"; // increment if major changes are made to the shop database.
+	CONST SHOPVERSION 			= "?cache-control=4.1"; // increment if major changes are made to the shop database.
 	CONST INVENTORY_PATH 		= "";
 	CONST SITECONF				= "server/config/site.conf.json";
 	CONST CURRENCIES			= "server/config/currencies.conf.json";
@@ -288,6 +288,77 @@ class Shop {
 		} 
 		
 		return $options;
+	}
+	
+	public function load_json($url) 
+	{
+		$url = str_ireplace('.json','',$url);
+		$url .= '.json';
+		
+		$file  = $this->traverse($url,'traverse');
+
+		$json = json_decode($file, true, 9999, JSON_BIGINT_AS_STRING);
+		
+		if($json !== NULL || $json != false) {
+			return $json;
+			} else {
+			exit;
+		} 
+	}
+	
+	public function traverse($string) {
+		
+		// prepare string by removing all illegal characters.
+		$find = ['../','./','%','#','&'];
+		$replace = ['','','','',''];
+		$string = str_ireplace($find,'',$string);
+		
+		// test string before processing
+		if(stristr(rawurldecode($string),'..') != false) {
+			$this->messages->message("Error: illegal characters found in filename.");
+			exit;	
+		}		
+		// filetype must be either json or csv.	
+		if(substr(strtolower($string),-5) == '.json' || substr(strtolower($string),-4) == '.csv') {
+			} else {
+			$this->messages->message("Error: this is not a supported file.");
+			exit;	
+		}		
+		
+		// only allow alphanumeric characters, a period and slash.
+		$string  = preg_replace('/[^a-zA-Z-0-9.\/]/','', $string);
+		// filetype must be either json or csv, after preg_replace.
+		if((substr(strtolower($string),-5) == '.json') || (substr(strtolower($string),-4) == '.csv')) {
+			$urlstring = $string;
+			} else {
+			$this->messages->message("Error: this is not a supported file.");
+			exit;								
+		}
+
+		// a file path must start with either inventory/ or server/config/
+		if(substr($urlstring,0,10) == 'inventory/') 
+		{
+			$url = $urlstring;
+			} elseif(substr($urlstring,0,14) == 'server/config/') {
+			$url = $urlstring;
+			
+			} else {
+				$this->messages->message("Error: JSON file could not be loaded due to possible directory traversal.");
+				exit;			    
+		}	
+		
+		// try to locate the file, rewind if needed.
+		if(file_exists($url)) {
+			$file = file_get_contents($url);
+				} elseif(file_exists('../'.$url)) {
+				$file = file_get_contents('../'.$url);
+				} elseif(file_exists('../../'.$url)) {
+				$file = file_get_contents('../../'.$url);
+				} else { 
+			$file = false;
+		}
+				
+		return $file;		
 	}
 	
 	public function categories($selected=false,$direction='left') { 
@@ -791,11 +862,11 @@ class Shop {
 							switch(strtolower(trim($pieces[1]))) {
 								
 								case 'ascending':
-								array_multisort($sort, SORT_ASC, $ts);
+								array_multisort($sort, SORT_DESC, $ts);
 								break;
 								case 'descending':
 								case 'decending':
-								array_multisort($sort, SORT_DESC, $ts);
+								array_multisort($sort, SORT_ASC, $ts);
 								break;
 							}
 						}
@@ -839,9 +910,9 @@ class Shop {
 					}
 					
 					if($stock <= 5) {
-						$status = 'ts-product-status-red'; // low stock
+						$status = ''; // low stock
 						} else {
-						$status = 'ts-product-status-green';
+						$status = '';
 					}
 					
 					if(isset($ts[$i]['product.image']) != "") {
@@ -863,7 +934,7 @@ class Shop {
 							
 							// $this->textstring .= "<div class=\"ts-list-product-cat\">".$this->sanitizer->cleaninput($ts[$i]['product.category'])."</div>";
 							$this->textstring .= "<div class=\"ts-list-product-price\">".$this->getsitecurrency(self::INVENTORY_PATH . self::SITECONF,self::INVENTORY_PATH . self::CURRENCIES).' '.$this->sanitizer->cleaninput($ts[$i]['product.price'])."</div>";
-							$this->textstring .= "<div class=\"ts-list-product-status\">left in stock.<div class=\"".$status."\">".$this->sanitizer->cleaninput($ts[$i]['product.stock'])."</div></div>";
+							$this->textstring .= "<div class=\"ts-list-product-status\">".$this->sanitizer->cleaninput($ts[$i]['product.stock'])." left in stock.</div>";
 							
 							if(isset($configuration[0]['products.quick.cart']) == 'yes') {
 								$this->textstring .= "<div><input type='number' name='qty' size='1' value='1' min='1' max='9999' id='ts-group-cart-qty-".($i+1).'-'.(int)$ts[$i]['product.id']."'><input type='button' onclick='OpenShop.addtocart(\"".(int)$ts[$i]['product.id']."\",\"ts-group-cart-qty-".($i+1).'-'.(int)$ts[$i]['product.id']."\",\"".$token."\",\"".$hostaddr."\");' class='ts-list-cart-button' name='add_cart' value='".$this->sanitizer->cleaninput($configuration[0]['products.cart.button'])."' /></div>";
@@ -884,7 +955,7 @@ class Shop {
 						$this->textstring .= "<div class=\"ts-group-product-desc\">".$this->sanitizer->cleaninput($ts[$i]['product.description'])."</div>";
 						$this->textstring .= "<div class=\"ts-group-product-price\">".$this->getsitecurrency(self::INVENTORY_PATH . self::SITECONF,self::INVENTORY_PATH . self::CURRENCIES).' '.$this->sanitizer->cleaninput($ts[$i]['product.price'])."</div>";
 						// $this->textstring .= "<div class=\"ts-group-product-cat\">".$this->sanitizer->cleaninput($ts[$i]['product.category'])."</div>";
-						$this->textstring .= "<div class=\"ts-group-product-status\">left in stock.<div class=\"".$status."\">".$this->sanitizer->cleaninput($ts[$i]['product.stock'])."</div></div>";
+						$this->textstring .= "<div class=\"ts-group-product-status\">".$this->sanitizer->cleaninput($ts[$i]['product.stock'])." left in stock.</div>";
 						
 						if(isset($configuration[0]['products.quick.cart']) == 'yes') {
 							
@@ -1038,7 +1109,6 @@ class Shop {
 								$html .= "<option value=\"".$this->sanitizer->sanitize($value,'option')."\">".$this->sanitizer->sanitize($value,'unicode')."</option>";
 									foreach($subcategory as $subrow)
 									{
-										
 										$maincat = $row['category.id'];
 
 										if($subrow['sub.category.cat.id'] == $maincat) {

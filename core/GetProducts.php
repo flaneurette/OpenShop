@@ -424,9 +424,9 @@ class GetProducts {
 					}
 					
 					if($stock <= 5) {
-						$status = 'ts-product-status-red'; // low stock
+						$status = ''; // low stock
 						} else {
-						$status = 'ts-product-status-green';
+						$status = '';
 					}
 					
 					if(isset($ts[$i]['product.image']) != "") {
@@ -448,7 +448,7 @@ class GetProducts {
 							
 							// $this->textstring .= "<div class=\"ts-list-product-cat\">".$this->cleaninput($ts[$i]['product.category'])."</div>";
 							$this->textstring .= "<div class=\"ts-list-product-price\">".$this->getsitecurrency(self::INVENTORY_PATH . self::SITECONF,self::INVENTORY_PATH . self::CURRENCIES).' '.$this->cleaninput($ts[$i]['product.price'])."</div>";
-							$this->textstring .= "<div class=\"ts-list-product-status\">left in stock.<div class=\"".$status."\">".$this->cleaninput($ts[$i]['product.stock'])."</div></div>";
+							$this->textstring .= "<div class=\"ts-list-product-status\">".$this->cleaninput($ts[$i]['product.stock'])." left in stock.</div>";
 							
 							if(isset($configuration[0]['products.quick.cart']) == 'yes') {
 								$this->textstring .= "<div><input type='number' name='qty' size='1' value='1' min='1' max='9999' id='ts-group-cart-qty-".($i+1).'-'.(int)$ts[$i]['product.id']."'><input type='button' onclick='OpenShop.addtocart(\"".(int)$ts[$i]['product.id']."\",\"ts-group-cart-qty-".($i+1).'-'.(int)$ts[$i]['product.id']."\",\"".$token."\",\"".$hostaddr."\");' class='ts-list-cart-button' name='add_cart' value='".$this->cleaninput($configuration[0]['products.cart.button'])."' /></div>";
@@ -469,7 +469,7 @@ class GetProducts {
 						$this->textstring .= "<div class=\"ts-group-product-desc\">".$this->cleaninput($ts[$i]['product.description'])."</div>";
 						$this->textstring .= "<div class=\"ts-group-product-price\">".$this->getsitecurrency(self::INVENTORY_PATH . self::SITECONF,self::INVENTORY_PATH . self::CURRENCIES).' '.$this->cleaninput($ts[$i]['product.price'])."</div>";
 						// $this->textstring .= "<div class=\"ts-group-product-cat\">".$this->cleaninput($ts[$i]['product.category'])."</div>";
-						$this->textstring .= "<div class=\"ts-group-product-status\">left in stock.<div class=\"".$status."\">".$this->cleaninput($ts[$i]['product.stock'])."</div></div>";
+						$this->textstring .= "<div class=\"ts-group-product-status\">".$this->cleaninput($ts[$i]['product.stock'])." left in stock.</div>";
 						
 						if(isset($configuration[0]['products.quick.cart']) == 'yes') {
 							

@@ -502,7 +502,8 @@ hr {
 } 
 
 ts-product-image-div-featured {
-	height:900px;
+	height:300px;
+	overflow:hidden;
 }
 
 
@@ -537,8 +538,17 @@ ts-product-image-div-featured {
 	display:block;
 }
 .ts-list-product-status {
-	display:block;
-	font-size: 12px;
+	display: block;
+	width: 100%;
+	padding: 5px;
+    /* margin: 5px; */
+    margin-left: 0px;
+    margin-top: 0px;
+    padding-left: 0px;
+    float: left;
+    background-color: lightgreen;
+    text-align: center;
+    border-radius: 5px;
 }
 .ts-list-product-link {
 	display:block;
@@ -599,9 +609,13 @@ ts-product-image-div-featured {
 /** OpenShop pagination
 */
 
+#ts-shop-nav {
+	margin-top: 0px;
+}
+
 #ts-paginate {
 	display:block;
-	height:30px;
+	height:25px;
 }
 
 #ts-paginate-left {
@@ -610,7 +624,7 @@ ts-product-image-div-featured {
 	text-align:left;
 	font-size:12px;
 	padding:0px;
-	margin:0px;
+	margin:5px;
 	margin-left:5px;
 }
 

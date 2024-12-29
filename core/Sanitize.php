@@ -50,7 +50,7 @@ class Sanitizer {
 		}
 		
 		if($dots == true) {
-			$returnstring .= '...';
+			$returnstring .= '';
 		}
 		
 		return $returnstring;

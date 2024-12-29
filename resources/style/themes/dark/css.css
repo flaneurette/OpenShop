@@ -30,7 +30,6 @@ body {
 
 img {
 	clear: both!important;
-	/* padding-bottom: 1.5em; */
 	-moz-user-select: none;
 	-webkit-user-select: none;
 	-ms-user-select: none;
@@ -42,7 +41,7 @@ img {
 
 h1#logo {
 	color: #999;
-	font-size: 29px;
+	font-size: 48px;
 	font-family: 'Playfair Display', Georgia, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", serif;
 	text-decoration: none;
 	font-weight: 400;

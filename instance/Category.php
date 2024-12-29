@@ -74,7 +74,6 @@ include("../resources/PHP/Header.php");
 ?>
 <div id="cart-contents"><a href="<?php echo $host;?>cart/">View Cart</a></div>
 <div id="wrapper">
-<h2>Store</h2>
 	<div id="ts-shop-result-message" onclick="OpenShop.togglecartmsg('close');" onmouseover="OpenShop.togglecartmsg('close');"></div>
 		
 		<div id="shop">
@@ -114,7 +113,7 @@ include("../resources/PHP/Header.php");
 				<?php
 				
 				 if(isset($subcat) && $cat != 'index') {
-					echo $sorter->sorting($uriparameters.'/sort/','price','Sorting...,Price ascending,Price descending,Title acending,Title descending','Sorting...,Price:ascending,Price:descending,Title:ascending,Title:descending');
+					echo $sorter->sorting($uriparameters.'sort/','price','Sorting...,Price ascending,Price descending,Title acending,Title descending','Sorting...,Price:ascending,Price:descending,Title:ascending,Title:descending');
 				} elseif(isset($cat) && $cat != 'index') {
 
 				echo $sorter->sorting($uriparameters.'sort/','price','Sorting...,Price ascending,Price descending,Title acending,Title descending','Sorting...,Price:ascending,Price:descending,Title:ascending,Title:descending');
