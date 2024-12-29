@@ -1,14 +1,45 @@
-	h1 {
-		font-size:86px;
-		line-height:1em;
-	}
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
-	h2 {
-		font-size:36px;
-		line-height:1em;
-		color:lightgreen;
-	}
-	small { 
-		color:#666;
-		font-size:11px;
-	}
+html,
+body {
+	margin: 0px;
+	background-color: #f7f7f7;
+	font-family: "Helvetica Neue", Arial, "Open Sans", sans-serif;
+}
+
+#wrapper {
+	background-color: #fff;
+	max-width: fit-content;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: auto;
+	border: 1px solid #ced4da;
+	border-radius: 5px;
+	padding: 50px;
+	margin-top: 100px;
+	font-family: "Open Sans", sans-serif;
+	box-shadow: 5px 5px 5px #ced4da;
+}
+
+h1 {
+	font-size: 46px;
+	line-height: 1em;
+}
+
+h2 {
+	font-size: 36px;
+	color: green;
+}
+
+h4 {
+	margin-top: 15px;
+}
+
+small {
+	color: #666;
+	font-size: 11px;
+}
+
+div {
+	margin-left: 0px;
+}

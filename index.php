@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<meta name="viewport" content="width=device-width, initial-scale=0.73">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<?php
 	echo $metafactory->getmeta();				
 	?>
@@ -21,7 +21,6 @@
 	?>
 		<div id="cart-contents"><a href="<?php echo $host;?>cart/">View Cart</a></div>
 			<div id="wrapper">
-			<h2>Store</h2>
 				<div id="ts-shop-result-message" onclick="OpenShop.togglecartmsg('close');" onmouseover="OpenShop.togglecartmsg('close');"></div>
 					<div id="shop">
 						

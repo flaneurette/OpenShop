@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=0.73">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>OpenShop webshop</title>
 		<meta charset="utf-8">
 		<meta name="description" content="OpenShop webshop is your place to shop!">
@@ -720,7 +720,7 @@ Allow from '.$ip.'
 		/***
 		/* If successful, show the following message.
 		*/
-				
+		echo '<h1>Success!</h1>';
 		echo '<div class="installer-message-success">';
 		echo 'OpenShop was installed and should function correctly! If not, please read the manual on Github: https://github.com/flaneurette/OpenShop'. PHP_EOL;
 		echo 'Please delete the install.php file, or <a href="install.php?delete='.$sanitizer->sanitize($nonce,'alphanum').'">click here.</a> to let OpenShop do it for you'. PHP_EOL;
@@ -728,6 +728,7 @@ Allow from '.$ip.'
 		
 	} elseif(isset($_POST['setup-complete']) == 1) {
 		
+		echo '<h1>Success!</h1>';
 		echo '<div class="installer-message-success">';
 		echo 'OpenShop was installed and should function correctly! If not, please read the manual on Github: https://github.com/flaneurette/OpenShop'. PHP_EOL;
 		echo 'Please delete the install.php file, or <a href="install.php?delete='.$sanitizer->sanitize($nonce,'alphanum').'">click here.</a> to let OpenShop do it for you'. PHP_EOL;
@@ -750,22 +751,24 @@ Allow from '.$ip.'
 
 <h1>Setup OpenShop</h1>
 <div>
-	<?php echo "All requirements were met. Continue to configure OpenShop";?>
+	<?php 
+	echo "All requirements were met. Continue to configure OpenShop"; 
+	?>
 </div>
 <hr />
 		<div id="ts-shop-cart-form">
 					<form name="" action="" method="post">
 						<input name="setup" value="1" type="hidden">
 						<input name="nonce" value="<?php echo $sanitizer->sanitize($nonce,'alphanum');?>" type="hidden">
-						Shop title: <input name="admin_title" value="OpenShop webshop" type="text"> 
-						Shop description: <input name="admin_description" value="OpenShop webshop is cool!" type="text"> 
-						Website: <input name="admin_website" value="https://<?php echo $host;?>" type="text"> 
-						Shop folder name /shop/ (without slashes) <input name="shop_folder" value="<?php echo $sanitizer->sanitize($shopfolder,'alphanum');?>" type="text" alt="Without slashes" title="Without slashes">
-						Website e-mail: <input name="admin_website_email" value="info@website.com" type="text">
+						Shop title: <input name="admin_title" value="OpenShop webshop" type="text" size="65"> 
+						Shop description: <input name="admin_description" value="OpenShop webshop is cool!" type="text" size="65"> 
+						Website: <input name="admin_website" value="https://<?php echo $host;?>" type="text" size="65"> 
+						Shop folder name /shop/ (without slashes) <input name="shop_folder" value="<?php echo $sanitizer->sanitize($shopfolder,'alphanum');?>" type="text" alt="Without slashes" title="Without slashes"  size="65">
+						Website e-mail: <input name="admin_website_email" value="info@website.com" type="text" size="65">
 						<hr />
 						Theme: <select name="theme"> 
 						<option value="default">White Theme</option>
-						<option value="dark">Dark Theme</option>
+						<!-- <option value="dark">Dark Theme</option> -->
 						</select>
 						<hr />
 						Free shipping above: <br /><input name="freeshipping" value="50.00" type="text" size="5" />
@@ -794,18 +797,19 @@ Allow from '.$ip.'
 						Admin Password: <input name="admin_password" value="" type="text">
 						Admin E-mail: <input name="admin_email" value="" type="text">
 						<hr />
-						<strong>Security.</strong> Encrypt e-mail address? 
+						<strong>Security.</strong> 
+						<hr />Encrypt e-mail address? 
 						<select name="admin_encryption">
 							<option value="2">No</option>
 							<option value="1">Yes</option>
-						</select> <sup>(if NO, it will be visible to everyone)</sup>
+						</select> (if NO, it will be visible to everyone)
 						<hr />
 						Admin IP: <input name="admin_ip" value="<?php echo  $sanitizer->sanitize($_SERVER['REMOTE_ADDR'],'table');?>" type="text">
 						<hr />
 						<div id="paypal">PayPal e-mail (to accept payments on):</div> <input id="paypal-email" name="admin_paypal_email" value="" type="text">
 						<hr />
 						
-						Social media accounts. i.e. https://www.twitter.com/tinywebshop
+						Social media accounts. i.e. https://x.com
 						<input name="socialmedia_option1" value="" type="text"> 
 						<input name="socialmedia_option2" value="" type="text"> 
 						<input name="socialmedia_option3" value="" type="text"> 

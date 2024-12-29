@@ -4,7 +4,7 @@
 include_once(__DIR__."/../../core/Sanitize.php");
 include_once(__DIR__."/../../core/JSON.Loader.php");
 
-
+#[AllowDynamicProperties]
 class Shop {
 
 	CONST SHOPVERSION 			= "?cache-control=4.1"; // increment if major changes are made to the shop database.

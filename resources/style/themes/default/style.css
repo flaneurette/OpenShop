@@ -14,20 +14,16 @@ body {
 	line-height: 1.2em;
 	color: #212529;
 	text-align: left;
-	/* background-color: #f8f9fa; */
-}
-
-div {
-	/* border:1px solid #000; */
 }
 
 #searchbar {
-	height:20px;
-	width:100%;
-	margin:auto;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	padding:5px;
+	height: 28px;
+    width: 100%;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px;
+    background-color: #f7f7f7;
 }
 
 #searchbar-input {
@@ -108,12 +104,6 @@ div {
 	z-index:10;
 }
 
-div {
-	/* 
-	testing div borders.
-	border:1px solid #000;
-	*/
-}
 h1 {
     color: #000;
     font-family: 'Playfair Display', Georgia, Palatino, "Palatino Linotype", "Palatino LT STD", "Book Antiqua", serif;
@@ -1356,12 +1346,11 @@ display: block;
     overflow-y: hidden;
     clear: both;
     /* width: 100%; */
-    background-color: #ddd;
+    background-color: #000;
     height: 500px;
     left: 0;
     right: 0;
     bottom: 10;
-    border-top: 5px solid #dcdcdc;
 	padding-left:170px;
 	padding-top:60px;
 }
@@ -1369,7 +1358,11 @@ display: block;
 .shop-floor-item {
 	float:left;
 	width:100px;
-	border:1px solid #777;
 	text-align:center;
+	color: white;
 	margin:10px;
+}
+
+.shop-floor-item a:link, .shop-floor-item a:visited {
+	color: white;
 }
