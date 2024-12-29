@@ -2,18 +2,6 @@
 
 Is a barebones opensource webshop software, written in PHP and flat file JSON and CSV.
 
-# First steps on working with OpenShop 
-If installed, go to the administration folder and there you will be able to upload .CSV files. The CSV files included in /inventory/csv/ are examples of a shop. Normally, the only CSV files that need to be edited are: 
-
-- server/config/site.conf.csv
-- inventory/shop.csv
-- inventory/categories.csv 
-- inventory/subcategories.csv. 
-
-These CSV files can be kept on your computer, and uploaded through the administration screen. Most shop settings can be edited through these CSV files. All products are stored inside *shop.csv* and linked to categories and subcategories, so at a minimal you need to have to edit these 3 CSV files. For more, such as Paypal settings, read the entire README.
-In OpenShop it is possible to change the column order of the CSV, in any way you desire. It would be wise to not delete any columns, as then OpenShop might not be able to read the shop corectly, although it may be able to read products. OpenShop accepts only text, integers, floats and uri locators in CSV fields. Embeded images are not supported. 
-The CSV files can be downloaded through the administration panel, by visiting the /downloads/ tab.
-
 # Installing
 
 OpenShop can be installed via two methods, composer and manual installation.
