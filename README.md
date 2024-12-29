@@ -1,7 +1,7 @@
 
 # OpenShop
 
-Is a barebones opensource webshop software, written in PHP and flat file JSON. 
+Is a barebones opensource webshop software, written in PHP and flat file JSON and CSV.
 
 # Table of Contents
 <details open>
