@@ -130,7 +130,7 @@ The administration panel requires the following folders to be writable contineou
 - inventory/ 			: 0777 or 0755
 - inventory/csv/ 		: 0777 or 0755
 
-Depening on your situation, it would be wise to start with the lowest permissions, however, the adminsitration panel might require more permissions. OpenShop will try to chmod the .csv and .json files when a change is made, and chmods the files automatically back to 0755. If you cannot upload files, chmod these folders to 0777 manually to prepare OpenShop to make changes automatically.
+Depending on your situation, it would be wise to start with the lowest permissions, however, the adminsitration panel might require more permissions. OpenShop will try to chmod the .csv and .json files when a change is made, and chmods the files automatically back to 0755. If you cannot upload files, chmod these folders to 0777 manually to prepare OpenShop to make changes automatically.
 
 <a name="Payment-configuration"></a>
 
