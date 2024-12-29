@@ -211,7 +211,7 @@ Bancontact, KNET, CitrusPay, Mada, QPAY, EPS, Giropay, iDEAL, Bitcoin: Coingate,
 <a name="Currencies"></a>
 
 # Currencies
-OpenShop supports 36 different currencies, including Bitcoin.
+OpenShop supports 36 different currencies
 
 <a name="Storage"></a>
 
