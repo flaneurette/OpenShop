@@ -102,6 +102,7 @@ It would be wise to install UFW for port control:
 
 	apt-get install ufw
 	ufw status numbered
+ 	ufw allow 22
 	ufw allow 25
 	ufw allow 80
 	ufw allow 443
